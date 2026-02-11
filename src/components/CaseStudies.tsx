@@ -68,7 +68,7 @@ export default function CaseStudies() {
             Success <span className="text-[#B7934A]">Stories</span>
           </h2>
           <p className="paragraph max-w-2xl mx-auto">
-            Discover how we've helped leading companies optimize their global trade operations
+            Discover how we&apos;ve helped leading companies optimize their global trade operations
             and achieve remarkable results.
           </p>
         </div>

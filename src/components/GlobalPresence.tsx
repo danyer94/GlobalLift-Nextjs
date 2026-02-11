@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react'
 import { Globe2 } from 'lucide-react'
-import Image from 'next/image'
 
 const locations = [
   { name: 'New York', lat: 40.7128, lng: -74.0060 },
