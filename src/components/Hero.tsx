@@ -1,130 +1,148 @@
-'use client'
+import { ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import type { HeroCopy } from '../content/siteContent';
+import { withBasePath } from '../utils/basePath';
+import { MotionSection } from './MotionSection';
 
-import React, { useEffect, useRef } from 'react'
-import { ArrowRight, Globe } from 'lucide-react'
+const HERO_BG_IMAGES = [
+  {
+    src: withBasePath('/images/generated/hero-cinematic-port.webp'),
+    posMobile: 'center 40%',
+    posTablet: 'center 38%',
+    posDesktop: 'center 36%',
+  },
+  {
+    src: withBasePath('/images/generated/services-multimodal.webp'),
+    posMobile: 'center 44%',
+    posTablet: 'center 42%',
+    posDesktop: 'center 40%',
+  },
+  {
+    src: withBasePath('/images/generated/commitment-ship-sunset.webp'),
+    posMobile: 'center 46%',
+    posTablet: 'center 44%',
+    posDesktop: 'center 42%',
+  },
+];
+const BG_ROTATE_INTERVAL_MS = 6_000;
 
-export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+type HeroProps = {
+  copy: HeroCopy;
+};
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+const highlightTitle = (title: string): ReactNode => {
+  const markers = [
+    {
+      text: 'sin fronteras',
+      className: 'hero-highlight-match',
+    },
+    {
+      text: 'without borders',
+      className: 'hero-highlight-match',
+    },
+    {
+      text: 'República Dominicana',
+      className: 'hero-highlight-match',
+    },
+    {
+      text: 'Dominican Republic',
+      className: 'hero-highlight-match',
+    },
+  ];
+  const marker = markers.find((item) => title.includes(item.text));
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+  if (!marker) {
+    return title;
+  }
 
-    // Set canvas size
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    setCanvasSize()
-    window.addEventListener('resize', setCanvasSize)
-
-    // Points for the world map
-    const points = [
-      { x: 0.2, y: 0.3 }, { x: 0.4, y: 0.2 }, { x: 0.6, y: 0.25 },
-      { x: 0.3, y: 0.4 }, { x: 0.5, y: 0.35 }, { x: 0.7, y: 0.3 },
-      { x: 0.25, y: 0.5 }, { x: 0.45, y: 0.45 }, { x: 0.65, y: 0.4 },
-      { x: 0.8, y: 0.35 }, { x: 0.35, y: 0.6 }, { x: 0.55, y: 0.55 }
-    ]
-
-    // Animation
-    let frame = 0
-    const animate = () => {
-      frame++
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
-      // Draw points and connections
-      points.forEach((point, i) => {
-        const x = point.x * canvas.width
-        const y = point.y * canvas.height
-        
-        // Draw point
-        ctx.beginPath()
-        ctx.arc(x, y, 2, 0, Math.PI * 2)
-        ctx.fillStyle = '#B7934A'
-        ctx.fill()
-        
-        // Draw connections
-        points.forEach((otherPoint, j) => {
-          if (i !== j) {
-            const distance = Math.hypot(
-              otherPoint.x * canvas.width - x,
-              otherPoint.y * canvas.height - y
-            )
-            if (distance < canvas.width * 0.2) {
-              ctx.beginPath()
-              ctx.moveTo(x, y)
-              ctx.lineTo(otherPoint.x * canvas.width, otherPoint.y * canvas.height)
-              ctx.strokeStyle = `rgba(183, 147, 74, ${0.1 + Math.sin(frame * 0.02) * 0.05})`
-              ctx.stroke()
-            }
-          }
-        })
-      })
-      
-      requestAnimationFrame(animate)
-    }
-    animate()
-
-    return () => {
-      window.removeEventListener('resize', setCanvasSize)
-    }
-  }, [])
+  const index = title.indexOf(marker.text);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full opacity-30"
-      />
-      
-      {/* Content */}
-      <div className="container-custom relative z-10">
-        <div className="max-w-3xl">
-          <h1 className="heading-primary mb-6 animate-float">
-            Global Trade Excellence in
-            <span className="text-[#B7934A]"> Import & Export</span>
-          </h1>
-          <p className="paragraph mb-8 text-xl">
-            Connecting businesses worldwide with premium logistics solutions, 
-            cutting-edge technology, and unparalleled expertise in international trade.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a href="#contact" className="btn-primary">
-              Start Your Journey
-              <ArrowRight className="w-5 h-5" />
+    <>
+      {title.slice(0, index)}
+      <span className={marker.className}>{marker.text}</span>
+      {title.slice(index + marker.text.length)}
+    </>
+  );
+};
+
+export function Hero({ copy }: HeroProps) {
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setBgIndex((i) => (i + 1) % HERO_BG_IMAGES.length);
+    }, BG_ROTATE_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <MotionSection
+      className="hero-aurora section min-h-[88vh] pt-28 pb-16 flex items-center justify-center"
+      decorVariant="aurora"
+      parallaxStrength={24}
+      background={
+        <div className="hero-bg-slides" aria-hidden="true">
+          {HERO_BG_IMAGES.map((image, i) => {
+            const slideStyle = {
+              opacity: i === bgIndex ? 1 : 0,
+              '--hero-pos-mobile': image.posMobile,
+              '--hero-pos-tablet': image.posTablet,
+              '--hero-pos-desktop': image.posDesktop,
+            } as CSSProperties;
+
+            return (
+              <img
+                key={image.src}
+                src={image.src}
+                alt=""
+                className="hero-bg-image"
+                style={slideStyle}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                width={1536}
+                height={1024}
+                sizes="100vw"
+              />
+            );
+          })}
+        </div>
+      }
+    >
+      <div className="container flex justify-center">
+        <div className="w-full max-w-3xl space-y-7 px-4 text-center text-primary-foreground sm:px-6">
+          <div className="space-y-5">
+            <h1 className="hero-slogan hero-slogan--archivo text-4xl tracking-tight md:text-6xl">
+              {highlightTitle(copy.title)}
+            </h1>
+            <p className="text-lg text-primary-foreground/88 md:text-xl">{copy.subtitle}</p>
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row justify-center">
+            <a
+              href="#contact"
+              className="btn btn-contact"
+            >
+              {copy.primaryCta}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
-            <a href="#services" className="px-8 py-3 border border-[#B7934A] text-[#B7934A] 
-              font-semibold rounded-lg hover:bg-[#B7934A] hover:text-white 
-              transition-colors duration-300 inline-flex items-center gap-2">
-              Explore Services
-              <Globe className="w-5 h-5" />
+            <a href="#services" className="btn btn-outline">
+              {copy.secondaryCta}
             </a>
           </div>
-          
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#B7934A] mb-2">150+</div>
-              <div className="text-gray-300">Countries Served</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#B7934A] mb-2">$2.5B+</div>
-              <div className="text-gray-300">Annual Trade Volume</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#B7934A] mb-2">98%</div>
-              <div className="text-gray-300">Client Satisfaction</div>
-            </div>
+          <p className="text-sm text-primary-foreground/84 md:text-base">{copy.micro}</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {copy.trustCues.map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/28 bg-primary-foreground/10 px-4 py-1.5 text-xs font-semibold text-primary-foreground/90"
+              >
+                {item}
+              </span>
+            ))}
           </div>
         </div>
       </div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0B1437] to-transparent" />
-    </section>
-  )
-} 
+    </MotionSection>
+  );
+}
