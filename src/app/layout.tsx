@@ -1,14 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  preload: true,
-  weight: ['400', '500', '600', '700']
-})
+import '../../styles/globals.css'
 
 export const metadata: Metadata = {
   title: 'Global Trade Excellence | Premium Import/Export Solutions',
@@ -22,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
+      <body className="antialiased">
         {children}
       </body>
     </html>

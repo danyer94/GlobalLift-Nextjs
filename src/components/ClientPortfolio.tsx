@@ -75,7 +75,7 @@ export default function ClientPortfolio() {
             Trusted by <span className="text-[#B7934A]">Industry Leaders</span>
           </h2>
           <p className="paragraph max-w-2xl mx-auto">
-            We're proud to work with Fortune 500 companies and industry leaders
+            We&apos;re proud to work with Fortune 500 companies and industry leaders
             who trust us with their global trade operations.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function ClientPortfolio() {
                       ))}
                     </div>
                     <blockquote className="text-xl text-gray-300 italic mb-4">
-                      "{testimonials[activeTestimonial].quote}"
+                      &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
                     </blockquote>
                     <div className="text-white font-semibold">
                       {testimonials[activeTestimonial].name}
