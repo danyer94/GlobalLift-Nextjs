@@ -80,7 +80,7 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
           className="h-full w-full object-cover"
         />
       </span>
-      <span className="font-display text-sm font-medium leading-none tracking-tight text-[#00308f] md:text-lg">
+      <span className="font-display text-sm font-medium leading-none tracking-tight text-[#00308f] md:text-sm">
         {activeOption.label}
       </span>
     </button>
