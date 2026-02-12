@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import type { KeyboardEvent } from 'react';
 import type { Language } from '../content/siteContent';
+import { withBasePath } from '../utils/basePath';
 
 type LanguageToggleProps = {
   value: Language;
@@ -9,62 +11,40 @@ type LanguageToggleProps = {
 type LanguageOption = {
   value: Language;
   label: string;
+  flagAlt: string;
+  flagSrc: string;
   borderClass: string;
   buttonLabel: string;
 };
 
-const options: LanguageOption[] = [
-  {
+const LANGUAGE_ORDER: Language[] = ['es', 'en'];
+
+const LANGUAGE_OPTIONS: Record<Language, LanguageOption> = {
+  es: {
     value: 'es',
-    label: 'Espa�ol',
+    label: 'Español',
+    flagAlt: 'Bandera de España',
+    flagSrc: withBasePath('/icons/flags/es.svg'),
     borderClass: 'border-[#f47a20]',
     buttonLabel: 'Switch language to English',
   },
-  {
+  en: {
     value: 'en',
     label: 'English',
+    flagAlt: 'United States flag',
+    flagSrc: withBasePath('/icons/flags/us.svg'),
     borderClass: 'border-[#27486b]',
-    buttonLabel: 'Cambiar idioma a espa�ol',
+    buttonLabel: 'Cambiar idioma a español',
   },
-];
-
-const order: Language[] = ['es', 'en'];
-
-const flagBackgrounds: Record<Language, string> = {
-  es: 'linear-gradient(to bottom, #c60b1e 0 33.333%, #ffc400 33.333% 66.666%, #c60b1e 66.666% 100%)',
-  en: 'repeating-linear-gradient(to bottom, #b22234 0 8%, #ffffff 8% 16%)',
 };
 
-const cantonBackground =
-  'radial-gradient(circle at 20% 20%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 48% 20%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 76% 20%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 34% 42%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 62% 42%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 20% 64%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 48% 64%, #ffffff 0 7%, transparent 7.5%), radial-gradient(circle at 76% 64%, #ffffff 0 7%, transparent 7.5%), #3c3b6e';
-
-function getNextLanguage(value: Language): Language {
-  const currentIndex = order.indexOf(value);
-  const nextIndex = (currentIndex + 1) % order.length;
-  return order[nextIndex];
-}
-
-function Flag({ language }: { language: Language }) {
-  return (
-    <span
-      className="relative inline-flex h-11 w-11 shrink-0 overflow-hidden rounded-full border-[3px] border-white shadow-[0_8px_16px_rgba(15,23,42,0.18)]"
-      aria-hidden="true"
-      style={{ background: flagBackgrounds[language] }}
-    >
-      {language === 'es' ? (
-        <span className="absolute left-[30%] top-1/2 h-3.5 w-2 -translate-y-1/2 rounded-sm bg-[#9b111e]/70 ring-1 ring-[#f1d38b]" />
-      ) : (
-        <span
-          className="absolute left-0 top-0 h-[55%] w-[55%]"
-          style={{ background: cantonBackground }}
-        />
-      )}
-    </span>
-  );
+function getNextLanguage(current: Language): Language {
+  const currentIndex = LANGUAGE_ORDER.indexOf(current);
+  return LANGUAGE_ORDER[(currentIndex + 1) % LANGUAGE_ORDER.length];
 }
 
 export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
-  const activeOption = options.find((option) => option.value === value) ?? options[0];
+  const activeOption = LANGUAGE_OPTIONS[value];
 
   const handleToggle = () => {
     onChange(getNextLanguage(value));
@@ -77,9 +57,9 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
 
     event.preventDefault();
     const step = event.key === 'ArrowRight' ? 1 : -1;
-    const currentIndex = order.indexOf(value);
-    const nextIndex = (currentIndex + step + order.length) % order.length;
-    onChange(order[nextIndex]);
+    const currentIndex = LANGUAGE_ORDER.indexOf(value);
+    const nextIndex = (currentIndex + step + LANGUAGE_ORDER.length) % LANGUAGE_ORDER.length;
+    onChange(LANGUAGE_ORDER[nextIndex]);
   };
 
   return (
@@ -87,12 +67,20 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       type="button"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      className={`inline-flex h-14 min-w-[12rem] items-center gap-4 rounded-full border-[3px] bg-white/95 pl-2.5 pr-6 shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(15,23,42,0.17)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
+      className={`inline-flex h-12 min-w-[10.5rem] items-center gap-3 rounded-full border-[3px] bg-white/95 pl-2 pr-4 shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(15,23,42,0.17)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
       aria-label={activeOption.buttonLabel}
       title={activeOption.buttonLabel}
     >
-      <Flag language={activeOption.value} />
-      <span className="font-display text-[2rem] font-semibold leading-none tracking-[-0.03em] text-[#00308f]">
+      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-[0_6px_14px_rgba(15,23,42,0.16)]">
+        <Image
+          src={activeOption.flagSrc}
+          alt={activeOption.flagAlt}
+          width={36}
+          height={36}
+          className="h-full w-full object-cover"
+        />
+      </span>
+      <span className="font-display text-sm font-medium leading-none tracking-tight text-[#00308f] md:text-lg">
         {activeOption.label}
       </span>
     </button>
