@@ -41,15 +41,14 @@ module.exports = {
         "muted-foreground": "rgb(var(--muted-foreground) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Onest", "system-ui", "sans-serif"],
+        sans: ["var(--font-onest)", "system-ui", "sans-serif"],
         display: [
-          "Archivo SemiExpanded",
-          "Onest",
+          "var(--font-onest)",
           "system-ui",
           "sans-serif",
         ],
         mono: [
-          "JetBrains Mono",
+          "var(--font-jetbrains-mono)",
           "ui-monospace",
           "SFMono-Regular",
           "monospace",

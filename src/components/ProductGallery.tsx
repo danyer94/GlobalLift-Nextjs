@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
+import Image from 'next/image';
 import type { ProductsGalleryCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
 
@@ -154,15 +155,13 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                 index === currentIndex ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
               }`}
             >
-              <img
+              <Image
                 src={getImageSrc(slide)}
                 alt={`${heading} - ${slideTitle}`}
                 className="h-full w-full object-cover"
-                loading={index === currentIndex ? 'eager' : 'lazy'}
-                decoding="async"
-                width={1600}
-                height={900}
+                fill
                 sizes="(min-width: 640px) 80vw, 100vw"
+                priority={index === currentIndex && currentIndex === 0}
                 onError={() => handleImageError(slide.key)}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-primary/10 to-transparent" />
@@ -252,12 +251,14 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
               </button>
 
-              <img
+              <Image
                 src={getImageSrc(currentSlide)}
                 alt={`${heading} - ${getSlideTitle(currentSlide.key)}`}
                 className="max-h-[78vh] w-full rounded-xl bg-background/70 object-contain"
-                loading="lazy"
-                decoding="async"
+                width={1600}
+                height={900}
+                sizes="(min-width: 1024px) 960px, 100vw"
+                style={{ maxHeight: '78vh', width: '100%', height: 'auto' }}
                 onError={() => handleImageError(currentSlide.key)}
               />
 

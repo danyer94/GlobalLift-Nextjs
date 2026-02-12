@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect } from 'react';
 import { About } from './components/About';
 import { Boat } from './components/Boat';
 import { Contact } from './components/Contact';
@@ -11,51 +13,22 @@ import { Products } from './components/Products';
 import { SEO } from './components/SEO';
 import { Services } from './components/Services';
 import { Why } from './components/Why';
-import { siteContent, type Language } from './content/siteContent';
+import { siteContent } from './content/siteContent';
+import { useLanguage } from './hooks/useLanguage';
 import { withBasePath } from './utils/basePath';
 import { ScrollProvider } from './utils/scroll';
 
-const STORAGE_KEY = 'globallift-language';
 const CINEMA_PRESET = 'immersive';
 
-const getInitialLanguage = (): Language => {
-  if (typeof window === 'undefined') {
-    return 'es';
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const paramLanguage = params.get('lang')?.toLowerCase();
-  if (paramLanguage === 'es' || paramLanguage === 'en') {
-    return paramLanguage;
-  }
-
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === 'es' || stored === 'en') {
-    return stored;
-  }
-
-  const browserLang = window.navigator.language?.toLowerCase() ?? '';
-  return browserLang.startsWith('es') ? 'es' : 'en';
-};
-
 function App() {
-  const [language, setLanguage] = useState<Language>('es');
+  const { language, setLanguage } = useLanguage({
+    storageKey: 'globallift-language',
+  });
   const content = siteContent[language];
 
   useEffect(() => {
-    setLanguage(getInitialLanguage());
+    document.documentElement.setAttribute('data-cinema', CINEMA_PRESET);
   }, []);
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = language;
-      document.documentElement.setAttribute('data-cinema', CINEMA_PRESET);
-    }
-
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, language);
-    }
-  }, [language]);
 
   return (
     <div id="top" className="bg-background text-foreground antialiased">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ArrowRight, TrendingUp, Clock, DollarSign } from 'lucide-react'
+import Image from 'next/image'
 
 const caseStudies = [
   {
@@ -76,10 +77,12 @@ export default function CaseStudies() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Case Study Image */}
           <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-            <img
+            <Image
               src={caseStudies[activeIndex].image}
               alt={caseStudies[activeIndex].title}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437] via-transparent to-transparent" />
           </div>

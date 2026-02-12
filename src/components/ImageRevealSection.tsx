@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import Image from 'next/image';
 
 interface ImageRevealSectionProps {
   image1: string;
@@ -48,14 +49,11 @@ export function ImageRevealSection({
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         {/* Base Layer (Image 1) */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={image1}
             alt={title1}
             className="w-full h-full object-cover brightness-[0.85]"
-            loading="lazy"
-            decoding="async"
-            width={1536}
-            height={1024}
+            fill
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-primary/25" />
@@ -87,14 +85,11 @@ export function ImageRevealSection({
             willChange: 'clip-path'
           }}
         >
-          <img
+          <Image
             src={image2}
             alt={title2}
             className="w-full h-full object-cover brightness-[0.85]"
-            loading="lazy"
-            decoding="async"
-            width={1536}
-            height={1024}
+            fill
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-primary/25" />

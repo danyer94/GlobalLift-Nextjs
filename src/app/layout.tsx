@@ -1,7 +1,22 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { JetBrains_Mono, Onest } from 'next/font/google'
 import '../../styles/globals.css'
 import { siteContent } from '../content/siteContent'
+
+const onest = Onest({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-onest',
+  display: 'swap',
+})
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: siteContent.es.seo.title,
@@ -14,21 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Archivo+SemiExpanded:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Onest:wght@300;400;500;600;700;800&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo+SemiExpanded:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Onest:wght@300;400;500;600;700;800&display=swap"
-        />
-      </head>
-      <body>
+    <html lang="es" className="scroll-smooth">
+      <body className={`${onest.variable} ${jetBrainsMono.variable}`}>
         {children}
       </body>
     </html>

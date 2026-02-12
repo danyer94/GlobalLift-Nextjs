@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { HeroCopy } from '../content/siteContent';
@@ -93,17 +94,15 @@ export function Hero({ copy }: HeroProps) {
             } as CSSProperties;
 
             return (
-              <img
+              <Image
                 key={image.src}
                 src={image.src}
                 alt=""
                 className="hero-bg-image"
                 style={slideStyle}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                width={1536}
-                height={1024}
+                fill
                 sizes="100vw"
+                priority={i === 0}
               />
             );
           })}
