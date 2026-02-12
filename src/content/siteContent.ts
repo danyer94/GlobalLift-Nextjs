@@ -1,4 +1,4 @@
-﻿import { withBasePath } from '../utils/basePath';
+﻿import { withBasePath } from "../utils/basePath";
 
 export type Language = "es" | "en";
 
@@ -134,7 +134,7 @@ export type SiteContent = {
   contact: ContactCopy;
 };
 
-export const brandLogoSrc = withBasePath('/logo/Global-Lift.png');
+export const brandLogoSrc = withBasePath("/logo/Global-Lift.png");
 
 export const siteContent: Record<Language, SiteContent> = {
   es: {
@@ -183,7 +183,7 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     about: {
       label: "NOSOTROS",
-      heading: "Nosotros",
+      heading: "NOSOTROS",
       paragraphs: [
         "Global Lift SRL es una empresa dominicana dedicada a la importación, exportación, logística y comercialización de bienes y servicios, con un enfoque multisectorial y una visión estratégica orientada al comercio nacional e internacional. Actuamos como puente entre vendedores en el extranjero y oportunidades de abastecimiento en República Dominicana, facilitando conexiones comerciales entre mercados, proveedores y clientes.",
         "Operamos bajo altos estándares de cumplimiento legal, eficiencia operativa y transparencia. Nuestro enfoque se centra en optimizar operaciones y habilitar relaciones comerciales sólidas, con una gestión orientada al crecimiento sostenible y a la creación de valor a largo plazo.",
@@ -382,7 +382,7 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     about: {
       label: "ABOUT US",
-      heading: "About Us",
+      heading: "ABOUT US",
       paragraphs: [
         "Global Lift SRL is a Dominican company focused on importing, exporting, logistics, and the commercialization of goods and services—with a multi-sector approach and a strategic view of both national and international trade. We serve as a bridge between overseas sellers and sourcing opportunities in the Dominican Republic, facilitating commercial connections among markets, suppliers, and clients.",
         "We operate with strong standards for legal compliance, operational efficiency, and transparency. Our focus is to optimize operations and build lasting commercial relationships through structured processes, ethical business practices, and sustainability-oriented growth.",
@@ -536,4 +536,3 @@ export const siteContent: Record<Language, SiteContent> = {
     },
   },
 };
-

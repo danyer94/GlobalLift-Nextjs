@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { Star, Quote } from 'lucide-react'
+import Image from 'next/image'
 
 const testimonials = [
   {
@@ -91,10 +92,13 @@ export default function ClientPortfolio() {
               <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-                    <img
+                    <Image
                       src={testimonials[activeTestimonial].image}
                       alt={testimonials[activeTestimonial].name}
                       className="w-full h-full object-cover"
+                      width={96}
+                      height={96}
+                      sizes="96px"
                     />
                   </div>
                   <div>
@@ -143,11 +147,14 @@ export default function ClientPortfolio() {
               className="bg-white/5 backdrop-blur-sm rounded-lg p-6 flex items-center justify-center
                 transform transition-transform duration-300 hover:scale-105"
             >
-              <img
+              <Image
                 src={company.image}
                 alt={company.name}
                 className="w-full h-12 object-contain filter grayscale hover:grayscale-0 
                   transition-all duration-300"
+                width={240}
+                height={48}
+                sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 50vw"
               />
             </div>
           ))}

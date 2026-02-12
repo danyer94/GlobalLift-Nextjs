@@ -6,6 +6,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion';
+import Image from 'next/image';
 import { useRef } from 'react';
 import { withBasePath } from '../utils/basePath';
 import { useScrollProgress } from '../utils/scroll';
@@ -67,14 +68,13 @@ export function Boat({ className }: BoatProps) {
       aria-hidden="true"
     >
       <div className="boat-shell">
-        <img
+        <Image
           src={boatPhotoSrc}
           alt=""
           className="boat-photo"
-          loading="lazy"
-          decoding="async"
           width={640}
           height={360}
+          sizes="(min-width: 768px) 136px, 0px"
         />
       </div>
     </motion.div>

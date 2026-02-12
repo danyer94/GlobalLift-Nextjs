@@ -121,7 +121,7 @@
     position: relative;
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
-    font-family: "Onest", system-ui, sans-serif;
+    font-family: var(--font-onest), system-ui, sans-serif;
     line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: rgb(var(--ring) / 0.22);
@@ -132,7 +132,7 @@
   h2,
   h3,
   h4 {
-    font-family: "Archivo SemiExpanded", "Onest", system-ui, sans-serif;
+    font-family: var(--font-onest), system-ui, sans-serif;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
@@ -212,7 +212,7 @@
 
   .badge {
     @apply inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-primary shadow-soft;
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
   }
 
   .panel {
@@ -433,7 +433,7 @@
   }
 
   .service-route-index {
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -548,7 +548,7 @@
   }
 
   .statement-panel-label {
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -616,7 +616,7 @@
   }
 
   .value-thread-index {
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.69rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -750,7 +750,7 @@
     border: 1px solid rgb(var(--secondary) / 0.3);
     background: rgb(var(--secondary) / 0.12);
     color: rgb(var(--primary));
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -1027,10 +1027,16 @@
 }
 
 .hero-slogan--archivo {
-  font-family: "Archivo SemiExpanded", "Onest", system-ui, sans-serif;
+  font-family: var(--font-onest), system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.016em;
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-onest), system-ui, sans-serif;
+  }
 }
 
 @supports (backdrop-filter: blur(12px)) {

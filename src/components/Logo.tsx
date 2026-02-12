@@ -1,4 +1,4 @@
-
+import Image from 'next/image';
 import { withBasePath } from '../utils/basePath';
 
 export function Logo({ className = '', iconOnly = false }: { className?: string; iconOnly?: boolean }) {
@@ -7,13 +7,12 @@ export function Logo({ className = '', iconOnly = false }: { className?: string;
   return (
     <div className={`${baseClasses} ${className}`}>
       <span className="logo-plate">
-        <img
+        <Image
           src={withBasePath('/logo/Global-Lift.ico')}
           alt="Global Lift SRL"
           className="h-9 w-auto"
           width={90}
           height={90}
-          decoding="async"
         />
       </span>
       {!iconOnly && (

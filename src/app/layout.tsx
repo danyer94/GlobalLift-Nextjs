@@ -1,10 +1,26 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { JetBrains_Mono, Onest } from 'next/font/google'
 import '../../styles/globals.css'
+import { siteContent } from '../content/siteContent'
+
+const onest = Onest({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-onest',
+  display: 'swap',
+})
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'Global Trade Excellence | Premium Import/Export Solutions',
-  description: 'Your trusted partner in international trade and logistics. Offering premium import/export solutions with a global network and decades of expertise.',
+  title: siteContent.es.seo.title,
+  description: siteContent.es.seo.description,
 }
 
 export default function RootLayout({
@@ -13,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="antialiased">
+    <html lang="es" className="scroll-smooth">
+      <body className={`${onest.variable} ${jetBrainsMono.variable}`}>
         {children}
       </body>
     </html>
