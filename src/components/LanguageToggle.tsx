@@ -67,11 +67,11 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       type="button"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      className={`inline-flex h-12 min-w-[10.5rem] items-center gap-3 rounded-full border-[3px] bg-white/95 pl-2 pr-4 shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(15,23,42,0.17)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
+      className={`inline-flex h-12 items-center gap-3 rounded-full border-[3px] pl-2 pr-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
       aria-label={activeOption.buttonLabel}
       title={activeOption.buttonLabel}
     >
-      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-[0_6px_14px_rgba(15,23,42,0.16)]">
+      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
         <Image
           src={activeOption.flagSrc}
           alt={activeOption.flagAlt}
@@ -80,7 +80,7 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
           className="h-full w-full object-cover"
         />
       </span>
-      <span className="font-display text-sm font-medium leading-none tracking-tight text-[#00308f] md:text-sm">
+      <span className="font-display text-sm font-medium leading-none tracking-tight text-muted-foreground transition-all duration-300 md:text-sm">
         {activeOption.label}
       </span>
     </button>
