@@ -6,7 +6,7 @@ export default function NotFound() {
         <p className="text-muted-foreground">
           La ruta que buscas no existe o fue movida.
         </p>
-        <a href="#top" className="btn btn-contact inline-flex">
+        <a href="/" className="btn btn-contact inline-flex">
           Volver al inicio
         </a>
       </div>
