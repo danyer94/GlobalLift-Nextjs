@@ -211,7 +211,7 @@
   }
 
   .badge {
-    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-primary shadow-soft;
+    @apply inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-secondary shadow-soft;
     font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
   }
 
