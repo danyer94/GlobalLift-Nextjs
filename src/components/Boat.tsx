@@ -7,7 +7,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { withBasePath } from '../utils/basePath';
 import { useScrollProgress } from '../utils/scroll';
 
@@ -16,10 +16,33 @@ type BoatProps = {
 };
 
 export function Boat({ className }: BoatProps) {
+  const BOAT_FALLBACK_HEIGHT = 136;
+  const TRACK_PADDING = 6;
+  const SCROLL_GAP = 4;
+
   const scrollYProgress = useScrollProgress();
   const reduceMotion = useReducedMotion();
-  const travel = useTransform(scrollYProgress, [0, 1], [24, 520]);
-  const y = useSpring(travel, { stiffness: 100, damping: 30, mass: 1 });
+  const boatRef = useRef<HTMLDivElement | null>(null);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const [boatHeight, setBoatHeight] = useState(BOAT_FALLBACK_HEIGHT);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      setViewportHeight(window.innerHeight);
+      setScrollbarWidth(Math.max(0, window.innerWidth - document.documentElement.clientWidth));
+      const measuredBoatHeight = boatRef.current?.getBoundingClientRect().height ?? BOAT_FALLBACK_HEIGHT;
+      setBoatHeight(Math.max(1, Math.round(measuredBoatHeight)));
+    };
+
+    measure();
+    window.addEventListener('resize', measure);
+
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  const laneEnd = Math.max(TRACK_PADDING, viewportHeight - boatHeight - TRACK_PADDING);
+  const travel = useTransform(scrollYProgress, [0, 1], [TRACK_PADDING, laneEnd]);
   const heading = useMotionValue(90);
   const headingRotation = useSpring(heading, {
     stiffness: 220,
@@ -43,9 +66,11 @@ export function Boat({ className }: BoatProps) {
 
   return (
     <motion.div
-      className={`boat fixed right-6 top-[12vh] z-40 hidden md:block pointer-events-none ${className ?? ''}`}
+      ref={boatRef}
+      className={`boat fixed top-0 z-30 hidden xl:block pointer-events-none ${className ?? ''}`}
       style={{
-        y: reduceMotion ? 0 : y,
+        right: scrollbarWidth + SCROLL_GAP,
+        y: reduceMotion ? TRACK_PADDING : travel,
         rotate: reduceMotion ? heading.get() : headingRotation,
         willChange: 'transform',
       }}
@@ -74,7 +99,7 @@ export function Boat({ className }: BoatProps) {
           className="boat-photo"
           width={640}
           height={360}
-          sizes="(min-width: 768px) 136px, 0px"
+          sizes="(min-width: 1280px) 136px, 0px"
         />
       </div>
     </motion.div>
