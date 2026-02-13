@@ -17,8 +17,8 @@ type BoatProps = {
 
 export function Boat({ className }: BoatProps) {
   const BOAT_FALLBACK_HEIGHT = 136;
-  const TRACK_PADDING = 6;
-  const SCROLL_GAP = 4;
+  const TRACK_PADDING = 1;
+  const SCROLL_GAP = -50
 
   const scrollYProgress = useScrollProgress();
   const reduceMotion = useReducedMotion();
