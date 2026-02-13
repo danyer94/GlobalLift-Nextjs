@@ -38,7 +38,7 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Ship className="h-4 w-4 text-secondary" aria-hidden="true" />
+                <Ship className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.exportTitle}</p>
               </div>
             </div>
@@ -52,7 +52,7 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Package className="h-4 w-4 text-accent" aria-hidden="true" />
+                <Package className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.supplyTitle}</p>
               </div>
             </div>

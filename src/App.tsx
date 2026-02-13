@@ -46,7 +46,7 @@ function App() {
 
       <ScrollProvider>
         <Boat />
-        <main id="main-content">
+        <main id="main-content" className="xl:pr-3 2xl:pr-4">
           <Hero copy={content.hero} />
           <About copy={content.about} values={content.values} commitment={content.commitment} />
           <ImageRevealSection

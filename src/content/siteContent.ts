@@ -182,7 +182,7 @@ export const siteContent: Record<Language, SiteContent> = {
         "Conectamos su negocio con proveedores globales de confianza para asegurar su cadena de suministro.",
     },
     about: {
-      label: "NOSOTROS",
+      label: "QUIÉNES SOMOS",
       heading: "NOSOTROS",
       paragraphs: [
         "Global Lift SRL es una empresa dominicana dedicada a la importación, exportación, logística y comercialización de bienes y servicios, con un enfoque multisectorial y una visión estratégica orientada al comercio nacional e internacional. Actuamos como puente entre vendedores en el extranjero y oportunidades de abastecimiento en República Dominicana, facilitando conexiones comerciales entre mercados, proveedores y clientes.",
@@ -192,7 +192,7 @@ export const siteContent: Record<Language, SiteContent> = {
       oneLine: "Conectamos comercio internacional con ejecución local en RD.",
     },
     services: {
-      label: "SERVICIOS",
+      label: "QUÉ HACEMOS",
       heading: "SERVICIOS",
       lead: "Diseñamos soluciones a la medida para importar, exportar, coordinar logística y sostener operaciones comerciales de forma continua.",
       items: [
@@ -206,7 +206,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     products: {
-      label: "PRODUCTOS",
+      label: "QUÉ OFRECEMOS",
       heading: "PRODUCTOS",
       exportTitle: "Exportación",
       supplyTitle: "Abastecimiento",
@@ -242,7 +242,7 @@ export const siteContent: Record<Language, SiteContent> = {
       },
     },
     process: {
-      label: "PROCESO",
+      label: "CÓMO TRABAJAMOS",
       heading: "PROCESO",
       steps: [
         "Descubrimiento — Entendemos tu necesidad comercial y el flujo de la operación.",
@@ -252,7 +252,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     why: {
-      label: "DIFERENCIALES",
+      label: "POR QUÉ ELEGIRNOS",
       heading: "DIFERENCIALES",
       items: [
         "Cumplimiento legal — Operamos con respeto a las leyes y estándares de cumplimiento.",
@@ -265,7 +265,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     values: {
-      label: "VALORES",
+      label: "EN QUÉ CREEMOS",
       heading: "VALORES",
       visionLabel: "VISIÓN",
       visionText:
@@ -310,12 +310,12 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     commitment: {
-      label: "COMPROMISO",
+      label: "NUESTRO COMPROMISO",
       heading: "COMPROMISO",
       text: "Nuestro compromiso es responder con agilidad, cumplimiento y ejecución clara para cada operación comercial, cuidando resultados sostenibles para clientes y aliados.",
     },
     contact: {
-      label: "CONTACTO",
+      label: "HABLEMOS",
       heading: "CONTACTO",
       description:
         "Conversemos sobre tu operación. Exportamos variedad de frutas, verduras y carbón, y también gestionamos productos que no aparecen en la web. Cuéntanos tu necesidad y trabajemos una ruta clara, responsable y orientada a resultados.",
@@ -381,7 +381,7 @@ export const siteContent: Record<Language, SiteContent> = {
         "Connecting your business with trusted global suppliers to secure your supply chain.",
     },
     about: {
-      label: "ABOUT US",
+      label: "WHO WE ARE",
       heading: "ABOUT US",
       paragraphs: [
         "Global Lift SRL is a Dominican company focused on importing, exporting, logistics, and the commercialization of goods and services—with a multi-sector approach and a strategic view of both national and international trade. We serve as a bridge between overseas sellers and sourcing opportunities in the Dominican Republic, facilitating commercial connections among markets, suppliers, and clients.",
@@ -392,7 +392,7 @@ export const siteContent: Record<Language, SiteContent> = {
         "International trade connectivity with local execution in the DR.",
     },
     services: {
-      label: "SERVICES",
+      label: "WHAT WE DO",
       heading: "SERVICES",
       lead: "We build tailored solutions to import, export, coordinate logistics, and sustain commercial operations end-to-end.",
       items: [
@@ -406,7 +406,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     products: {
-      label: "PRODUCTS",
+      label: "WHAT WE OFFER",
       heading: "PRODUCTS",
       exportTitle: "Export",
       supplyTitle: "Sourcing",
@@ -442,7 +442,7 @@ export const siteContent: Record<Language, SiteContent> = {
       },
     },
     process: {
-      label: "PROCESS",
+      label: "HOW WE WORK",
       heading: "PROCESS",
       steps: [
         "Discovery — We understand your commercial need and operational flow.",
@@ -452,7 +452,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     why: {
-      label: "WHY",
+      label: "WHY CHOOSE US",
       heading: "WHY",
       items: [
         "Legal compliance — We operate with respect for laws and compliance standards.",
@@ -465,7 +465,7 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     values: {
-      label: "VALUES",
+      label: "WHAT WE STAND FOR",
       heading: "VALUES",
       visionLabel: "VISION",
       visionText:
@@ -510,12 +510,12 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     commitment: {
-      label: "COMMITMENT",
+      label: "OUR COMMITMENT",
       heading: "COMMITMENT",
       text: "Our commitment is to deliver agile response, compliance, and clear execution in every commercial operation while supporting sustainable outcomes for clients and partners.",
     },
     contact: {
-      label: "CONTACT",
+      label: "LET’S TALK",
       heading: "CONTACT",
       description:
         "Let’s talk about your operation. We export a broad mix of fruits, vegetables, and coal, and we also source products beyond what is shown on the website. Tell us your need and we’ll define a clear, responsible, results-driven path.",

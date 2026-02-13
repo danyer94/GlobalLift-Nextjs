@@ -211,7 +211,7 @@
   }
 
   .badge {
-    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-primary shadow-soft;
+    @apply inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-secondary shadow-soft;
     font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
   }
 
@@ -822,9 +822,7 @@
   opacity: 0.3;
 }
 
-.boat {
-  mix-blend-mode: multiply;
-}
+
 
 .boat-shell {
   width: 136px;
@@ -839,7 +837,7 @@
   object-fit: contain;
   transform: rotate(180deg) scale(0.98);
   transform-origin: center;
-  filter: saturate(1.08) contrast(1.04)
+  filter: saturate(1.08) contrast(1.04) drop-shadow(0 0 15px rgba(255, 255, 255, 0.4))
     drop-shadow(0 10px 14px rgb(var(--primary) / 0.28));
 }
 

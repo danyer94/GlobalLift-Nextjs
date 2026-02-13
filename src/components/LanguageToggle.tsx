@@ -1,65 +1,89 @@
-﻿import type { Language } from '../content/siteContent';
+import Image from 'next/image';
+import type { KeyboardEvent } from 'react';
+import type { Language } from '../content/siteContent';
+import { withBasePath } from '../utils/basePath';
 
 type LanguageToggleProps = {
   value: Language;
   onChange: (value: Language) => void;
 };
 
-const options: Array<{ value: Language; short: string }> = [
-  { value: 'es', short: 'ES' },
-  { value: 'en', short: 'EN' },
-];
+type LanguageOption = {
+  value: Language;
+  label: string;
+  flagAlt: string;
+  flagSrc: string;
+  borderClass: string;
+  buttonLabel: string;
+};
+
+const LANGUAGE_ORDER: Language[] = ['es', 'en'];
+
+const LANGUAGE_OPTIONS: Record<Language, LanguageOption> = {
+  es: {
+    value: 'es',
+    label: 'Español',
+    flagAlt: 'Bandera de España',
+    flagSrc: withBasePath('/icons/flags/es.svg'),
+    borderClass: 'border-[#f47a20]',
+    buttonLabel: 'Switch language to English',
+  },
+  en: {
+    value: 'en',
+    label: 'English',
+    flagAlt: 'United States flag',
+    flagSrc: withBasePath('/icons/flags/us.svg'),
+    borderClass: 'border-[#27486b]',
+    buttonLabel: 'Cambiar idioma a español',
+  },
+};
+
+function getNextLanguage(current: Language): Language {
+  const currentIndex = LANGUAGE_ORDER.indexOf(current);
+  return LANGUAGE_ORDER[(currentIndex + 1) % LANGUAGE_ORDER.length];
+}
 
 export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
-  const indicatorClass = value === 'en' ? 'translate-x-full' : 'translate-x-0';
-  const orderedValues: Language[] = ['es', 'en'];
+  const activeOption = LANGUAGE_OPTIONS[value];
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleToggle = () => {
+    onChange(getNextLanguage(value));
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
       return;
     }
 
     event.preventDefault();
-    const currentIndex = orderedValues.indexOf(value);
-    const nextIndex =
-      event.key === 'ArrowRight'
-        ? Math.min(currentIndex + 1, orderedValues.length - 1)
-        : Math.max(currentIndex - 1, 0);
-    onChange(orderedValues[nextIndex]);
+    const step = event.key === 'ArrowRight' ? 1 : -1;
+    const currentIndex = LANGUAGE_ORDER.indexOf(value);
+    const nextIndex = (currentIndex + step + LANGUAGE_ORDER.length) % LANGUAGE_ORDER.length;
+    onChange(LANGUAGE_ORDER[nextIndex]);
   };
 
   return (
-    <div
-      className="relative grid w-[6.125rem] shrink-0 grid-cols-2 items-center overflow-hidden rounded-full border border-border bg-graphite/70 p-1 text-xs font-semibold shadow-soft backdrop-blur"
-      role="radiogroup"
-      aria-label="Language selector"
+    <button
+      type="button"
+      onClick={handleToggle}
       onKeyDown={handleKeyDown}
+      className={`inline-flex h-12 items-center gap-3 rounded-full border-[3px] pl-2 pr-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
+      aria-pressed={value === 'en'}
+      title={activeOption.buttonLabel}
     >
-      <span
-        className={`pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full border border-border bg-card shadow-soft transition-transform duration-300 ${indicatorClass}`}
-        aria-hidden="true"
-      />
-      {options.map((option) => {
-        const isActive = option.value === value;
-
-        return (
-          <button
-            key={option.value}
-            type="button"
-            role="radio"
-            aria-checked={isActive}
-            onClick={() => onChange(option.value)}
-            className={`relative z-10 inline-flex items-center justify-center gap-2 rounded-full px-3 py-1.5 transition-colors ${
-              isActive
-                ? 'text-foreground'
-                : 'text-muted-foreground hover:text-foreground focus-visible:text-foreground'
-            }`}
-            aria-label={option.value === 'es' ? 'Switch to Spanish' : 'Switch to English'}
-          >
-            <span className="text-[0.6rem] uppercase tracking-[0.32em]">{option.short}</span>
-          </button>
-        );
-      })}
-    </div>
+      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
+        <Image
+          src={activeOption.flagSrc}
+          alt={activeOption.flagAlt}
+          width={36}
+          height={36}
+          className="h-full w-full object-cover"
+        />
+      </span>
+      <span className="font-display text-sm font-medium leading-none tracking-tight text-muted-foreground transition-all duration-300 md:text-sm">
+        {activeOption.label}
+      </span>
+      <span className="sr-only">{`${activeOption.label}. ${activeOption.buttonLabel}`}</span>
+    </button>
   );
 }

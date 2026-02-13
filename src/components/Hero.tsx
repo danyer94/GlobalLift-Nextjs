@@ -130,15 +130,18 @@ export function Hero({ copy }: HeroProps) {
             </a>
           </div>
           <p className="text-sm text-primary-foreground/84 md:text-base">{copy.micro}</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {copy.trustCues.map((item) => (
-              <span
-                key={item}
-                className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/28 bg-primary-foreground/10 px-4 py-1.5 text-xs font-semibold text-primary-foreground/90"
-              >
-                {item}
-              </span>
-            ))}
+          <div className="mx-auto w-full max-w-3xl border-t border-primary-foreground/24 pt-4">
+            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-primary-foreground/90 md:text-[0.95rem]">
+              {copy.trustCues.map((item) => (
+                <li key={item} className="inline-flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="h-1.5 w-1.5 rounded-full bg-secondary shadow-[0_0_0_4px_rgba(6,182,212,0.22)]"
+                  />
+                  <span className="font-medium tracking-[0.01em]">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
