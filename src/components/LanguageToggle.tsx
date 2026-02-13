@@ -68,7 +68,7 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
       className={`inline-flex h-12 items-center gap-3 rounded-full border-[3px] pl-2 pr-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
-      aria-label={activeOption.buttonLabel}
+      aria-pressed={value === 'en'}
       title={activeOption.buttonLabel}
     >
       <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
@@ -83,6 +83,7 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       <span className="font-display text-sm font-medium leading-none tracking-tight text-muted-foreground transition-all duration-300 md:text-sm">
         {activeOption.label}
       </span>
+      <span className="sr-only">{`${activeOption.label}. ${activeOption.buttonLabel}`}</span>
     </button>
   );
 }
