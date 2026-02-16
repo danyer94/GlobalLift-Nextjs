@@ -31,8 +31,6 @@ export function Process({ copy }: ProcessProps) {
   const stageStyle = {
     '--process-stage-image': `url(${withBasePath('/images/generated/hero-cinematic-port.webp')})`,
   } as CSSProperties;
-  const leadStep = splitItem(copy.steps[0] ?? copy.heading).title;
-
   return (
     <MotionSection
       id="process"

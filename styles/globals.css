@@ -259,7 +259,7 @@
   }
 
   .section-title {
-    @apply text-3xl font-semibold leading-tight text-foreground md:text-4xl;
+    @apply text-xl font-semibold leading-tight text-foreground md:text-2xl;
   }
 
   .section-lead {
