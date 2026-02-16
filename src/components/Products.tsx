@@ -59,7 +59,7 @@ export function Products({ copy }: ProductsProps) {
             <p className="text-base font-semibold text-foreground md:text-lg">{copy.openCatalogHighlight}</p>
           </div>
         </div>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-12 md:mt-14 flex justify-center">
           <a href="#contact" className="btn btn-contact">
             {copy.cta}
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

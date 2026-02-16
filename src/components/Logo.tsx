@@ -1,14 +1,21 @@
-import Image from 'next/image';
-import { withBasePath } from '../utils/basePath';
+import Image from "next/image";
+import { withBasePath } from "../utils/basePath";
 
-export function Logo({ className = '', iconOnly = false }: { className?: string; iconOnly?: boolean }) {
-  const baseClasses = "flex items-center gap-1 transition-opacity hover:opacity-90";
-  
+export function Logo({
+  className = "",
+  iconOnly = false,
+}: {
+  className?: string;
+  iconOnly?: boolean;
+}) {
+  const baseClasses =
+    "flex items-center gap-2 transition-opacity hover:opacity-90";
+
   return (
     <div className={`${baseClasses} ${className}`}>
       <span>
         <Image
-          src={withBasePath('/logo/logo-3D-removebg.png')}
+          src={withBasePath("/logo/logo-3D-removebg.png")}
           alt="Global Lift"
           className="h-9 w-auto"
           width={90}
