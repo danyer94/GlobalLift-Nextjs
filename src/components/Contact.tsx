@@ -57,7 +57,6 @@ export function Contact({ copy, trustCues }: ContactProps) {
       <div className="container">
         <div className="grid gap-12 lg:grid-cols-[1fr,1.1fr]">
           <div className="space-y-6">
-            <p className="badge">{copy.label}</p>
             <h2 className="section-title font-display">{copy.heading}</h2>
             <p className="section-lead">{copy.description}</p>
             <div className="panel-solid p-6">

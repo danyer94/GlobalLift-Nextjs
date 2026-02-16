@@ -1,5 +1,5 @@
-﻿import type { NavItem } from '../content/siteContent';
-import { Logo } from './Logo';
+﻿import type { NavItem } from "../content/siteContent";
+import { Logo } from "./Logo";
 
 type FooterProps = {
   items: NavItem[];
@@ -23,7 +23,7 @@ export function Footer({ items, note }: FooterProps) {
                 key={item.label}
                 href={item.href}
                 className={`transition-colors hover:text-secondary ${
-                  item.href === '#contact' ? 'font-semibold text-primary' : ''
+                  item.href === "#contact" ? "font-semibold text-primary" : ""
                 }`}
               >
                 {item.label}
@@ -32,7 +32,9 @@ export function Footer({ items, note }: FooterProps) {
           </div>
         </div>
         <div className="mt-10 h-px bg-border/70" aria-hidden="true" />
-        <p className="mt-6 text-xs text-muted-foreground">© {new Date().getFullYear()} Global Lift SRL</p>
+        <p className="mt-6 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Global Lift
+        </p>
       </div>
     </footer>
   );

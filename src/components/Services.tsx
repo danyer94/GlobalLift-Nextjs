@@ -53,7 +53,6 @@ export function Services({ copy }: ServicesProps) {
     >
       <div className="container">
         <div>
-          <p className="badge">{copy.label}</p>
           <h2 className="section-title mt-6 font-display">{copy.heading}</h2>
           <p className="section-lead mt-6 max-w-3xl">{copy.lead}</p>
         </div>

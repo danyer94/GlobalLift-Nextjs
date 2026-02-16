@@ -8,8 +8,8 @@ export function Logo({ className = '', iconOnly = false }: { className?: string;
     <div className={`${baseClasses} ${className}`}>
       <span>
         <Image
-          src={withBasePath('/logo/Global-Lift-icon-removebg.png')}
-          alt="Global Lift SRL"
+          src={withBasePath('/logo/logo-3D-removebg.png')}
+          alt="Global Lift"
           className="h-9 w-auto"
           width={90}
           height={90}
@@ -17,7 +17,7 @@ export function Logo({ className = '', iconOnly = false }: { className?: string;
       </span>
       {!iconOnly && (
         <span className="text-sm tracking-tight text-foreground md:text-lg font-display">
-          Global <span className="italic font-bold text-secondary">Lift</span> <span className="font-medium text-muted-foreground ml-1">SRL</span>
+          Global <span className="italic font-bold text-secondary">Lift</span>
         </span>
       )}
     </div>

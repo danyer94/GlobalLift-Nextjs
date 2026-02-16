@@ -27,7 +27,6 @@ export function About({ copy, values, commitment }: AboutProps) {
       <div className="container">
         <div className="grid gap-12 lg:grid-cols-[1.1fr,0.9fr] lg:items-start">
           <div className="space-y-6">
-            <p className="badge">{copy.label}</p>
             <h2 className="section-title font-display">{copy.heading}</h2>
             <div className="space-y-4 section-lead max-w-2xl">
               {copy.paragraphs.map((paragraph) => (
@@ -52,7 +51,6 @@ export function About({ copy, values, commitment }: AboutProps) {
                 aria-hidden="true"
               />
               <div className="relative space-y-6">
-                <p className="badge">{commitment.label}</p>
                 <h3 className="section-title font-display">{commitment.heading}</h3>
                 <p className="text-sm md:text-base text-muted-foreground">{commitment.text}</p>
               </div>
@@ -62,7 +60,6 @@ export function About({ copy, values, commitment }: AboutProps) {
 
         <div id="nosotros-valores" className="mt-16">
           <div>
-            <p className="badge">{values.label}</p>
             <h3 className="section-title font-display mt-6">{values.heading}</h3>
           </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-2">

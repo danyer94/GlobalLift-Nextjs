@@ -42,7 +42,6 @@ export function Why({ copy }: WhyProps) {
     >
       <div className="container">
         <div>
-          <p className="badge badge-contrast">{copy.label}</p>
           <h2 className="section-title font-display mt-6 !text-white">{copy.heading}</h2>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
