@@ -9,7 +9,7 @@ export function Logo({
   iconOnly?: boolean;
 }) {
   const baseClasses =
-    "flex items-center gap-2 transition-opacity hover:opacity-90";
+    "flex items-center gap-0 transition-opacity hover:opacity-90";
 
   return (
     <div className={`${baseClasses} ${className}`}>
@@ -17,13 +17,13 @@ export function Logo({
         <Image
           src={withBasePath("/logo/logo-3D-removebg.png")}
           alt="Global Lift"
-          className="h-9 w-auto"
+          className="h-16 w-auto"
           width={90}
           height={90}
         />
       </span>
       {!iconOnly && (
-        <span className="text-sm tracking-tight text-foreground md:text-lg font-display">
+        <span className="text-sm tracking-tight text-foreground md:text-lg font-display -m-4">
           Global <span className="italic font-bold text-secondary">Lift</span>
         </span>
       )}
