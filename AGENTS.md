@@ -77,6 +77,8 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - Mantener la lista de valores individuales (value-thread) en su estilo de hilo original, sin liquid glass.
 - Mantener estos boxes sin degradados de fondo: usar superficie translucida, borde suave y blur (backdrop-filter) para consistencia visual.
 - Evitar crear estilos inline duplicados cuando exista una utilidad global o clase reutilizable para liquid glass.
+- Aplicar el mismo lenguaje liquid glass al selector de idioma (`LanguageToggle`) para mantener consistencia en componentes de control visibles en el header.
+
 ## 6) Protocolo de auto-actualizacion de AGENTS.md (OBLIGATORIO)
 
 Regla dura: si una tarea cambia algo del proyecto que afecte reglas, estructura, comandos o decisiones documentadas aqui, el agente DEBE actualizar `AGENTS.md` en la misma tarea.
@@ -137,3 +139,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-02-12: Reestructuracion completa del archivo; se anadieron flujo operativo, protocolo de auto-actualizacion y registro formal de errores resueltos.
 - 2026-02-17: Se agrego la convencion visual de boxes Liquid Glass para secciones de contenido institucional y proceso.
 - 2026-02-17: Se ajusto el alcance de Liquid Glass: en Valores solo aplica a Vision y Mision; la lista value-thread queda en estilo original.
+- 2026-02-17: Se aplico Liquid Glass al selector de idioma en el header (`LanguageToggle`) con estilo consistente al resto de superficies glass.

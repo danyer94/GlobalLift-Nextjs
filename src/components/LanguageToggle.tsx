@@ -66,13 +66,13 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       type="button"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      className="relative inline-flex h-12 w-[9rem] items-center rounded-full border border-border/70 bg-muted/55 p-1 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="language-glass-toggle"
       aria-pressed={isEnglish}
       title={activeOption.buttonLabel}
     >
       <span
         aria-hidden="true"
-        className={`absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full border border-border/60 bg-background shadow-[0_6px_18px_rgba(15,23,42,0.16)] transition-transform duration-300 ease-out ${
+        className={`language-glass-toggle-thumb ${
           isEnglish ? "translate-x-full" : "translate-x-0"
         }`}
       />
@@ -85,10 +85,10 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
           return (
             <span
               key={option.value}
-              className={`inline-flex items-center justify-center gap-1.5 transition-all duration-300 ${
+              className={`language-glass-toggle-option ${
                 isActive
-                  ? "scale-100 text-primary"
-                  : "scale-[0.9] text-muted-foreground"
+                  ? "language-glass-toggle-option--active"
+                  : "language-glass-toggle-option--inactive"
               }`}
             >
               <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
