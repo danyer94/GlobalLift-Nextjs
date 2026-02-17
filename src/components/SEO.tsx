@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import type { Language } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
@@ -53,6 +54,13 @@ export function SEO({
   const finalDescription = description || seo.description;
   const finalKeywords = keywords || seo.keywords;
   const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+  // Update document.title when language changes (for App Router compatibility)
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = finalTitle;
+    }
+  }, [finalTitle]);
 
   const schemaGraph = {
     '@context': 'https://schema.org',

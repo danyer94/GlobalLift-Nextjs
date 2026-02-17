@@ -2,7 +2,6 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { JetBrains_Mono, Onest } from 'next/font/google'
 import '../../styles/globals.css'
-import { siteContent } from '../content/siteContent'
 
 const onest = Onest({
   subsets: ['latin'],
@@ -19,8 +18,18 @@ const jetBrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: siteContent.es.seo.title,
-  description: siteContent.es.seo.description,
+  icons: {
+    icon: [
+      {
+        url: '/logo/Global-Lift.ico',
+      },
+      {
+        url: '/logo/Global-Lift.png',
+        type: 'image/png',
+        sizes: '512x512',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
