@@ -50,7 +50,7 @@ export function Why({ copy }: WhyProps) {
             const Icon = icons[index % icons.length];
 
             return (
-              <div key={item} className="tile group border-white/10">
+              <div key={item} className="tile why-glass-card group">
                 <span className="icon-dot">
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </span>

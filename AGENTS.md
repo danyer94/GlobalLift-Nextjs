@@ -1,4 +1,4 @@
-# GlobalLift Next.js - AGENTS.md
+﻿# GlobalLift Next.js - AGENTS.md
 
 Guia operativa para cualquier agente de IA que trabaje en este repositorio.
 Este archivo es una fuente de verdad viva: si cambia el proyecto y este documento queda desactualizado, la tarea NO esta completa.
@@ -70,6 +70,13 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
    - Cambios de build/dependencias/ruteo mayor: sumar `npm run build`.
 4. Reportar que se cambio, que se verifico y cualquier riesgo residual.
 
+### 5.1 Convencion visual para boxes (Liquid Glass)
+
+- Aplicar estilo liquid glass a los boxes de Nosotros, Compromiso, Process y Por que elegirnos.
+- En Valores, aplicar liquid glass solo a los boxes de Vision y Mision.
+- Mantener la lista de valores individuales (value-thread) en su estilo de hilo original, sin liquid glass.
+- Mantener estos boxes sin degradados de fondo: usar superficie translucida, borde suave y blur (backdrop-filter) para consistencia visual.
+- Evitar crear estilos inline duplicados cuando exista una utilidad global o clase reutilizable para liquid glass.
 ## 6) Protocolo de auto-actualizacion de AGENTS.md (OBLIGATORIO)
 
 Regla dura: si una tarea cambia algo del proyecto que afecte reglas, estructura, comandos o decisiones documentadas aqui, el agente DEBE actualizar `AGENTS.md` en la misma tarea.
@@ -128,3 +135,5 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 ## 8) Historial de sincronizacion de AGENTS.md
 
 - 2026-02-12: Reestructuracion completa del archivo; se anadieron flujo operativo, protocolo de auto-actualizacion y registro formal de errores resueltos.
+- 2026-02-17: Se agrego la convencion visual de boxes Liquid Glass para secciones de contenido institucional y proceso.
+- 2026-02-17: Se ajusto el alcance de Liquid Glass: en Valores solo aplica a Vision y Mision; la lista value-thread queda en estilo original.

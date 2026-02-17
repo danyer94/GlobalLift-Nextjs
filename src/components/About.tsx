@@ -35,13 +35,13 @@ export function About({ copy, values, commitment }: AboutProps) {
             </div>
           </div>
           <div className="space-y-6">
-            <div className="panel-solid p-7 flex flex-col gap-4">
+            <div className="liquid-glass-panel p-7 flex flex-col gap-4">
               <span className="pill">{copy.heading}</span>
               <p className="text-lg text-foreground">{copy.oneLine}</p>
               <div className="section-divider h-px" aria-hidden="true" />
               <p className="text-sm text-muted-foreground">{copy.paragraphs[1]}</p>
             </div>
-            <div id="nosotros-compromiso" className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-soft">
+            <div id="nosotros-compromiso" className="liquid-glass-panel relative overflow-hidden p-8">
               <span
                 className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-secondary/15 blur-3xl"
                 aria-hidden="true"
@@ -63,7 +63,7 @@ export function About({ copy, values, commitment }: AboutProps) {
             <h3 className="section-title font-display mt-6">{values.heading}</h3>
           </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div className="statement-panel statement-panel--vision h-full">
+            <div className="statement-panel statement-panel--vision liquid-glass-panel h-full">
               <div className="statement-panel-head">
                 <span className="statement-panel-icon">
                   <Telescope className="h-4 w-4" aria-hidden="true" />
@@ -72,7 +72,7 @@ export function About({ copy, values, commitment }: AboutProps) {
               </div>
               <p className="statement-panel-text">{values.visionText}</p>
             </div>
-            <div className="statement-panel statement-panel--mission h-full">
+            <div className="statement-panel statement-panel--mission liquid-glass-panel h-full">
               <div className="statement-panel-head">
                 <span className="statement-panel-icon">
                   <Flag className="h-4 w-4" aria-hidden="true" />

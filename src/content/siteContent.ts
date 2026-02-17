@@ -104,6 +104,16 @@ export type ContactCopy = {
   label: string;
   heading: string;
   description: string;
+  companyInfo: {
+    countryLabel: string;
+    country: string;
+    addressLabel: string;
+    address: string;
+    emailLabel: string;
+    email: string;
+    phoneLabel: string;
+    phone: string;
+  };
   form: {
     fields: string[];
     submitLabel: string;
@@ -315,10 +325,20 @@ export const siteContent: Record<Language, SiteContent> = {
       text: "Nuestro compromiso es responder con agilidad, cumplimiento y ejecución clara para cada operación comercial, cuidando resultados sostenibles para clientes y aliados.",
     },
     contact: {
-      label: "HABLEMOS",
+      label: "INFORMACIÓN DE LA EMPRESA",
       heading: "CONTÁCTANOS",
       description:
         "Conversemos sobre tu operación. Exportamos variedad de frutas, vegetales y carbón, y también gestionamos productos que no aparecen en la web. Cuéntanos tu necesidad y trabajemos una ruta clara, responsable y orientada a resultados.",
+      companyInfo: {
+        countryLabel: "País",
+        country: "República Dominicana",
+        addressLabel: "Dirección de la oficina",
+        address: "Av. Winston Churchill 95, Torre Empresarial Atlántico, Santo Domingo",
+        emailLabel: "Correo electrónico",
+        email: "contacto@globalliftrd.com",
+        phoneLabel: "Teléfono",
+        phone: "+1 (809) 555-0147",
+      },
       form: {
         fields: [
           "Nombre",
@@ -514,10 +534,20 @@ export const siteContent: Record<Language, SiteContent> = {
       text: "Our commitment is to deliver agile response, compliance, and clear execution in every commercial operation while supporting sustainable outcomes for clients and partners.",
     },
     contact: {
-      label: "LET’S TALK",
+      label: "COMPANY INFORMATION",
       heading: "CONTACT US",
       description:
         "Let’s talk about your operation. We export a broad mix of fruits, vegetables, and coal, and we also source products beyond what is shown on the website. Tell us your need and we’ll define a clear, responsible, results-driven path.",
+      companyInfo: {
+        countryLabel: "Country",
+        country: "Dominican Republic",
+        addressLabel: "Office address",
+        address: "95 Winston Churchill Ave, Atlantico Business Tower, Santo Domingo",
+        emailLabel: "Email",
+        email: "contact@globalliftrd.com",
+        phoneLabel: "Phone",
+        phone: "+1 (809) 555-0147",
+      },
       form: {
         fields: [
           "Name",
