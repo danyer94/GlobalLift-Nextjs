@@ -131,7 +131,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   }, [isViewerOpen, total]);
 
   return (
-    <div className="mt-12 w-full max-w-5xl mx-auto">
+    <div className="mt-20 md:mt-24 w-full max-w-5xl mx-auto">
       <div
         className="group relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-soft sm:aspect-[21/9]"
         onMouseEnter={() => setIsCarouselPaused(true)}

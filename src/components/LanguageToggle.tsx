@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import type { KeyboardEvent } from 'react';
-import type { Language } from '../content/siteContent';
-import { withBasePath } from '../utils/basePath';
+import Image from "next/image";
+import type { KeyboardEvent } from "react";
+import type { Language } from "../content/siteContent";
+import { withBasePath } from "../utils/basePath";
 
 type LanguageToggleProps = {
   value: Language;
@@ -13,28 +13,25 @@ type LanguageOption = {
   label: string;
   flagAlt: string;
   flagSrc: string;
-  borderClass: string;
   buttonLabel: string;
 };
 
-const LANGUAGE_ORDER: Language[] = ['es', 'en'];
+const LANGUAGE_ORDER: Language[] = ["es", "en"];
 
 const LANGUAGE_OPTIONS: Record<Language, LanguageOption> = {
   es: {
-    value: 'es',
-    label: 'Español',
-    flagAlt: 'Bandera de España',
-    flagSrc: withBasePath('/icons/flags/es.svg'),
-    borderClass: 'border-[#f47a20]',
-    buttonLabel: 'Switch language to English',
+    value: "es",
+    label: "ES",
+    flagAlt: "Bandera de Espa\u00f1a",
+    flagSrc: withBasePath("/icons/flags/es.svg"),
+    buttonLabel: "Switch language to English",
   },
   en: {
-    value: 'en',
-    label: 'English',
-    flagAlt: 'United States flag',
-    flagSrc: withBasePath('/icons/flags/us.svg'),
-    borderClass: 'border-[#27486b]',
-    buttonLabel: 'Cambiar idioma a español',
+    value: "en",
+    label: "EN",
+    flagAlt: "United States flag",
+    flagSrc: withBasePath("/icons/flags/us.svg"),
+    buttonLabel: "Cambiar idioma a espa\u00f1ol",
   },
 };
 
@@ -45,20 +42,22 @@ function getNextLanguage(current: Language): Language {
 
 export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
   const activeOption = LANGUAGE_OPTIONS[value];
+  const isEnglish = value === "en";
 
   const handleToggle = () => {
     onChange(getNextLanguage(value));
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
       return;
     }
 
     event.preventDefault();
-    const step = event.key === 'ArrowRight' ? 1 : -1;
+    const step = event.key === "ArrowRight" ? 1 : -1;
     const currentIndex = LANGUAGE_ORDER.indexOf(value);
-    const nextIndex = (currentIndex + step + LANGUAGE_ORDER.length) % LANGUAGE_ORDER.length;
+    const nextIndex =
+      (currentIndex + step + LANGUAGE_ORDER.length) % LANGUAGE_ORDER.length;
     onChange(LANGUAGE_ORDER[nextIndex]);
   };
 
@@ -67,23 +66,47 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       type="button"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      className={`inline-flex h-12 items-center gap-3 rounded-full border-[3px] pl-2 pr-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40 focus-visible:ring-offset-2 ${activeOption.borderClass}`}
-      aria-pressed={value === 'en'}
+      className="language-glass-toggle"
+      aria-pressed={isEnglish}
       title={activeOption.buttonLabel}
     >
-      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
-        <Image
-          src={activeOption.flagSrc}
-          alt={activeOption.flagAlt}
-          width={36}
-          height={36}
-          className="h-full w-full object-cover"
-        />
+      <span
+        aria-hidden="true"
+        className={`language-glass-toggle-thumb ${
+          isEnglish ? "translate-x-full" : "translate-x-0"
+        }`}
+      />
+
+      <span className="relative z-10 grid w-full grid-cols-2 items-center text-xs font-semibold leading-none tracking-tight">
+        {LANGUAGE_ORDER.map((language) => {
+          const option = LANGUAGE_OPTIONS[language];
+          const isActive = language === value;
+
+          return (
+            <span
+              key={option.value}
+              className={`language-glass-toggle-option ${
+                isActive
+                  ? "language-glass-toggle-option--active"
+                  : "language-glass-toggle-option--inactive"
+              }`}
+            >
+              <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
+                <Image
+                  src={option.flagSrc}
+                  alt={option.flagAlt}
+                  width={36}
+                  height={36}
+                  className="h-full w-full object-cover"
+                />
+              </span>
+              <span>{option.label}</span>
+            </span>
+          );
+        })}
       </span>
-      <span className="font-display text-sm font-medium leading-none tracking-tight text-muted-foreground transition-all duration-300 md:text-sm">
-        {activeOption.label}
-      </span>
-      <span className="sr-only">{`${activeOption.label}. ${activeOption.buttonLabel}`}</span>
+
+      <span className="sr-only">{activeOption.buttonLabel}</span>
     </button>
   );
 }

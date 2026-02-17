@@ -17,7 +17,7 @@ interface SEOProps {
 
 const defaultSEO = {
   es: {
-    title: 'Global Lift SRL | Importación, Exportación y Logística',
+    title: 'Global Lift | Importación, Exportación y Logística',
     description:
       'Soluciones B2B de importación, exportación, logística y comercialización. Conectamos mercados con República Dominicana con cumplimiento y transparencia.',
     keywords:
@@ -26,7 +26,7 @@ const defaultSEO = {
     geoPlacename: 'República Dominicana',
   },
   en: {
-    title: 'Global Lift SRL | Import, Export & Logistics',
+    title: 'Global Lift | Import, Export & Logistics',
     description:
       'B2B import, export, logistics, and trade facilitation. Connecting markets with the Dominican Republic through compliance and transparency.',
     keywords:
@@ -60,7 +60,7 @@ export function SEO({
       {
         '@type': 'Organization',
         '@id': `${siteUrl}/#organization`,
-        name: 'Global Lift SRL',
+        name: 'Global Lift',
         url: siteUrl,
         logo: {
           '@type': 'ImageObject',
@@ -100,7 +100,7 @@ export function SEO({
         '@type': 'WebSite',
         '@id': `${siteUrl}/#website`,
         url: siteUrl,
-        name: 'Global Lift SRL',
+        name: 'Global Lift',
         publisher: {
           '@id': `${siteUrl}/#organization`,
         },
@@ -140,7 +140,7 @@ export function SEO({
       <meta property="og:description" content={finalDescription} />
       <meta property="og:image" content={ogImageUrl} />
       <meta property="og:locale" content={seo.ogLocale} />
-      <meta property="og:site_name" content="Global Lift SRL" />
+      <meta property="og:site_name" content="Global Lift" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={canonicalUrl} />

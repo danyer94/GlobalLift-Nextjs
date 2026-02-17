@@ -61,7 +61,7 @@ function App() {
           <Products copy={content.products} />
           <Process copy={content.process} />
           <Why copy={content.why} />
-          <Contact copy={content.contact} trustCues={content.hero.trustCues} />
+          <Contact copy={content.contact} />
         </main>
       </ScrollProvider>
       <Footer items={content.navItems} note={content.about.oneLine} />

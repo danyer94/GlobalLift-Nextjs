@@ -104,6 +104,16 @@ export type ContactCopy = {
   label: string;
   heading: string;
   description: string;
+  companyInfo: {
+    countryLabel: string;
+    country: string;
+    addressLabel: string;
+    address: string;
+    emailLabel: string;
+    email: string;
+    phoneLabel: string;
+    phone: string;
+  };
   form: {
     fields: string[];
     submitLabel: string;
@@ -146,7 +156,7 @@ export const siteContent: Record<Language, SiteContent> = {
       { label: "Contacto", href: "#contact" },
     ],
     seo: {
-      title: "Global Lift SRL | Importación, Exportación y Logística",
+      title: "Global Lift | Importación, Exportación y Logística",
       description:
         "Soluciones B2B de importación, exportación, logística y comercialización. Conectamos mercados con República Dominicana con cumplimiento y transparencia.",
     },
@@ -156,7 +166,7 @@ export const siteContent: Record<Language, SiteContent> = {
     hero: {
       title: "Impulsamos tu cadena de suministro, sin fronteras.",
       subtitle:
-        "Soluciones B2B de importación, exportación, logística y comercialización para frutas, verduras, carbón y otras categorías según demanda, con cumplimiento legal, transparencia y procesos estructurados.",
+        "Soluciones B2B de importación, exportación, logística y comercialización para frutas, vegetales, carbón y otras categorías según demanda, con cumplimiento legal, transparencia y procesos estructurados.",
       primaryCta: "Contacto",
       secondaryCta: "Servicios",
       micro:
@@ -185,11 +195,11 @@ export const siteContent: Record<Language, SiteContent> = {
       label: "QUIÉNES SOMOS",
       heading: "NOSOTROS",
       paragraphs: [
-        "Global Lift SRL es una empresa dominicana dedicada a la importación, exportación, logística y comercialización de bienes y servicios, con un enfoque multisectorial y una visión estratégica orientada al comercio nacional e internacional. Actuamos como puente entre vendedores en el extranjero y oportunidades de abastecimiento en República Dominicana, facilitando conexiones comerciales entre mercados, proveedores y clientes.",
+        "Global Lift es una empresa dominicana dedicada a la importación, exportación, logística y comercialización de bienes y servicios, con un enfoque multisectorial y una visión estratégica orientada al comercio nacional e internacional. Actuamos como puente entre vendedores en el extranjero y oportunidades de abastecimiento en República Dominicana, facilitando conexiones comerciales entre mercados, proveedores y clientes.",
         "Operamos bajo altos estándares de cumplimiento legal, eficiencia operativa y transparencia. Nuestro enfoque se centra en optimizar operaciones y habilitar relaciones comerciales sólidas, con una gestión orientada al crecimiento sostenible y a la creación de valor a largo plazo.",
         "Trabajamos para ser un aliado estratégico confiable, conectando mercados y creando oportunidades comerciales con visión global y ejecución local.",
       ],
-      oneLine: "Conectamos comercio internacional con ejecución local en RD.",
+      oneLine: "Conectando mercados, elevando oportunidades.",
     },
     services: {
       label: "QUÉ HACEMOS",
@@ -211,7 +221,7 @@ export const siteContent: Record<Language, SiteContent> = {
       exportTitle: "Exportación",
       supplyTitle: "Abastecimiento",
       exportText:
-        "Exportamos una variedad amplia de frutas, verduras y carbón, conectando oferta en República Dominicana con oportunidades comerciales en mercados internacionales.",
+        "Exportamos una variedad amplia de frutas, vegetales y carbón, conectando oferta en República Dominicana con oportunidades comerciales en mercados internacionales.",
       supplyText:
         "No estamos limitados a los productos mostrados en la web: podemos gestionar suministro de múltiples categorías según tu requerimiento, volumen y destino.",
       coalHighlight:
@@ -224,7 +234,7 @@ export const siteContent: Record<Language, SiteContent> = {
           "products-charcoal-premium": "Carbón vegetal premium",
           "products-charcoal-bulk": "Carbón para volumen comercial",
           "products-fruits-variety": "Variedad de frutas tropicales",
-          "products-vegetables-variety": "Variedad de verduras frescas",
+          "products-vegetables-variety": "Variedad de vegetales frescas",
           "products-avocado-export": "Aguacate para exportación",
           "products-mango-export": "Mango para exportación",
           "products-peppers-tomatoes": "Pimientos y tomates de calidad",
@@ -253,7 +263,7 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     why: {
       label: "POR QUÉ ELEGIRNOS",
-      heading: "DIFERENCIALES",
+      heading: "POR QUÉ ELEGIRNOS",
       items: [
         "Cumplimiento legal — Operamos con respeto a las leyes y estándares de cumplimiento.",
         "Transparencia — Priorizamos claridad en procesos y acuerdos comerciales.",
@@ -315,10 +325,20 @@ export const siteContent: Record<Language, SiteContent> = {
       text: "Nuestro compromiso es responder con agilidad, cumplimiento y ejecución clara para cada operación comercial, cuidando resultados sostenibles para clientes y aliados.",
     },
     contact: {
-      label: "HABLEMOS",
-      heading: "CONTACTO",
+      label: "INFORMACIÓN DE LA EMPRESA",
+      heading: "CONTÁCTANOS",
       description:
-        "Conversemos sobre tu operación. Exportamos variedad de frutas, verduras y carbón, y también gestionamos productos que no aparecen en la web. Cuéntanos tu necesidad y trabajemos una ruta clara, responsable y orientada a resultados.",
+        "Conversemos sobre tu operación. Exportamos variedad de frutas, vegetales y carbón, y también gestionamos productos que no aparecen en la web. Cuéntanos tu necesidad y trabajemos una ruta clara, responsable y orientada a resultados.",
+      companyInfo: {
+        countryLabel: "País",
+        country: "República Dominicana",
+        addressLabel: "Dirección de la oficina",
+        address: "Av. Winston Churchill 95, Torre Empresarial Atlántico, Santo Domingo",
+        emailLabel: "Correo electrónico",
+        email: "contacto@globalliftrd.com",
+        phoneLabel: "Teléfono",
+        phone: "+1 (809) 555-0147",
+      },
       form: {
         fields: [
           "Nombre",
@@ -345,7 +365,7 @@ export const siteContent: Record<Language, SiteContent> = {
       { label: "Contact", href: "#contact" },
     ],
     seo: {
-      title: "Global Lift SRL | Import, Export & Logistics",
+      title: "Global Lift | Import, Export & Logistics",
       description:
         "B2B import, export, logistics, and trade facilitation. Connecting markets with the Dominican Republic through compliance and transparency.",
     },
@@ -384,12 +404,11 @@ export const siteContent: Record<Language, SiteContent> = {
       label: "WHO WE ARE",
       heading: "ABOUT US",
       paragraphs: [
-        "Global Lift SRL is a Dominican company focused on importing, exporting, logistics, and the commercialization of goods and services—with a multi-sector approach and a strategic view of both national and international trade. We serve as a bridge between overseas sellers and sourcing opportunities in the Dominican Republic, facilitating commercial connections among markets, suppliers, and clients.",
+        "Global Lift is a Dominican company focused on importing, exporting, logistics, and the commercialization of goods and services—with a multi-sector approach and a strategic view of both national and international trade. We serve as a bridge between overseas sellers and sourcing opportunities in the Dominican Republic, facilitating commercial connections among markets, suppliers, and clients.",
         "We operate with strong standards for legal compliance, operational efficiency, and transparency. Our focus is to optimize operations and build lasting commercial relationships through structured processes, ethical business practices, and sustainability-oriented growth.",
         "We work to be a reliable strategic partner, connecting markets and creating commercial opportunities through global vision and local execution.",
       ],
-      oneLine:
-        "International trade connectivity with local execution in the DR.",
+      oneLine: "Connecting markets, lifting opportunities.",
     },
     services: {
       label: "WHAT WE DO",
@@ -453,7 +472,7 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     why: {
       label: "WHY CHOOSE US",
-      heading: "WHY",
+      heading: "WHY CHOOSE US",
       items: [
         "Legal compliance — We operate with respect for laws and compliance standards.",
         "Transparency — We prioritize clarity across processes and commercial agreements.",
@@ -515,10 +534,20 @@ export const siteContent: Record<Language, SiteContent> = {
       text: "Our commitment is to deliver agile response, compliance, and clear execution in every commercial operation while supporting sustainable outcomes for clients and partners.",
     },
     contact: {
-      label: "LET’S TALK",
-      heading: "CONTACT",
+      label: "COMPANY INFORMATION",
+      heading: "CONTACT US",
       description:
         "Let’s talk about your operation. We export a broad mix of fruits, vegetables, and coal, and we also source products beyond what is shown on the website. Tell us your need and we’ll define a clear, responsible, results-driven path.",
+      companyInfo: {
+        countryLabel: "Country",
+        country: "Dominican Republic",
+        addressLabel: "Office address",
+        address: "95 Winston Churchill Ave, Atlantico Business Tower, Santo Domingo",
+        emailLabel: "Email",
+        email: "contact@globalliftrd.com",
+        phoneLabel: "Phone",
+        phone: "+1 (809) 555-0147",
+      },
       form: {
         fields: [
           "Name",

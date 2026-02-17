@@ -31,8 +31,6 @@ export function Process({ copy }: ProcessProps) {
   const stageStyle = {
     '--process-stage-image': `url(${withBasePath('/images/generated/hero-cinematic-port.webp')})`,
   } as CSSProperties;
-  const leadStep = splitItem(copy.steps[0] ?? copy.heading).title;
-
   return (
     <MotionSection
       id="process"
@@ -43,7 +41,6 @@ export function Process({ copy }: ProcessProps) {
     >
       <div className="container">
         <div className="max-w-3xl">
-          <p className="badge">{copy.label}</p>
           <h2 className="section-title mt-6 font-display">{copy.heading}</h2>
         </div>
 
@@ -52,16 +49,7 @@ export function Process({ copy }: ProcessProps) {
             <div className="process-stage">
               <div className="process-stage-media" style={stageStyle}>
                 <p className="badge badge-contrast">{copy.label}</p>
-                <h3 className="mt-5 text-2xl font-display font-semibold text-primary-foreground">
-                  {leadStep}
-                </h3>
               </div>
-              <ul className="process-stage-points">
-                {copy.steps.slice(0, 3).map((step) => {
-                  const { title } = splitItem(step);
-                  return <li key={step}>{title}</li>;
-                })}
-              </ul>
             </div>
           </aside>
 

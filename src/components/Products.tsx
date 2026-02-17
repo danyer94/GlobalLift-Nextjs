@@ -26,7 +26,6 @@ export function Products({ copy }: ProductsProps) {
       <div className="container">
         <div className="grid gap-10 lg:grid-cols-[1fr,1.1fr] lg:items-start">
           <div>
-            <p className="badge">{copy.label}</p>
             <h2 className="section-title font-display mt-6">{copy.heading}</h2>
           </div>
         </div>
@@ -60,7 +59,7 @@ export function Products({ copy }: ProductsProps) {
             <p className="text-base font-semibold text-foreground md:text-lg">{copy.openCatalogHighlight}</p>
           </div>
         </div>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-16 md:mt-20 flex justify-center">
           <a href="#contact" className="btn btn-contact">
             {copy.cta}
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

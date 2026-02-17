@@ -68,7 +68,7 @@ export function ImageRevealSection({
             <span className="badge badge-contrast mb-4">
               Global Lift
             </span>
-            <h2 className="mb-4 text-3xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-6xl">
+            <h2 className="mb-4 text-2xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-5xl">
               {title1}
             </h2>
             <p className="max-w-2xl text-base font-medium text-primary-foreground/90 drop-shadow-md md:text-xl">
@@ -104,7 +104,7 @@ export function ImageRevealSection({
             <span className="badge badge-contrast mb-4">
               Global Lift
             </span>
-            <h2 className="mb-4 text-3xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-6xl">
+            <h2 className="mb-4 text-2xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-5xl">
               {title2}
             </h2>
             <p className="max-w-2xl text-base font-medium text-primary-foreground/90 drop-shadow-md md:text-xl">
