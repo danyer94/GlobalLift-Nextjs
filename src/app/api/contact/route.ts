@@ -170,7 +170,7 @@ export async function POST(request: Request) {
   try {
     const resend = new Resend(resendApiKey);
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: fromEmail,
       to: [toEmail],
       subject: `New contact request - ${payload.name}`,
@@ -178,6 +178,14 @@ export async function POST(request: Request) {
       text: formatTextBody(payload),
       html: formatHtmlBody(payload),
     });
+
+    if (error) {
+      console.error("[contact-api] resend API rejected send", error);
+      return NextResponse.json(
+        { ok: false, error: "Unable to send message" },
+        { status: 502 },
+      );
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
