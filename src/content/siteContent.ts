@@ -117,6 +117,12 @@ export type ContactCopy = {
   form: {
     fields: string[];
     submitLabel: string;
+    submittingLabel: string;
+    status: {
+      submitting: string;
+      success: string;
+      error: string;
+    };
     micro: string;
   };
 };
@@ -350,6 +356,12 @@ export const siteContent: Record<Language, SiteContent> = {
           "Mensaje",
         ],
         submitLabel: "Enviar solicitud",
+        submittingLabel: "Enviando...",
+        status: {
+          submitting: "Estamos enviando tu solicitud...",
+          success: "Solicitud enviada. Te responderemos pronto.",
+          error: "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.",
+        },
         micro:
           "Comparte el producto y volumen que necesitas: te respondemos con una propuesta concreta de suministro.",
       },
@@ -559,6 +571,12 @@ export const siteContent: Record<Language, SiteContent> = {
           "Message",
         ],
         submitLabel: "Send request",
+        submittingLabel: "Sending...",
+        status: {
+          submitting: "We are sending your request...",
+          success: "Request sent. We will get back to you soon.",
+          error: "We could not send your request. Please try again in a few minutes.",
+        },
         micro:
           "Share the product and volume you need and we’ll reply with a concrete supply proposal.",
       },

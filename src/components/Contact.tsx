@@ -1,6 +1,5 @@
 import { ArrowRight, Globe2, Mail, MapPin, Phone, type LucideIcon } from 'lucide-react';
-import type { CSSProperties } from 'react';
-import type { FormEvent, HTMLAttributes } from 'react';
+import { useState, type CSSProperties, type FormEvent, type HTMLAttributes } from 'react';
 import type { ContactCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
 import { MotionSection } from './MotionSection';
@@ -25,6 +24,19 @@ type CompanyInfoItem = {
   icon: LucideIcon;
 };
 
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
+
+type ContactPayload = {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  service: string;
+  product: string;
+  message: string;
+  website: string;
+};
+
 const fieldConfig: FieldConfig[] = [
   { id: 'name', type: 'text', required: true },
   { id: 'company', type: 'text', required: true },
@@ -36,6 +48,8 @@ const fieldConfig: FieldConfig[] = [
 ];
 
 export function Contact({ copy }: ContactProps) {
+  const [submitState, setSubmitState] = useState<SubmitState>('idle');
+
   const cinematicStyle = {
     '--cinema-image': `url(${withBasePath('/images/generated/contact-global-map-lights.webp')})`,
     '--cinema-position': 'center 44%',
@@ -70,7 +84,7 @@ export function Contact({ copy }: ContactProps) {
     },
   ];
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
 
@@ -79,7 +93,56 @@ export function Contact({ copy }: ContactProps) {
       return;
     }
 
-    form.reset();
+    setSubmitState('submitting');
+
+    const formData = new FormData(form);
+    const payload: ContactPayload = {
+      name: String(formData.get('name') ?? ''),
+      company: String(formData.get('company') ?? ''),
+      email: String(formData.get('email') ?? ''),
+      phone: String(formData.get('phone') ?? ''),
+      service: String(formData.get('service') ?? ''),
+      product: String(formData.get('product') ?? ''),
+      message: String(formData.get('message') ?? ''),
+      website: String(formData.get('website') ?? ''),
+    };
+
+    try {
+      const response = await fetch(withBasePath('/api/contact'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error('Contact request failed');
+      }
+
+      setSubmitState('success');
+      form.reset();
+    } catch {
+      setSubmitState('error');
+    }
+  };
+
+  const statusMessage =
+    submitState === 'submitting'
+      ? copy.form.status.submitting
+      : submitState === 'success'
+        ? copy.form.status.success
+        : submitState === 'error'
+          ? copy.form.status.error
+          : null;
+
+  const statusClassName =
+    submitState === 'error' ? 'mt-3 text-sm text-red-600' : 'mt-3 text-sm text-emerald-700';
+
+  const handleFormChange = () => {
+    if (submitState === 'success' || submitState === 'error') {
+      setSubmitState('idle');
+    }
   };
 
   return (
@@ -122,7 +185,16 @@ export function Contact({ copy }: ContactProps) {
             </div>
           </div>
           <div className="contact-form-panel p-8">
-            <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2" aria-describedby="contact-helper">
+            <form
+              onSubmit={handleSubmit}
+              onChange={handleFormChange}
+              className="grid gap-4 sm:grid-cols-2"
+              aria-describedby="contact-helper"
+            >
+              <div className="sr-only" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
               {fieldConfig.map((field, index) => {
                 const label = copy.form.fields[index] ?? '';
 
@@ -147,10 +219,15 @@ export function Contact({ copy }: ContactProps) {
                 );
               })}
               <div className="sm:col-span-2">
-                <button type="submit" className="btn btn-contact w-full">
-                  {copy.form.submitLabel}
+                <button type="submit" className="btn btn-contact w-full" disabled={submitState === 'submitting'}>
+                  {submitState === 'submitting' ? copy.form.submittingLabel : copy.form.submitLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </button>
+                {statusMessage ? (
+                  <p role="status" aria-live="polite" className={statusClassName}>
+                    {statusMessage}
+                  </p>
+                ) : null}
                 <p id="contact-helper" className="mt-3 text-xs text-muted-foreground">
                   {copy.form.micro}
                 </p>
