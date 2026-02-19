@@ -1,5 +1,3 @@
-﻿import { withBasePath } from "../utils/basePath";
-
 export type Language = "es" | "en";
 
 export type NavItem = {
@@ -7,7 +5,7 @@ export type NavItem = {
   href: string;
 };
 
-export type SeoCopy = {
+type SeoCopy = {
   title: string;
   description: string;
 };
@@ -127,14 +125,14 @@ export type ContactCopy = {
   };
 };
 
-export type RevealSectionCopy = {
+type RevealSectionCopy = {
   title1: string;
   subtitle1: string;
   title2: string;
   subtitle2: string;
 };
 
-export type SiteContent = {
+type SiteContent = {
   navItems: NavItem[];
   seo: SeoCopy;
   navigation: NavigationCopy;
@@ -149,8 +147,6 @@ export type SiteContent = {
   commitment: CommitmentCopy;
   contact: ContactCopy;
 };
-
-export const brandLogoSrc = withBasePath("/logo/Global-Lift.png");
 
 export const siteContent: Record<Language, SiteContent> = {
   es: {
