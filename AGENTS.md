@@ -13,6 +13,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 - Framework: Next.js `14.x` + React `18.x` + TypeScript.
 - Estilos: Tailwind CSS `3.x` + `styles/globals.css`.
+- Email transaccional de contacto: `resend` (API route en App Router).
 - Scripts disponibles:
   - `npm run dev`
   - `npm run build`
@@ -23,11 +24,19 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 ## 3) Mapa rapido del repo
 
 - `src/app/*`: App Router (layout, page, errores globales).
+- `src/app/api/contact/route.ts`: endpoint POST para envio de formulario de contacto por email.
 - `src/components/*`: componentes de UI y secciones.
 - `src/content/siteContent.ts`: contenido principal del sitio.
 - `styles/globals.css`: tokens visuales, reglas base y utilidades globales.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
 - `pages/_app.tsx` y `pages/_document.tsx`: compatibilidad heredada de Pages Router.
+
+### 3.1 Variables de entorno para contacto por email
+
+- `RESEND_API_KEY`: API key de Resend para envio transaccional.
+- `CONTACT_FROM_EMAIL`: remitente validado (formato sugerido: `Nombre <correo@dominio>`).
+- `CONTACT_TO_EMAIL`: destino interno donde llegan los leads.
+- Mantener plantilla de variables en `.env.example` y secretos reales solo en `.env.local` o entorno de despliegue.
 
 ## 4) Contrato de tipografia (NO romper)
 
@@ -140,3 +149,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-02-17: Se agrego la convencion visual de boxes Liquid Glass para secciones de contenido institucional y proceso.
 - 2026-02-17: Se ajusto el alcance de Liquid Glass: en Valores solo aplica a Vision y Mision; la lista value-thread queda en estilo original.
 - 2026-02-17: Se aplico Liquid Glass al selector de idioma en el header (`LanguageToggle`) con estilo consistente al resto de superficies glass.
+- 2026-02-19: Se implemento flujo de contacto por email con `resend` via `src/app/api/contact/route.ts`, se anadio `.env.example` y feedback de envio en `src/components/Contact.tsx` con textos ES/EN en `src/content/siteContent.ts`.
