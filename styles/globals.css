@@ -210,6 +210,11 @@
     box-shadow: 0 18px 42px rgb(var(--brand-cta) / 0.42);
   }
 
+  /* Compact variant used only in the navigation bar */
+  .btn-nav {
+    @apply min-h-0 py-1.5 px-4 rounded-full text-sm;
+  }
+
   .badge {
     @apply inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-secondary shadow-soft;
     font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;

@@ -94,9 +94,12 @@ export function Navigation({ items, copy, language, onLanguageChange }: Navigati
             </div>
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3 ml-auto">
-              <a href="#contact" className="btn btn-contact hidden lg:inline-flex">
+              <a
+                href="#contact"
+                className="btn btn-contact btn-nav hidden lg:inline-flex"
+              >
                 {copy.cta}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </a>
               <LanguageToggle value={language} onChange={onLanguageChange} />
               <button
