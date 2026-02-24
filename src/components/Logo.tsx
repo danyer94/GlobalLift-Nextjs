@@ -15,7 +15,7 @@ export function Logo({
         <Image
           src={withBasePath("/logo/logo-3D-removebg.png")}
           alt="Global Lift"
-          className="h-20 md:h-[6.5rem] w-auto -mt-2 -mb-2 scale-105"
+          className="h-[3.5rem] md:h-[4.5rem] w-auto"
           width={180}
           height={180}
           priority
