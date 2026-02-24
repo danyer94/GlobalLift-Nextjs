@@ -77,12 +77,15 @@ export function Navigation({ items, copy, language, onLanguageChange }: Navigati
     <>
       <nav className="fixed top-0 z-50 w-full nav-blur" aria-label="Primary">
         <div className="container">
-          <div className="flex items-center justify-between py-4">
-            <a href="#top">
+          <div className="flex items-center justify-between py-4 relative h-16 md:h-24">
+            {/* Break the logo out of the standard flex flow so its size 
+                doesn't stretch the header height artificially */}
+            <a href="#top" className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
               <Logo />
             </a>
 
-            <div className="hidden items-center gap-6 md:flex lg:gap-8">
+            {/* Absolutely center the navigation links on desktop */}
+            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:gap-8 whitespace-nowrap z-10">
               {headerItems.map((item) => (
                 <a key={item.label} href={item.href} className="text-sm font-medium text-muted-foreground transition-colors hover:text-secondary">
                   {item.label}
@@ -90,10 +93,13 @@ export function Navigation({ items, copy, language, onLanguageChange }: Navigati
               ))}
             </div>
 
-            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <a href="#contact" className="btn btn-contact hidden lg:inline-flex">
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3 ml-auto">
+              <a
+                href="#contact"
+                className="btn btn-contact btn-nav hidden lg:inline-flex"
+              >
                 {copy.cta}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </a>
               <LanguageToggle value={language} onChange={onLanguageChange} />
               <button

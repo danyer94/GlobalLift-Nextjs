@@ -23,24 +23,9 @@ const PRODUCT_IMAGES: ProductSlide[] = [
     fallbackSrc: 'images/generated/products/products-charcoal-premium.png',
   },
   {
-    key: 'products-charcoal-bulk',
-    src: 'images/generated/products/products-charcoal-bulk.webp',
-    fallbackSrc: 'images/generated/products/products-charcoal-bulk.png',
-  },
-  {
     key: 'products-fruits-variety',
     src: 'images/generated/products/products-fruits-variety.webp',
     fallbackSrc: 'images/generated/products/products-fruits-variety.png',
-  },
-  {
-    key: 'products-vegetables-variety',
-    src: 'images/generated/products/products-vegetables-variety.webp',
-    fallbackSrc: 'images/generated/products/products-vegetables-variety.png',
-  },
-  {
-    key: 'products-avocado-export',
-    src: 'images/generated/products/products-avocado-export.webp',
-    fallbackSrc: 'images/generated/products/products-avocado-export.png',
   },
   {
     key: 'products-mango-export',
@@ -52,12 +37,31 @@ const PRODUCT_IMAGES: ProductSlide[] = [
     src: 'images/generated/products/products-peppers-tomatoes.webp',
     fallbackSrc: 'images/generated/products/products-peppers-tomatoes.png',
   },
+
+];
+
+/*
   {
     key: 'products-mixed-catalog',
     src: 'images/generated/products/products-mixed-catalog.webp',
     fallbackSrc: 'images/generated/products/products-mixed-catalog.png',
   },
-];
+  {
+    key: 'products-charcoal-bulk',
+    src: 'images/generated/products/products-charcoal-bulk.webp',
+    fallbackSrc: 'images/generated/products/products-charcoal-bulk.png',
+  },
+  {
+    key: 'products-vegetables-variety',
+    src: 'images/generated/products/products-vegetables-variety.webp',
+    fallbackSrc: 'images/generated/products/products-vegetables-variety.png',
+  },  
+  {
+    key: 'products-avocado-export',
+    src: 'images/generated/products/products-avocado-export.webp',
+    fallbackSrc: 'images/generated/products/products-avocado-export.png',
+  },
+*/
 
 export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);

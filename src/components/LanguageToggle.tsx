@@ -77,7 +77,7 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
         }`}
       />
 
-      <span className="relative z-10 grid w-full grid-cols-2 items-center text-xs font-semibold leading-none tracking-tight">
+      <span className="relative z-10 grid w-full grid-cols-2 items-center text-[0.65rem] font-[750] leading-none tracking-tight">
         {LANGUAGE_ORDER.map((language) => {
           const option = LANGUAGE_OPTIONS[language];
           const isActive = language === value;
@@ -91,13 +91,13 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
                   : "language-glass-toggle-option--inactive"
               }`}
             >
-              <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-border/50">
+              <span className="inline-flex h-[1.15rem] w-[1.15rem] shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 shadow-sm">
                 <Image
                   src={option.flagSrc}
                   alt={option.flagAlt}
-                  width={36}
-                  height={36}
-                  className="h-full w-full object-cover"
+                  width={24}
+                  height={24}
+                  className="h-full w-full object-cover scale-[1.25]"
                 />
               </span>
               <span>{option.label}</span>
