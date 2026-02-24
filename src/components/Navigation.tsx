@@ -77,7 +77,7 @@ export function Navigation({ items, copy, language, onLanguageChange }: Navigati
     <>
       <nav className="fixed top-0 z-50 w-full nav-blur" aria-label="Primary">
         <div className="container">
-          <div className="flex items-center justify-between py-4 relative h-16 md:h-20">
+          <div className="flex items-center justify-between py-4 relative h-16 md:h-24">
             {/* Break the logo out of the standard flex flow so its size 
                 doesn't stretch the header height artificially */}
             <a href="#top" className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
