@@ -195,12 +195,7 @@
 
   .nav-hero-blend {
     border-bottom: 0;
-    background: linear-gradient(
-      180deg,
-      rgb(2 8 20 / 0.48) 0%,
-      rgb(2 8 20 / 0.26) 58%,
-      rgb(2 8 20 / 0.14) 100%
-    );
+    background: transparent;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

@@ -60,7 +60,6 @@ export function Hero({ copy }: HeroProps) {
               {copy.secondaryCta}
             </a>
           </div>
-          <p className="hero-micro text-sm md:text-base">{copy.micro}</p>
         </div>
       </div>
     </MotionSection>
