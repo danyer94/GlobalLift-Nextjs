@@ -39,14 +39,13 @@ function App() {
       />
       <Navigation
         items={content.navItems}
-        copy={content.navigation}
         language={language}
         onLanguageChange={setLanguage}
       />
 
       <ScrollProvider>
         <Boat />
-        <main id="main-content" className="xl:pr-3 2xl:pr-4">
+        <main id="main-content">
           <Hero copy={content.hero} />
           <About copy={content.about} values={content.values} commitment={content.commitment} />
           <ImageRevealSection

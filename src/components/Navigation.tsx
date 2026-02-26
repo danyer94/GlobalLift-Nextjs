@@ -1,19 +1,17 @@
 import { Menu, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import type { Language, NavItem, NavigationCopy } from '../content/siteContent';
+import type { Language, NavItem } from '../content/siteContent';
 import { LanguageToggle } from './LanguageToggle';
 import { Logo } from './Logo';
 
 type NavigationProps = {
   items: NavItem[];
-  copy: NavigationCopy;
   language: Language;
   onLanguageChange: (value: Language) => void;
 };
 
 export function Navigation({
   items,
-  copy,
   language,
   onLanguageChange,
 }: NavigationProps) {
@@ -131,7 +129,6 @@ export function Navigation({
     ? 'nav-controls nav-controls--hero'
     : 'nav-controls nav-controls--glass';
   const logoClass = isHeroZone ? 'nav-logo nav-logo--hero' : 'nav-logo';
-  const ctaClass = 'hero-btn hero-btn--primary nav-cta hidden lg:inline-flex';
   const mobileMenuButtonClass = isHeroZone
     ? 'nav-mobile-trigger nav-mobile-trigger--hero md:hidden'
     : 'nav-mobile-trigger nav-mobile-trigger--glass md:hidden';
