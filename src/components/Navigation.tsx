@@ -1,4 +1,4 @@
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { Language, NavItem, NavigationCopy } from '../content/siteContent';
 import { LanguageToggle } from './LanguageToggle';
@@ -11,17 +11,24 @@ type NavigationProps = {
   onLanguageChange: (value: Language) => void;
 };
 
-export function Navigation({ items, copy, language, onLanguageChange }: NavigationProps) {
+export function Navigation({
+  items,
+  copy,
+  language,
+  onLanguageChange,
+}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHeroZone, setIsHeroZone] = useState(false);
+
   const headerItems = items.filter((item) => item.href !== '#nosotros-valores');
   const mobileMenuCopy = useMemo(
     () =>
       language === 'es'
         ? {
-            open: 'Abrir menú',
-            close: 'Cerrar menú',
-            title: 'Menú',
-            navLabel: 'Navegación móvil',
+            open: 'Abrir menu',
+            close: 'Cerrar menu',
+            title: 'Menu',
+            navLabel: 'Navegacion movil',
           }
         : {
             open: 'Open menu',
@@ -73,39 +80,102 @@ export function Navigation({ items, copy, language, onLanguageChange }: Navigati
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    const heroSection = document.querySelector<HTMLElement>('.hero-aurora');
+
+    if (!heroSection) {
+      setIsHeroZone(false);
+      return;
+    }
+
+    const createObserver = () => {
+      const navOffset = window.innerWidth >= 768 ? 106 : 74;
+      return new IntersectionObserver(
+        ([entry]) => {
+          setIsHeroZone(entry.isIntersecting);
+        },
+        {
+          threshold: 0,
+          rootMargin: `-${navOffset}px 0px 0px 0px`,
+        },
+      );
+    };
+
+    let observer = createObserver();
+    observer.observe(heroSection);
+
+    const rebindObserver = () => {
+      observer.disconnect();
+      observer = createObserver();
+      observer.observe(heroSection);
+    };
+
+    window.addEventListener('resize', rebindObserver);
+    window.addEventListener('orientationchange', rebindObserver);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', rebindObserver);
+      window.removeEventListener('orientationchange', rebindObserver);
+    };
+  }, []);
+
+  const navToneClass = isHeroZone ? 'nav-hero-blend' : 'nav-liquid-glass';
+  const navLinksShellClass = isHeroZone
+    ? 'nav-links-shell nav-links-shell--hero'
+    : 'nav-links-shell nav-links-shell--glass';
+  const desktopLinkClass = isHeroZone
+    ? 'nav-link nav-link--hero'
+    : 'nav-link nav-link--glass';
+  const controlsClass = isHeroZone
+    ? 'nav-controls nav-controls--hero'
+    : 'nav-controls nav-controls--glass';
+  const logoClass = isHeroZone ? 'nav-logo nav-logo--hero' : 'nav-logo';
+  const ctaClass = 'hero-btn hero-btn--primary nav-cta hidden lg:inline-flex';
+  const mobileMenuButtonClass = isHeroZone
+    ? 'nav-mobile-trigger nav-mobile-trigger--hero md:hidden'
+    : 'nav-mobile-trigger nav-mobile-trigger--glass md:hidden';
+
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full nav-blur" aria-label="Primary">
+      <nav
+        className={`fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${navToneClass}`}
+        aria-label="Primary"
+      >
         <div className="container">
-          <div className="flex items-center justify-between py-4 relative h-16 md:h-24">
-            {/* Break the logo out of the standard flex flow so its size 
-                doesn't stretch the header height artificially */}
-            <a href="#top" className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
-              <Logo />
+          <div className="relative flex h-16 items-center justify-between py-4 md:h-24">
+            <a
+              href="#top"
+              className="absolute left-0 top-1/2 z-20 -translate-y-1/2"
+            >
+              <Logo className={logoClass} />
             </a>
 
-            {/* Absolutely center the navigation links on desktop */}
-            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:gap-8 whitespace-nowrap z-10">
+            <div
+              className={`absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 whitespace-nowrap md:flex ${navLinksShellClass}`}
+            >
               {headerItems.map((item) => (
-                <a key={item.label} href={item.href} className="text-sm font-medium text-muted-foreground transition-colors hover:text-secondary">
+                <a key={item.label} href={item.href} className={desktopLinkClass}>
                   {item.label}
                 </a>
               ))}
             </div>
 
-            <div className="flex shrink-0 items-center gap-2 sm:gap-3 ml-auto">
-              <a
-                href="#contact"
-                className="btn btn-contact btn-nav hidden lg:inline-flex"
-              >
+            <div
+              className={`ml-auto flex shrink-0 items-center gap-2 sm:gap-3 ${controlsClass}`}
+            >
+              <a href="#contact" className={ctaClass}>
                 {copy.cta}
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </a>
-              <LanguageToggle value={language} onChange={onLanguageChange} />
+              <LanguageToggle
+                value={language}
+                onChange={onLanguageChange}
+                variant={isHeroZone ? 'hero' : 'glass'}
+              />
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(true)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card/80 text-primary transition-colors hover:border-secondary/40 hover:text-secondary md:hidden"
+                className={mobileMenuButtonClass}
                 aria-label={mobileMenuCopy.open}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-nav-drawer"

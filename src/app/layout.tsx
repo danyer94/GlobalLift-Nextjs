@@ -1,6 +1,8 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import { JetBrains_Mono, Onest } from 'next/font/google'
+import { FontClassProvider } from '@/contexts/FontClassContext'
 import '../../styles/globals.css'
 
 const onest = Onest({
@@ -14,6 +16,18 @@ const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '600'],
   variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
+
+const hostGrotesk = localFont({
+  src: [
+    {
+      path: './fonts/host-grotesk-latin.woff2',
+      style: 'normal',
+      weight: '300 800',
+    },
+  ],
+  variable: '--font-host-grotesk',
   display: 'swap',
 })
 
@@ -39,9 +53,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={`${onest.variable} ${jetBrainsMono.variable}`}>
-        {children}
+      <body className={`${onest.variable} ${jetBrainsMono.variable} ${hostGrotesk.variable}`}>
+        <FontClassProvider monoClassName={jetBrainsMono.className}>
+          {children}
+        </FontClassProvider>
       </body>
     </html>
   )
-} 
+}
