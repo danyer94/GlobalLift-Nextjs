@@ -164,9 +164,6 @@ export function Navigation({
             <div
               className={`ml-auto flex shrink-0 items-center gap-2 sm:gap-3 ${controlsClass}`}
             >
-              <a href="#contact" className={ctaClass}>
-                {copy.cta}
-              </a>
               <LanguageToggle
                 value={language}
                 onChange={onLanguageChange}

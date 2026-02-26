@@ -233,9 +233,10 @@
     justify-content: center;
     border-radius: 0;
     padding: 0.25rem 0.45rem;
-    font-size: 0.87rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
+    font-family: var(--font-host-grotesk), "Host Grotesk", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0;
     transition:
       color var(--motion-fast) var(--ease-standard),
       transform var(--motion-fast) var(--ease-standard);
@@ -299,6 +300,14 @@
     min-height: 48px;
     min-width: 148px;
     border-radius: 0.12rem;
+    font-family: var(--font-host-grotesk), "Host Grotesk", sans-serif;
+    font-weight: 560;
+    letter-spacing: -0.008em;
+  }
+
+  .language-glass-toggle,
+  .nav-mobile-trigger {
+    font-family: var(--font-host-grotesk), "Host Grotesk", sans-serif;
   }
 
   .nav-mobile-trigger {
@@ -1510,8 +1519,8 @@
   height: 100%;
   object-fit: cover;
   object-position: var(--hero-pos-mobile, center 42%);
-  transform: scale(1.09);
-  filter: blur(1px) saturate(0.58) contrast(1.06) brightness(0.42);
+  transform: scale(1.045);
+  filter: saturate(0.8) contrast(1.12) brightness(0.6);
   transition: opacity var(--motion-slow) var(--ease-standard);
 }
 
@@ -1521,20 +1530,20 @@
   inset: 0;
   background:
     radial-gradient(
-      70% 54% at 50% 38%,
-      rgb(110 169 235 / 0.34) 0%,
+      70% 54% at 50% 36%,
+      rgb(110 169 235 / 0.26) 0%,
       transparent 80%
     ),
     radial-gradient(
       80% 56% at 18% 64%,
-      rgb(96 138 201 / 0.2) 0%,
+      rgb(96 138 201 / 0.16) 0%,
       transparent 72%
     ),
     linear-gradient(
       180deg,
-      rgb(3 9 24 / 0.36) 0%,
-      rgb(2 7 18 / 0.72) 52%,
-      rgb(1 5 12 / 0.95) 100%
+      rgb(3 9 24 / 0.22) 0%,
+      rgb(2 7 18 / 0.58) 52%,
+      rgb(1 5 12 / 0.82) 100%
     );
   z-index: 1;
 }
@@ -1612,6 +1621,18 @@
 .hero-copy-shell {
   position: relative;
   z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .hero-copy-shell--offset {
+    margin-top: clamp(-12rem, calc((100vh - 640px) * -0.5), 0rem);
+  }
+}
+
+@media (min-width: 1700px) and (min-height: 980px) {
+  .hero-copy-shell--offset {
+    margin-top: -18rem;
+  }
 }
 
 .hero-copy-shell h1 {

@@ -24,7 +24,7 @@ export function Hero({ copy }: HeroProps) {
 
   return (
     <MotionSection
-      className="hero-aurora section flex min-h-[100svh] items-center justify-center pt-32 pb-20"
+      className="hero-aurora section flex min-h-[100svh] items-center justify-center pt-24 pb-20 md:pt-24"
       decorVariant="none"
       parallaxStrength={14}
       reveal={false}
@@ -43,7 +43,7 @@ export function Hero({ copy }: HeroProps) {
       }
     >
       <div className="container flex justify-center">
-        <div className="hero-copy-shell w-full max-w-4xl space-y-6 px-4 text-center text-primary-foreground sm:px-6">
+        <div className="hero-copy-shell hero-copy-shell--offset w-full max-w-4xl space-y-6 px-4 text-center text-primary-foreground sm:px-6">
           <div>
             <h1 className="font-hero mx-auto max-w-3xl text-balance text-5xl font-normal leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
               {copy.title}
