@@ -6,6 +6,7 @@ import { withBasePath } from "../utils/basePath";
 type LanguageToggleProps = {
   value: Language;
   onChange: (value: Language) => void;
+  variant?: "glass" | "hero";
 };
 
 type LanguageOption = {
@@ -40,9 +41,14 @@ function getNextLanguage(current: Language): Language {
   return LANGUAGE_ORDER[(currentIndex + 1) % LANGUAGE_ORDER.length];
 }
 
-export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
+export function LanguageToggle({
+  value,
+  onChange,
+  variant = "glass",
+}: LanguageToggleProps) {
   const activeOption = LANGUAGE_OPTIONS[value];
   const isEnglish = value === "en";
+  const isHeroVariant = variant === "hero";
 
   const handleToggle = () => {
     onChange(getNextLanguage(value));
@@ -66,7 +72,9 @@ export function LanguageToggle({ value, onChange }: LanguageToggleProps) {
       type="button"
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
-      className="language-glass-toggle"
+      className={`language-glass-toggle ${
+        isHeroVariant ? "language-glass-toggle--hero" : ""
+      }`}
       aria-pressed={isEnglish}
       title={activeOption.buttonLabel}
     >

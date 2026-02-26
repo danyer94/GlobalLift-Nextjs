@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
+import { useFontClass } from '@/contexts/FontClassContext';
 
 interface ImageRevealSectionProps {
   image1: string;
@@ -21,6 +22,7 @@ export function ImageRevealSection({
 }: ImageRevealSectionProps) {
   const containerRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+  const monoClassName = useFontClass();
 
   // We use useScroll directly on this container to get progress relative to its view
   const { scrollYProgress } = useScroll({
@@ -65,7 +67,10 @@ export function ImageRevealSection({
               y: reduceMotion ? 0 : y1,
             }}
           >
-            <span className="badge badge-contrast mb-4">
+            <span
+              className={`badge badge-contrast mb-4 ${monoClassName ?? ''}`.trim()}
+              style={monoClassName ? undefined : { fontFamily: 'var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace' }}
+            >
               Global Lift
             </span>
             <h2 className="mb-4 text-2xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-5xl">
@@ -101,7 +106,10 @@ export function ImageRevealSection({
               y: reduceMotion ? 0 : y2,
             }}
           >
-            <span className="badge badge-contrast mb-4">
+            <span
+              className={`badge badge-contrast mb-4 ${monoClassName ?? ''}`.trim()}
+              style={monoClassName ? undefined : { fontFamily: 'var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace' }}
+            >
               Global Lift
             </span>
             <h2 className="mb-4 text-2xl font-display font-semibold text-primary-foreground drop-shadow-lg md:text-5xl">

@@ -43,10 +43,12 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-onest)", "system-ui", "sans-serif"],
         display: [
+          "var(--font-host-grotesk)",
           "var(--font-onest)",
           "system-ui",
           "sans-serif",
         ],
+        hero: ["var(--font-host-grotesk)", "var(--font-onest)", "system-ui", "sans-serif"],
         mono: [
           "var(--font-jetbrains-mono)",
           "ui-monospace",

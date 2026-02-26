@@ -1,4 +1,4 @@
-﻿# GlobalLift Next.js - AGENTS.md
+# GlobalLift Next.js - AGENTS.md
 
 Guia operativa para cualquier agente de IA que trabaje en este repositorio.
 Este archivo es una fuente de verdad viva: si cambia el proyecto y este documento queda desactualizado, la tarea NO esta completa.
@@ -24,8 +24,10 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 ## 3) Mapa rapido del repo
 
 - `src/app/*`: App Router (layout, page, errores globales).
+- `src/app/fonts/*`: fuentes locales usadas por `next/font/local` cuando una fuente de Google no esta disponible en `next/font/google`.
 - `src/app/api/contact/route.ts`: endpoint POST para envio de formulario de contacto por email.
 - `src/components/*`: componentes de UI y secciones.
+- `src/contexts/*`: contextos de React (ej. `FontClassContext` para exponer la clase de fuente mono del layout al badge de Image Reveal).
 - `src/content/siteContent.ts`: contenido principal del sitio.
 - `styles/globals.css`: tokens visuales, reglas base y utilidades globales.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
@@ -41,12 +43,15 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 ## 4) Contrato de tipografia (NO romper)
 
 - Primary/body font: `Onest`
-- Display/headings font: `Onest` (para mantener paridad visual con la version Vite validada)
+- Display/headings font: `Host Grotesk` (self-hosted via `next/font/local`) solo para headings destacados con `font-display` y para el Hero.
 - Mono font: `JetBrains Mono`
+- Alcance vigente: `Host Grotesk` se aplica al Hero (`font-hero`) y headings seleccionados por clase (`font-display`), sin reemplazar la tipografia base de todos los `h1-h4` ni la tipografia de cuerpo (`Onest`).
+- Labels, badges, kickers y texto auxiliar deben conservar su tipografia original de componente (no usar `Host Grotesk` por defecto). Ejemplo actual: badge `Global Lift` en sticky reveal usa `JetBrains Mono`.
 
 ### Source of truth de fuentes
 
-- Cargar fuentes solo en `src/app/layout.tsx` usando `next/font/google`.
+- Cargar fuentes solo en `src/app/layout.tsx` usando `next/font/google` y/o `next/font/local`.
+- `Host Grotesk` debe mantenerse como asset local en `src/app/fonts/host-grotesk-latin.woff2` y exponerse via variable CSS.
 - Consumir fuentes por variables CSS en todas las capas de estilos:
   - `styles/globals.css`
   - `tailwind.config.js`
@@ -69,6 +74,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 4. Verificar que se mantienen las variables:
    - `--font-onest`
    - `--font-jetbrains-mono`
+   - `--font-host-grotesk`
 
 ## 5) Flujo minimo de trabajo del agente
 
@@ -99,7 +105,7 @@ Si se modifica cualquiera de estos archivos o areas, revisar y actualizar `AGENT
 - `package.json` (scripts, dependencias, tooling)
 - `next.config.mjs`, `tsconfig.json`, `.eslintrc.json`, `postcss.config.js`, `tailwind.config.js`
 - `src/app/layout.tsx`, `styles/globals.css` (tipografia, tokens, estilos base)
-- estructura de carpetas en `src/app`, `src/components`, `src/content`, `src/hooks`, `src/utils`
+- estructura de carpetas en `src/app`, `src/components`, `src/contexts`, `src/content`, `src/hooks`, `src/utils`
 - convenciones de i18n, SEO, rutas, metadata o estrategia de rendering
 
 ### 6.2 Criterio de cierre de tarea
@@ -143,6 +149,16 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - Verificacion: lint + typecheck + revision cruzada de los 3 archivos de tipografia.
 - Estado: Resuelto
 
+### ERR-20260225-02 - Alcance tipografico aplicado fuera de headlines
+- Fecha: 2026-02-25
+- Area/archivo: `styles/globals.css`, `src/components/ImageRevealSection.tsx`
+- Sintoma: se percibio cambio de fuente en etiquetas auxiliares (ej. badge `Global Lift`) cuando el pedido era aplicar la fuente del Hero solo a headlines.
+- Causa raiz: no explicitar en el contrato local que badges/kickers debian mantener fuente base.
+- Solucion aplicada: restaurar tipografia original del badge (`JetBrains Mono`) y mantener `Host Grotesk` solo en clases de headlines (`font-hero`, `font-display`).
+- Regla preventiva (que nunca debe volver a hacerse): no extender cambios de tipografia display a labels, badges ni texto auxiliar sin confirmacion explicita.
+- Verificacion: Playwright (computed font-family en Hero h1, headings de seccion y badge sticky), `npm run lint`, `npm run typecheck`.
+- Estado: Resuelto
+
 ## 8) Historial de sincronizacion de AGENTS.md
 
 - 2026-02-12: Reestructuracion completa del archivo; se anadieron flujo operativo, protocolo de auto-actualizacion y registro formal de errores resueltos.
@@ -150,3 +166,12 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-02-17: Se ajusto el alcance de Liquid Glass: en Valores solo aplica a Vision y Mision; la lista value-thread queda en estilo original.
 - 2026-02-17: Se aplico Liquid Glass al selector de idioma en el header (`LanguageToggle`) con estilo consistente al resto de superficies glass.
 - 2026-02-19: Se implemento flujo de contacto por email con `resend` via `src/app/api/contact/route.ts`, se anadio `.env.example` y feedback de envio en `src/components/Contact.tsx` con textos ES/EN en `src/content/siteContent.ts`.
+- 2026-02-25: Hero actualizado a estilo cinematografico oscuro; header transparente en zona Hero; se agrego `Host Grotesk` para tipografia del Hero via `next/font/local` (`src/app/fonts/host-grotesk-latin.woff2`) y variable `--font-host-grotesk`.
+- 2026-02-25: Ajuste de alcance tipografico: se revierte `Host Grotesk` global en base headings y se limita a Hero + headings seleccionados con `font-display` (incluye secciones como Nosotros, Compromiso, Valores y sticky reveal), manteniendo `Onest` como base general.
+- 2026-02-25: Correccion de alcance tipografico en elementos auxiliares; badges/kickers mantienen tipografia original (ej. `Global Lift` en sticky reveal en `JetBrains Mono`), con `Host Grotesk` solo en headlines.
+- 2026-02-25: Refinamiento de Header/Hero inspirado en Skydda: logo sin fondo adicional, enlaces sin elipse contenedora, CTA del header igual al CTA primario del Hero, estado Hero sin borde inferior visible y Hero con mayor niebla/difuminacion azul para resaltar el titulo.
+- 2026-02-26: Paridad de fuente del badge «Global Lift» en Image Reveal con la version de referencia (globallift.vercel.app): se anadio `FontClassProvider` en layout para inyectar la clase de JetBrains Mono (`next/font`) en el badge, regla `#services .badge.badge-contrast` en `globals.css` con `!important`, y fallback inline por variable CSS; en dev la variable puede resolver al fallback de next/font; en produccion la fuente coincide con la referencia.
+- 2026-02-26: Ajuste fino Hero/Header con referencia Skydda: enlaces y controles del header en `Host Grotesk` (`14px/400` para links), Hero con imagen de fondo mas nitida (sin blur directo en `.hero-bg-image`) y recalibracion de overlays para mantener niebla sin perder lectura del barco; bloque de titulo/CTAs del Hero se desplazo hacia arriba para igualar separacion visual respecto al header (verificado con Playwright).
+- 2026-02-26: Ajuste de fusion visual en Hero: `nav-hero-blend` pasa a fondo totalmente transparente (sin gradiente/tinte, sin blur), para que no se perciba franja ni cambio tonal del header sobre la imagen del Hero.
+- 2026-02-26: Correccion responsive de solapamiento Hero/Header en laptops: se elimina el offset fijo negativo en `Hero.tsx` y se reemplaza por `hero-copy-shell--offset` con media queries por altura/anchura en `globals.css`, evitando superposicion en viewports bajos (ej. 1280x720) y manteniendo composicion en monitores grandes (verificado en 1024x768, 1280x640, 1280x720, 1366x768, 1440x900, 1536x864, 1600x900, 1920x1080).
+- 2026-02-26: Refinamiento del espaciado Hero/Header para pantallas grandes: se redujo el gap vertical de forma continua por altura de viewport con `clamp(...)` en `hero-copy-shell--offset` y un ajuste adicional para pantallas muy grandes (`min-width:1700` + `min-height:980`), manteniendo cero solapamientos en laptops y acercando la composicion al layout de referencia Skydda.
