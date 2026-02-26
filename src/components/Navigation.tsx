@@ -145,7 +145,7 @@ export function Navigation({
               href="#top"
               className="absolute left-0 top-1/2 z-20 -translate-y-1/2"
             >
-              <Logo className={logoClass} />
+              <Logo className={logoClass} variant={isHeroZone ? 'hero' : 'default'} />
             </a>
 
             <div
