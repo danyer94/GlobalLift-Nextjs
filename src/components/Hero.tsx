@@ -5,7 +5,7 @@ import { withBasePath } from '../utils/basePath';
 import { MotionSection } from './MotionSection';
 
 const HERO_BG_IMAGE = {
-  src: withBasePath('/images/generated/about-bridge-ocean.webp'),
+  src: withBasePath('/images/generated/services-multimodal.webp'),
   posMobile: 'center 36%',
   posTablet: 'center 34%',
   posDesktop: 'center 33%',

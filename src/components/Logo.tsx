@@ -14,7 +14,7 @@ export function Logo({
     "flex items-center gap-0 transition-opacity hover:opacity-90";
   const src =
     variant === "hero"
-      ? withBasePath("/logo/white-borders-removebg.png")
+      ? withBasePath("/logo/logo-3D-removebg.png")
       : withBasePath("/logo/logo-3D-removebg.png");
 
   return (
