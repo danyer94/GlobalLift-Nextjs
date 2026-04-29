@@ -987,9 +987,11 @@
     width: 7.25rem;
     align-items: center;
     border-radius: 999px;
-    border: 1px solid rgb(255 255 255 / 0.42);
+    border: 1px solid rgb(255 255 255 / 0.4);
     background: rgb(var(--card) / 0.3);
-    padding: 0.18rem;
+    padding: 0.1875rem;
+    isolation: isolate;
+    background-clip: padding-box;
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.5),
       inset 0 -1px 0 rgb(255 255 255 / 0.16),
@@ -1018,9 +1020,9 @@
 
   .language-glass-toggle-thumb {
     position: absolute;
-    inset-block: 0.18rem;
-    left: 0.18rem;
-    width: calc(50% - 0.18rem);
+    inset-block: 0.1875rem;
+    left: 0.1875rem;
+    width: calc(50% - 0.1875rem);
     border-radius: 999px;
     border: 1px solid rgb(var(--brand-accent) / 0.78);
     background: rgb(var(--background) / 0.38);
@@ -1029,7 +1031,9 @@
       0 8px 18px rgb(var(--brand-primary) / 0.14);
     backdrop-filter: blur(12px) saturate(1.18);
     -webkit-backdrop-filter: blur(12px) saturate(1.18);
+    backface-visibility: hidden;
     transition: transform var(--motion-base) var(--ease-standard);
+    will-change: transform;
   }
 
   .language-glass-toggle-option {
@@ -1052,9 +1056,45 @@
   }
 
   .language-glass-toggle-option--inactive {
-    transform: scale(0.92);
+    transform: none;
     color: rgb(var(--muted-foreground));
     background: rgb(var(--foreground) / 0.08);
+  }
+
+  .language-glass-toggle-option--inactive > span:last-child {
+    display: inline-block;
+    transform: scale(0.92);
+    transform-origin: center;
+  }
+
+  .language-glass-toggle-flag {
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.16);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.42),
+      0 1px 2px rgb(0 0 0 / 0.16);
+    transform: translateZ(0);
+  }
+
+  .language-glass-toggle-flag-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .language-glass-toggle-option--inactive .language-glass-toggle-flag {
+    opacity: 0.82;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.26),
+      0 1px 2px rgb(0 0 0 / 0.12);
   }
 
   .language-glass-toggle--hero {
@@ -1086,6 +1126,21 @@
   .language-glass-toggle--hero .language-glass-toggle-option--inactive {
     color: rgb(206 223 247 / 0.86);
     background: rgb(255 255 255 / 0.08);
+  }
+
+  .language-glass-toggle--hero .language-glass-toggle-flag {
+    background: rgb(255 255 255 / 0.12);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.48),
+      0 1px 2px rgb(0 0 0 / 0.22);
+  }
+
+  .language-glass-toggle--hero
+    .language-glass-toggle-option--inactive
+    .language-glass-toggle-flag {
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.3),
+      0 1px 2px rgb(0 0 0 / 0.16);
   }
 
   .liquid-glass-panel {

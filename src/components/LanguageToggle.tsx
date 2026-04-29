@@ -12,7 +12,6 @@ type LanguageToggleProps = {
 type LanguageOption = {
   value: Language;
   label: string;
-  flagAlt: string;
   flagSrc: string;
   buttonLabel: string;
 };
@@ -23,14 +22,12 @@ const LANGUAGE_OPTIONS: Record<Language, LanguageOption> = {
   es: {
     value: "es",
     label: "ES",
-    flagAlt: "Bandera de Espa\u00f1a",
     flagSrc: withBasePath("/icons/flags/es.svg"),
     buttonLabel: "Switch language to English",
   },
   en: {
     value: "en",
     label: "EN",
-    flagAlt: "United States flag",
     flagSrc: withBasePath("/icons/flags/us.svg"),
     buttonLabel: "Cambiar idioma a espa\u00f1ol",
   },
@@ -99,13 +96,14 @@ export function LanguageToggle({
                   : "language-glass-toggle-option--inactive"
               }`}
             >
-              <span className="inline-flex h-[1.15rem] w-[1.15rem] shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 shadow-sm">
+              <span className="language-glass-toggle-flag" aria-hidden="true">
                 <Image
                   src={option.flagSrc}
-                  alt={option.flagAlt}
-                  width={24}
-                  height={24}
-                  className="h-full w-full object-cover scale-[1.25]"
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="language-glass-toggle-flag-image"
+                  unoptimized
                 />
               </span>
               <span>{option.label}</span>
