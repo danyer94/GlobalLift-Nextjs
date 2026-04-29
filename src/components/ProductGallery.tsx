@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
-import Image from 'next/image';
-import type { ProductsGalleryCopy } from '../content/siteContent';
-import { withBasePath } from '../utils/basePath';
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
+import Image from "next/image";
+import type { ProductsGalleryCopy } from "../content/siteContent";
+import { withBasePath } from "../utils/basePath";
 
 type ProductGalleryProps = {
   heading: string;
@@ -18,50 +18,46 @@ type ProductSlide = {
 
 const PRODUCT_IMAGES: ProductSlide[] = [
   {
-    key: 'products-charcoal-premium',
-    src: 'images/generated/products/products-charcoal-premium.webp',
-    fallbackSrc: 'images/generated/products/products-charcoal-premium.png',
+    key: "products-charcoal-premium",
+    src: "images/generated/products/products-charcoal-premium.webp",
+    fallbackSrc: "images/generated/products/products-charcoal-premium.png",
   },
   {
-    key: 'products-fruits-variety',
-    src: 'images/generated/products/products-fruits-variety.webp',
-    fallbackSrc: 'images/generated/products/products-fruits-variety.png',
+    key: "products-fruits-variety",
+    src: "images/generated/products/products-fruits-variety.webp",
+    fallbackSrc: "images/generated/products/products-fruits-variety.png",
   },
   {
-    key: 'products-mango-export',
-    src: 'images/generated/products/products-mango-export.webp',
-    fallbackSrc: 'images/generated/products/products-mango-export.png',
+    key: "products-mango-export",
+    src: "images/generated/products/products-mango-export.webp",
+    fallbackSrc: "images/generated/products/products-mango-export.png",
   },
   {
-    key: 'products-peppers-tomatoes',
-    src: 'images/generated/products/products-peppers-tomatoes.webp',
-    fallbackSrc: 'images/generated/products/products-peppers-tomatoes.png',
+    key: "products-peppers-tomatoes",
+    src: "images/generated/products/products-peppers-tomatoes.webp",
+    fallbackSrc: "images/generated/products/products-peppers-tomatoes.png",
   },
-
+  {
+    key: "products-mixed-catalog",
+    src: "images/generated/products/products-mixed-catalog.webp",
+    fallbackSrc: "images/generated/products/products-mixed-catalog.png",
+  },
+  {
+    key: "products-charcoal-bulk",
+    src: "images/generated/products/products-charcoal-bulk.webp",
+    fallbackSrc: "images/generated/products/products-charcoal-bulk.png",
+  },
+  {
+    key: "products-vegetables-variety",
+    src: "images/generated/products/products-vegetables-variety.webp",
+    fallbackSrc: "images/generated/products/products-vegetables-variety.png",
+  },
+  {
+    key: "products-avocado-export",
+    src: "images/generated/products/products-avocado-export.webp",
+    fallbackSrc: "images/generated/products/products-avocado-export.png",
+  },
 ];
-
-/*
-  {
-    key: 'products-mixed-catalog',
-    src: 'images/generated/products/products-mixed-catalog.webp',
-    fallbackSrc: 'images/generated/products/products-mixed-catalog.png',
-  },
-  {
-    key: 'products-charcoal-bulk',
-    src: 'images/generated/products/products-charcoal-bulk.webp',
-    fallbackSrc: 'images/generated/products/products-charcoal-bulk.png',
-  },
-  {
-    key: 'products-vegetables-variety',
-    src: 'images/generated/products/products-vegetables-variety.webp',
-    fallbackSrc: 'images/generated/products/products-vegetables-variety.png',
-  },  
-  {
-    key: 'products-avocado-export',
-    src: 'images/generated/products/products-avocado-export.webp',
-    fallbackSrc: 'images/generated/products/products-avocado-export.png',
-  },
-*/
 
 export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -81,14 +77,18 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
 
   const getImageSrc = useCallback(
     (slide: ProductSlide) => {
-      const relativePath = fallbackMap[slide.key] ? slide.fallbackSrc : slide.src;
+      const relativePath = fallbackMap[slide.key]
+        ? slide.fallbackSrc
+        : slide.src;
       return withBasePath(relativePath);
     },
     [fallbackMap],
   );
 
   const handleImageError = useCallback((slideKey: string) => {
-    setFallbackMap((prev) => (prev[slideKey] ? prev : { ...prev, [slideKey]: true }));
+    setFallbackMap((prev) =>
+      prev[slideKey] ? prev : { ...prev, [slideKey]: true },
+    );
   }, []);
 
   const nextSlide = useCallback(() => {
@@ -121,17 +121,17 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
     if (!isViewerOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         setIsViewerOpen(false);
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === "ArrowRight") {
         setCurrentIndex((prev) => (prev + 1) % total);
-      } else if (event.key === 'ArrowLeft') {
+      } else if (event.key === "ArrowLeft") {
         setCurrentIndex((prev) => (prev - 1 + total) % total);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isViewerOpen, total]);
 
   return (
@@ -144,7 +144,10 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
         onTouchEnd={() => setIsCarouselPaused(false)}
       >
         {PRODUCT_IMAGES.map((slide, index) => {
-          const shouldRender = index === currentIndex || index === prevIndex || index === nextIndex;
+          const shouldRender =
+            index === currentIndex ||
+            index === prevIndex ||
+            index === nextIndex;
 
           if (!shouldRender) {
             return null;
@@ -156,7 +159,9 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             <div
               key={slide.key}
               className={`media-crossfade absolute inset-0 ${
-                index === currentIndex ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
+                index === currentIndex
+                  ? "opacity-100 z-10 pointer-events-auto"
+                  : "opacity-0 z-0 pointer-events-none"
               }`}
             >
               <Image
@@ -216,8 +221,8 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             onClick={() => goToSlide(index)}
             className={`h-2.5 transition-all duration-300 rounded-full ${
               index === currentIndex
-                ? 'w-8 bg-secondary shadow-[0_0_0_4px_rgb(var(--secondary)_/_0.18)]'
-                : 'w-2.5 bg-secondary/25 hover:bg-secondary/45'
+                ? "w-8 bg-secondary shadow-[0_0_0_4px_rgb(var(--secondary)_/_0.18)]"
+                : "w-2.5 bg-secondary/25 hover:bg-secondary/45"
             }`}
             aria-label={`${galleryCopy.controls.goToSlide} ${index + 1}`}
           />
@@ -262,7 +267,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                 width={1600}
                 height={900}
                 sizes="(min-width: 1024px) 960px, 100vw"
-                style={{ maxHeight: '78vh', width: '100%', height: 'auto' }}
+                style={{ maxHeight: "78vh", width: "100%", height: "auto" }}
                 onError={() => handleImageError(currentSlide.key)}
               />
 
