@@ -135,97 +135,129 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   }, [isViewerOpen, total]);
 
   return (
-    <div className="mt-20 md:mt-24 w-full max-w-5xl mx-auto">
+    <div className="mt-20 w-full max-w-6xl mx-auto md:mt-24">
       <div
-        className="group relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border/70 bg-card shadow-soft sm:aspect-[21/9]"
+        className="group relative"
         onMouseEnter={() => setIsCarouselPaused(true)}
         onMouseLeave={() => setIsCarouselPaused(false)}
         onTouchStart={() => setIsCarouselPaused(true)}
         onTouchEnd={() => setIsCarouselPaused(false)}
       >
-        {PRODUCT_IMAGES.map((slide, index) => {
-          const shouldRender =
-            index === currentIndex ||
-            index === prevIndex ||
-            index === nextIndex;
-
-          if (!shouldRender) {
-            return null;
-          }
-
-          const slideTitle = getSlideTitle(slide.key);
-
-          return (
-            <div
-              key={slide.key}
-              className={`media-crossfade absolute inset-0 ${
-                index === currentIndex
-                  ? "opacity-100 z-10 pointer-events-auto"
-                  : "opacity-0 z-0 pointer-events-none"
-              }`}
-            >
-              <Image
-                src={getImageSrc(slide)}
-                alt={`${heading} - ${slideTitle}`}
-                className="h-full w-full object-cover"
-                fill
-                sizes="(min-width: 640px) 80vw, 100vw"
-                priority={index === currentIndex && currentIndex === 0}
-                onError={() => handleImageError(slide.key)}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-primary/10 to-transparent" />
-            </div>
-          );
-        })}
-
         <div
-          className="absolute inset-0 z-[15] cursor-zoom-in"
-          onDoubleClick={openViewer}
+          className="pointer-events-none absolute -inset-x-4 top-8 h-[72%] rounded-[3rem] bg-[radial-gradient(circle_at_50%_40%,rgb(var(--secondary)_/_0.22),transparent_62%)] blur-3xl md:-inset-x-10"
           aria-hidden="true"
         />
 
-        <button
-          onClick={prevSlide}
-          className="icon-button-overlay absolute left-4 top-1/2 z-20 -translate-y-1/2 opacity-95 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
-          aria-label={galleryCopy.controls.previousSlide}
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="icon-button-overlay absolute right-4 top-1/2 z-20 -translate-y-1/2 opacity-95 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
-          aria-label={galleryCopy.controls.nextSlide}
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
+        <div className="relative mx-auto max-w-5xl">
+          <div className="relative aspect-[3/2] w-full">
+            {PRODUCT_IMAGES.map((slide, index) => {
+              const shouldRender =
+                index === currentIndex ||
+                index === prevIndex ||
+                index === nextIndex;
 
-        <button
-          onClick={openViewer}
-          className="icon-button-overlay absolute bottom-6 right-6 z-20"
-          aria-label={galleryCopy.controls.openViewer}
-        >
-          <Maximize2 className="h-6 w-6" />
-        </button>
+              if (!shouldRender) {
+                return null;
+              }
 
-        <div className="absolute bottom-6 left-6 z-20">
-          <span className="rounded-full border border-primary-foreground/25 bg-primary/80 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-lg backdrop-blur-md">
-            {getSlideTitle(currentSlide.key)}
-          </span>
+              const slideTitle = getSlideTitle(slide.key);
+
+              return (
+                <div
+                  key={slide.key}
+                  className={`media-crossfade absolute inset-0 ${
+                    index === currentIndex
+                      ? "opacity-100 z-10 pointer-events-auto"
+                      : "opacity-0 z-0 pointer-events-none"
+                  }`}
+                >
+                  <Image
+                    src={getImageSrc(slide)}
+                    alt={`${heading} - ${slideTitle}`}
+                    className="h-full w-full rounded-[1.75rem] object-contain shadow-[0_30px_90px_rgb(var(--primary)_/_0.22)]"
+                    fill
+                    sizes="(min-width: 1024px) 960px, (min-width: 640px) 86vw, 100vw"
+                    priority={index === currentIndex && currentIndex === 0}
+                    onError={() => handleImageError(slide.key)}
+                  />
+                </div>
+              );
+            })}
+
+            <div
+              className="absolute inset-0 z-[15] cursor-zoom-in"
+              onDoubleClick={openViewer}
+              aria-hidden="true"
+            />
+
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/70 bg-background/75 text-foreground shadow-[0_18px_45px_rgb(var(--primary)_/_0.18)] backdrop-blur-md transition duration-300 hover:-translate-x-0.5 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:-left-5 md:-left-7 md:h-12 md:w-12"
+              aria-label={galleryCopy.controls.previousSlide}
+            >
+              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/70 bg-background/75 text-foreground shadow-[0_18px_45px_rgb(var(--primary)_/_0.18)] backdrop-blur-md transition duration-300 hover:translate-x-0.5 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:-right-5 md:-right-7 md:h-12 md:w-12"
+              aria-label={galleryCopy.controls.nextSlide}
+            >
+              <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+            </button>
+
+            <button
+              onClick={openViewer}
+              className="absolute right-3 top-3 z-20 flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-foreground shadow-[0_18px_45px_rgb(var(--primary)_/_0.16)] backdrop-blur-md transition duration-300 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:right-5 sm:top-5"
+              aria-label={galleryCopy.controls.openViewer}
+            >
+              <span className="hidden sm:inline">{galleryCopy.controls.openViewer}</span>
+              <Maximize2 className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="relative z-20 mx-auto mt-6 flex max-w-5xl flex-col gap-4 border-t border-border/60 pt-5 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-muted-foreground">
+              {heading}
+            </p>
+            <h3 className="font-display text-2xl font-semibold leading-tight text-foreground md:text-3xl">
+              {getSlideTitle(currentSlide.key)}
+            </h3>
+          </div>
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
+            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </p>
         </div>
       </div>
 
-      <div className="mt-8 flex justify-center gap-3">
-        {PRODUCT_IMAGES.map((_, index) => (
+      <div className="mx-auto mt-6 flex max-w-5xl gap-3 overflow-x-auto pb-3">
+        {PRODUCT_IMAGES.map((slide, index) => (
           <button
-            key={index}
+            key={slide.key}
             onClick={() => goToSlide(index)}
-            className={`h-2.5 transition-all duration-300 rounded-full ${
+            className={`relative h-20 min-w-28 overflow-hidden rounded-2xl border transition duration-300 sm:h-24 sm:min-w-36 ${
               index === currentIndex
-                ? "w-8 bg-secondary shadow-[0_0_0_4px_rgb(var(--secondary)_/_0.18)]"
-                : "w-2.5 bg-secondary/25 hover:bg-secondary/45"
+                ? "border-secondary shadow-[0_0_0_4px_rgb(var(--secondary)_/_0.16)]"
+                : "border-border/70 opacity-55 hover:border-secondary/60 hover:opacity-100"
             }`}
             aria-label={`${galleryCopy.controls.goToSlide} ${index + 1}`}
-          />
+          >
+            <Image
+              src={getImageSrc(slide)}
+              alt=""
+              className="h-full w-full object-cover"
+              fill
+              sizes="144px"
+              onError={() => handleImageError(slide.key)}
+            />
+            <span
+              className={`absolute inset-x-0 bottom-0 h-1 ${
+                index === currentIndex ? "bg-secondary" : "bg-transparent"
+              }`}
+              aria-hidden="true"
+            />
+          </button>
         ))}
       </div>
 
