@@ -1,11 +1,11 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { JetBrains_Mono, Onest } from 'next/font/google'
+import { JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
 import { FontClassProvider } from '@/contexts/FontClassContext'
 import '../../styles/globals.css'
 
-const onest = Onest({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
   variable: '--font-onest',
@@ -53,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="scroll-smooth">
-      <body className={`${onest.variable} ${jetBrainsMono.variable} ${hostGrotesk.variable}`}>
+      <body className={`${plusJakartaSans.variable} ${jetBrainsMono.variable} ${hostGrotesk.variable}`}>
         <FontClassProvider monoClassName={jetBrainsMono.className}>
           {children}
         </FontClassProvider>

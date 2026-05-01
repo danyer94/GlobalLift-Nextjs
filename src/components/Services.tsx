@@ -1,12 +1,23 @@
 import type { CSSProperties } from 'react';
-import { Boxes, FileCheck, Globe2, Handshake, Plane, Ship, ShieldCheck, Truck } from 'lucide-react';
+import { Anchor, Cube, ClipboardText, Globe, Handshake, Airplane, ShieldCheck, Truck } from '@phosphor-icons/react';
 import type { ServicesCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
+import { AnimatedOl, MotionLi } from './ui/AnimatedList';
 import { MotionSection } from './MotionSection';
 
 type ServicesProps = {
   copy: ServicesCopy;
 };
+
+const SERVICE_KEYS = [
+  'import',
+  'export',
+  'logistics-coordination',
+  'commercialization',
+  'supplier-client-connection',
+  'trade-facilitation',
+  'sourcing-supply',
+] as const;
 
 const getIconForService = (title: string) => {
   const normalized = title
@@ -14,14 +25,14 @@ const getIconForService = (title: string) => {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
 
-  if (normalized.includes('maritimo') || normalized.includes('ocean')) return Ship;
-  if (normalized.includes('aereo') || normalized.includes('air')) return Plane;
+  if (normalized.includes('maritimo') || normalized.includes('ocean')) return Anchor;
+  if (normalized.includes('aereo') || normalized.includes('air')) return Airplane;
   if (normalized.includes('terrestre') || normalized.includes('land')) return Truck;
-  if (normalized.includes('aduanas') || normalized.includes('customs')) return FileCheck;
-  if (normalized.includes('almacenamiento') || normalized.includes('storage')) return Boxes;
+  if (normalized.includes('aduanas') || normalized.includes('customs')) return ClipboardText;
+  if (normalized.includes('almacenamiento') || normalized.includes('storage')) return Cube;
   if (normalized.includes('seguro') || normalized.includes('insurance')) return ShieldCheck;
   if (normalized.includes('asesoria') || normalized.includes('consulting')) return Handshake;
-  return Globe2;
+  return Globe;
 };
 
 const splitItem = (item: string) => {
@@ -57,13 +68,16 @@ export function Services({ copy }: ServicesProps) {
           <p className="section-lead mt-6 max-w-3xl">{copy.lead}</p>
         </div>
 
-        <ol className="service-route mt-12" aria-label={copy.heading}>
+        <AnimatedOl className="service-route mt-12" aria-label={copy.heading}>
           {copy.items.map((item, index) => {
             const { title, description } = splitItem(item);
             const Icon = getIconForService(title);
 
             return (
-              <li key={item} className={`service-route-item service-route-item--${getServiceTone(index)}`}>
+              <MotionLi
+                key={SERVICE_KEYS[index] ?? title}
+                className={`service-route-item service-route-item--${getServiceTone(index)}`}
+              >
                 <div className="service-route-marker">
                   <span className="service-route-index">{String(index + 1).padStart(2, '0')}</span>
                   <span className="icon-dot">
@@ -74,10 +88,10 @@ export function Services({ copy }: ServicesProps) {
                   <p className="text-base font-semibold text-foreground md:text-lg">{title}</p>
                   {description && <p className="mt-2 text-sm text-muted-foreground md:text-base">{description}</p>}
                 </div>
-              </li>
+              </MotionLi>
             );
           })}
-        </ol>
+        </AnimatedOl>
       </div>
     </MotionSection>
   );

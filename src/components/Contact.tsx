@@ -1,4 +1,6 @@
-import { ArrowRight, Globe2, Mail, MapPin, Phone, type LucideIcon } from 'lucide-react';
+import type { ComponentType } from 'react';
+import type { IconProps } from '@phosphor-icons/react';
+import { ArrowRight, Globe, EnvelopeSimple, MapPin, PhoneCall } from '@phosphor-icons/react';
 import { useState, type CSSProperties, type FormEvent, type HTMLAttributes } from 'react';
 import type { ContactCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
@@ -21,7 +23,7 @@ type CompanyInfoItem = {
   label: string;
   value: string;
   href?: string;
-  icon: LucideIcon;
+  icon: ComponentType<IconProps>;
 };
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
@@ -60,7 +62,7 @@ export function Contact({ copy }: ContactProps) {
       id: 'country',
       label: copy.companyInfo.countryLabel,
       value: copy.companyInfo.country,
-      icon: Globe2,
+      icon: Globe,
     },
     {
       id: 'address',
@@ -73,14 +75,14 @@ export function Contact({ copy }: ContactProps) {
       label: copy.companyInfo.emailLabel,
       value: copy.companyInfo.email,
       href: `mailto:${copy.companyInfo.email}`,
-      icon: Mail,
+      icon: EnvelopeSimple,
     },
     {
       id: 'phone',
       label: copy.companyInfo.phoneLabel,
       value: copy.companyInfo.phone,
       href: `tel:${copy.companyInfo.phone}`,
-      icon: Phone,
+      icon: PhoneCall,
     },
   ];
 

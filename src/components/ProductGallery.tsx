@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { createPortal } from "react-dom";
-import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
+import { CaretLeft, CaretRight, ArrowsOutSimple, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import type { ProductsGalleryCopy } from "../content/siteContent";
 import { withBasePath } from "../utils/basePath";
@@ -15,6 +15,24 @@ type ProductSlide = {
   src: string;
   fallbackSrc: string;
 };
+
+type GalleryState = {
+  currentIndex: number;
+  isViewerOpen: boolean;
+  isCarouselPaused: boolean;
+  hoveredIndex: number | null;
+  fallbackMap: Record<string, boolean>;
+};
+
+type GalleryAction =
+  | { type: "next" }
+  | { type: "previous" }
+  | { type: "goTo"; index: number }
+  | { type: "openViewer" }
+  | { type: "closeViewer" }
+  | { type: "setPaused"; paused: boolean }
+  | { type: "setHovered"; index: number | null }
+  | { type: "imageError"; slideKey: string };
 
 const PRODUCT_IMAGES: ProductSlide[] = [
   {
@@ -59,12 +77,47 @@ const PRODUCT_IMAGES: ProductSlide[] = [
   },
 ];
 
+const TOTAL_SLIDES = PRODUCT_IMAGES.length;
+
+const initialGalleryState: GalleryState = {
+  currentIndex: 0,
+  isViewerOpen: false,
+  isCarouselPaused: false,
+  hoveredIndex: null,
+  fallbackMap: {},
+};
+
+const galleryReducer = (state: GalleryState, action: GalleryAction): GalleryState => {
+  switch (action.type) {
+    case "next":
+      return { ...state, currentIndex: (state.currentIndex + 1) % TOTAL_SLIDES };
+    case "previous":
+      return { ...state, currentIndex: (state.currentIndex - 1 + TOTAL_SLIDES) % TOTAL_SLIDES };
+    case "goTo":
+      return { ...state, currentIndex: action.index };
+    case "openViewer":
+      return { ...state, isViewerOpen: true };
+    case "closeViewer":
+      return { ...state, isViewerOpen: false };
+    case "setPaused":
+      return { ...state, isCarouselPaused: action.paused };
+    case "setHovered":
+      return { ...state, hoveredIndex: action.index };
+    case "imageError":
+      return state.fallbackMap[action.slideKey]
+        ? state
+        : { ...state, fallbackMap: { ...state.fallbackMap, [action.slideKey]: true } };
+    default:
+      return state;
+  }
+};
+
 export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
-  const [fallbackMap, setFallbackMap] = useState<Record<string, boolean>>({});
-  const total = PRODUCT_IMAGES.length;
+  const [{ currentIndex, isViewerOpen, isCarouselPaused, hoveredIndex, fallbackMap }, dispatch] = useReducer(
+    galleryReducer,
+    initialGalleryState,
+  );
+  const total = TOTAL_SLIDES;
   const autoPlayInterval = 5000;
   const prevIndex = (currentIndex - 1 + total) % total;
   const nextIndex = (currentIndex + 1) % total;
@@ -73,6 +126,11 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   const getSlideTitle = useCallback(
     (slideKey: string) => galleryCopy.slideTitles[slideKey] ?? slideKey,
     [galleryCopy.slideTitles],
+  );
+
+  const getSlideMetadata = useCallback(
+    (slideKey: string) => galleryCopy.slideMetadata[slideKey],
+    [galleryCopy.slideMetadata],
   );
 
   const getImageSrc = useCallback(
@@ -86,29 +144,27 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   );
 
   const handleImageError = useCallback((slideKey: string) => {
-    setFallbackMap((prev) =>
-      prev[slideKey] ? prev : { ...prev, [slideKey]: true },
-    );
+    dispatch({ type: "imageError", slideKey });
   }, []);
 
   const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % total);
-  }, [total]);
+    dispatch({ type: "next" });
+  }, []);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
+    dispatch({ type: "previous" });
+  }, []);
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+  const goToSlide = useCallback((index: number) => {
+    dispatch({ type: "goTo", index });
+  }, []);
 
   const openViewer = useCallback(() => {
-    setIsViewerOpen(true);
+    dispatch({ type: "openViewer" });
   }, []);
 
   const closeViewer = useCallback(() => {
-    setIsViewerOpen(false);
+    dispatch({ type: "closeViewer" });
   }, []);
 
   useEffect(() => {
@@ -122,26 +178,32 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsViewerOpen(false);
+        dispatch({ type: "closeViewer" });
       } else if (event.key === "ArrowRight") {
-        setCurrentIndex((prev) => (prev + 1) % total);
+        dispatch({ type: "next" });
       } else if (event.key === "ArrowLeft") {
-        setCurrentIndex((prev) => (prev - 1 + total) % total);
+        dispatch({ type: "previous" });
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isViewerOpen, total]);
+  }, [isViewerOpen]);
 
   return (
     <div className="mt-20 w-full max-w-6xl mx-auto md:mt-24">
       <div
         className="group relative"
-        onMouseEnter={() => setIsCarouselPaused(true)}
-        onMouseLeave={() => setIsCarouselPaused(false)}
-        onTouchStart={() => setIsCarouselPaused(true)}
-        onTouchEnd={() => setIsCarouselPaused(false)}
+        onMouseEnter={() => { dispatch({ type: "setPaused", paused: true }); }}
+        onMouseLeave={() => {
+          dispatch({ type: "setPaused", paused: false });
+          dispatch({ type: "setHovered", index: null });
+        }}
+        onTouchStart={() => { dispatch({ type: "setPaused", paused: true }); }}
+        onTouchEnd={() => {
+          dispatch({ type: "setPaused", paused: false });
+          dispatch({ type: "setHovered", index: null });
+        }}
       >
         <div
           className="pointer-events-none absolute -inset-x-4 top-8 h-[72%] rounded-[3rem] bg-[radial-gradient(circle_at_50%_40%,rgb(var(--secondary)_/_0.22),transparent_62%)] blur-3xl md:-inset-x-10"
@@ -161,6 +223,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
               }
 
               const slideTitle = getSlideTitle(slide.key);
+              const slideMetadata = getSlideMetadata(slide.key);
 
               return (
                 <div
@@ -180,29 +243,46 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                     priority={index === currentIndex && currentIndex === 0}
                     onError={() => handleImageError(slide.key)}
                   />
+                  {/* Hover metadata overlay */}
+                  <div
+                    className={`absolute inset-x-0 bottom-0 z-[14] flex translate-y-0 items-end gap-3 rounded-b-[1.75rem] px-6 pb-6 opacity-100 transition-[opacity,transform] duration-300 ${
+                      (hoveredIndex !== null ? hoveredIndex === index : isCarouselPaused && index === currentIndex)
+                        ? "sm:translate-y-0 sm:opacity-100"
+                        : "sm:pointer-events-none sm:translate-y-2 sm:opacity-0"
+                    }`}
+                    style={{
+                      background: "linear-gradient(to top, rgb(var(--primary) / 0.72) 0%, transparent 100%)",
+                    }}
+                  >
+                    {slideMetadata?.badge && (
+                      <span className="rounded-full border border-white/30 bg-white/16 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-white backdrop-blur-sm">
+                        {slideMetadata.badge}
+                      </span>
+                    )}
+                    <div className="flex flex-col gap-0.5">
+                      <p className="text-sm font-semibold text-white">{slideMetadata?.category ?? slideTitle}</p>
+                      {slideMetadata?.origin ? (
+                        <p className="text-xs text-white/70">{slideMetadata.origin}</p>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
               );
             })}
-
-            <div
-              className="absolute inset-0 z-[15] cursor-zoom-in"
-              onDoubleClick={openViewer}
-              aria-hidden="true"
-            />
 
             <button
               onClick={prevSlide}
               className="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/70 bg-background/75 text-foreground shadow-[0_18px_45px_rgb(var(--primary)_/_0.18)] backdrop-blur-md transition duration-300 hover:-translate-x-0.5 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:-left-5 md:-left-7 md:h-12 md:w-12"
               aria-label={galleryCopy.controls.previousSlide}
             >
-              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+              <CaretLeft className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
             </button>
             <button
               onClick={nextSlide}
               className="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/70 bg-background/75 text-foreground shadow-[0_18px_45px_rgb(var(--primary)_/_0.18)] backdrop-blur-md transition duration-300 hover:translate-x-0.5 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:-right-5 md:-right-7 md:h-12 md:w-12"
               aria-label={galleryCopy.controls.nextSlide}
             >
-              <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+              <CaretRight className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
             </button>
 
             <button
@@ -211,7 +291,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
               aria-label={galleryCopy.controls.openViewer}
             >
               <span className="hidden sm:inline">{galleryCopy.controls.openViewer}</span>
-              <Maximize2 className="h-4 w-4" />
+              <ArrowsOutSimple className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -236,6 +316,8 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
           <button
             key={slide.key}
             onClick={() => goToSlide(index)}
+            onMouseEnter={() => { dispatch({ type: "setHovered", index }); }}
+            onMouseLeave={() => { dispatch({ type: "setHovered", index: null }); }}
             className={`relative h-20 min-w-28 overflow-hidden rounded-2xl border transition duration-300 sm:h-24 sm:min-w-36 ${
               index === currentIndex
                 ? "border-secondary shadow-[0_0_0_4px_rgb(var(--secondary)_/_0.16)]"
@@ -268,11 +350,15 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             role="dialog"
             aria-modal="true"
             aria-label={getSlideTitle(currentSlide.key)}
-            onClick={closeViewer}
           >
+            <button
+              type="button"
+              className="absolute inset-0 cursor-default"
+              aria-label={galleryCopy.controls.closeViewer}
+              onClick={closeViewer}
+            />
             <div
-              className="relative w-full max-w-5xl rounded-2xl border border-border/70 bg-card/95 p-3 shadow-lift sm:p-4"
-              onClick={(event) => event.stopPropagation()}
+              className="relative z-10 w-full max-w-5xl rounded-2xl border border-border/70 bg-card/95 p-3 shadow-lift sm:p-4"
             >
               <button
                 type="button"
@@ -289,7 +375,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                 className="icon-button-overlay absolute left-4 top-1/2 z-20 -translate-y-1/2 h-11 w-11"
                 aria-label={galleryCopy.controls.previousImage}
               >
-                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                <CaretLeft className="h-5 w-5" aria-hidden="true" />
               </button>
 
               <Image
@@ -309,7 +395,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                 className="icon-button-overlay absolute right-4 top-1/2 z-20 -translate-y-1/2 h-11 w-11"
                 aria-label={galleryCopy.controls.nextImage}
               >
-                <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                <CaretRight className="h-5 w-5" aria-hidden="true" />
               </button>
 
               <p className="mt-3 text-center text-sm font-semibold text-foreground">

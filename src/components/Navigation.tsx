@@ -1,4 +1,4 @@
-import { Menu, X } from 'lucide-react';
+import { List, X } from '@phosphor-icons/react';
 import { useEffect, useMemo, useState } from 'react';
 import type { Language, NavItem } from '../content/siteContent';
 import { LanguageToggle } from './LanguageToggle';
@@ -174,7 +174,7 @@ export function Navigation({
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-nav-drawer"
               >
-                <Menu className="h-5 w-5" aria-hidden="true" />
+                <List className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>

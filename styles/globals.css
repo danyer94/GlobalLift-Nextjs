@@ -20,8 +20,12 @@
   --radius-lg: 1.125rem;
   --radius-xl: 1.5rem;
   --radius-2xl: 1.75rem;
-  --shadow-soft: 0 24px 60px rgb(var(--brand-primary) / 0.1);
-  --shadow-lift: 0 18px 46px rgb(var(--brand-primary) / 0.14);
+  --shadow-soft:
+    0 8px 40px -8px rgb(var(--brand-secondary) / 0.1),
+    0 2px 12px -4px rgb(var(--brand-primary) / 0.06);
+  --shadow-lift:
+    0 8px 40px -8px rgb(var(--brand-secondary) / 0.14),
+    0 2px 12px -4px rgb(var(--brand-primary) / 0.08);
   --shadow-signal:
     0 0 0 1px rgb(var(--brand-secondary) / 0.28),
     0 28px 70px rgb(var(--brand-primary) / 0.22);
@@ -58,6 +62,18 @@
   --motion-slow: 780ms;
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Premium shadow system — shadows with colour tint, not pure black */
+  --shadow-premium:
+    0 8px 40px -8px rgb(var(--brand-secondary) / 0.12),
+    0 2px 12px -4px rgb(var(--brand-primary) / 0.08);
+  --shadow-card:
+    0 4px 24px -4px rgb(var(--brand-primary) / 0.08),
+    0 1px 6px -2px rgb(var(--brand-primary) / 0.06);
+  --shadow-glass:
+    0 20px 48px -12px rgb(var(--brand-primary) / 0.15),
+    inset 0 1px 0 rgb(255 255 255 / 0.4);
+  /* Section vertical rhythm */
+  --space-section: clamp(5rem, 10vw, 8rem);
   --gradient-aurora:
     radial-gradient(
       closest-side at 16% 18%,
@@ -100,7 +116,7 @@
 :root[data-cinema="immersive"] {
   --cinema-overlay-soft: rgb(var(--background) / 0.68);
   --cinema-vignette: rgb(var(--brand-primary) / 0.3);
-  --cinema-grain-opacity: 0.075;
+  --cinema-grain-opacity: 0.1;
   --cinema-media-opacity: 0.4;
   --cinema-card-lift: -4px;
   --cinema-step-lift: -3px;
@@ -291,8 +307,7 @@
   }
 
   .nav-logo--hero img {
-    filter:
-      drop-shadow(0 12px 26px rgb(0 0 0 / 0.48))
+    filter: drop-shadow(0 12px 26px rgb(0 0 0 / 0.48))
       drop-shadow(0 0 14px rgb(228 241 255 / 0.38));
   }
 
@@ -391,7 +406,8 @@
 
   .badge {
     @apply inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.32em] text-secondary shadow-soft;
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
   }
 
   .panel {
@@ -475,7 +491,8 @@
 
   /* Image Reveal badge: force JetBrains Mono so it matches reference (globallift.vercel.app) */
   #services .badge.badge-contrast {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace !important;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace !important;
   }
 
   .icon-button-overlay {
@@ -617,7 +634,8 @@
   }
 
   .service-route-index {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -732,7 +750,8 @@
   }
 
   .statement-panel-label {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -802,7 +821,8 @@
   }
 
   .contact-company-kicker {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -875,7 +895,8 @@
   }
 
   .contact-company-label {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -951,7 +972,8 @@
   }
 
   .contact-form-label {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -1258,7 +1280,8 @@
   }
 
   .value-thread-index {
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.69rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -1417,7 +1440,8 @@
     border: 1px solid rgb(var(--secondary) / 0.3);
     background: rgb(var(--secondary) / 0.12);
     color: rgb(var(--primary));
-    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+    font-family:
+      var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -1506,8 +1530,6 @@
   opacity: 0.3;
 }
 
-
-
 .boat-shell {
   width: 136px;
   height: 222px;
@@ -1521,7 +1543,8 @@
   object-fit: contain;
   transform: rotate(180deg) scale(0.98);
   transform-origin: center;
-  filter: saturate(1.08) contrast(1.04) drop-shadow(0 0 15px rgba(255, 255, 255, 0.4))
+  filter: saturate(1.08) contrast(1.04)
+    drop-shadow(0 0 15px rgba(255, 255, 255, 0.4))
     drop-shadow(0 10px 14px rgb(var(--primary) / 0.28));
 }
 
@@ -1535,6 +1558,38 @@
   color: transparent;
 }
 
+/* ── Mesh gradient for Contact section ─────────────── */
+.mesh-contact {
+  background:
+    radial-gradient(
+      60% 60% at 20% 40%,
+      rgb(var(--secondary) / 0.12) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 60% at 80% 60%,
+      rgb(var(--accent) / 0.08) 0%,
+      transparent 70%
+    ),
+    var(--gradient-surface);
+}
+
+.mesh-contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mesh-contact > * {
+  position: relative;
+  z-index: 2;
+}
+
 .hero-highlight-match {
   color: inherit;
 }
@@ -1543,22 +1598,9 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(
-      80% 70% at 50% 6%,
-      rgb(80 141 216 / 0.28),
-      transparent 72%
-    ),
-    radial-gradient(
-      64% 58% at 88% 24%,
-      rgb(29 72 140 / 0.32),
-      transparent 78%
-    ),
-    linear-gradient(
-      180deg,
-      rgb(7 19 45) 0%,
-      rgb(4 13 33) 48%,
-      rgb(2 8 20) 100%
-    );
+    radial-gradient(80% 70% at 50% 6%, rgb(80 141 216 / 0.28), transparent 72%),
+    radial-gradient(64% 58% at 88% 24%, rgb(29 72 140 / 0.32), transparent 78%),
+    linear-gradient(180deg, rgb(7 19 45) 0%, rgb(4 13 33) 48%, rgb(2 8 20) 100%);
 }
 
 .hero-bg-slides {
@@ -1624,16 +1666,8 @@
       rgb(146 188 244 / 0.26),
       transparent 74%
     ),
-    radial-gradient(
-      58% 62% at 84% 26%,
-      rgb(35 87 157 / 0.34),
-      transparent 76%
-    ),
-    radial-gradient(
-      88% 72% at 50% 88%,
-      rgb(8 24 52 / 0.9),
-      transparent 76%
-    ),
+    radial-gradient(58% 62% at 84% 26%, rgb(35 87 157 / 0.34), transparent 76%),
+    radial-gradient(88% 72% at 50% 88%, rgb(8 24 52 / 0.9), transparent 76%),
     radial-gradient(
       68% 44% at 50% 52%,
       rgb(132 174 232 / 0.14),
@@ -1656,8 +1690,16 @@
       rgb(2 7 18 / 0.42) 100%
     ),
     radial-gradient(125% 92% at 50% 104%, rgb(1 4 12 / 0.92), transparent 68%),
-    radial-gradient(84% 44% at 50% 12%, rgb(108 157 223 / 0.2), transparent 74%),
-    radial-gradient(95% 58% at 50% 44%, rgb(150 193 246 / 0.1), transparent 70%),
+    radial-gradient(
+      84% 44% at 50% 12%,
+      rgb(108 157 223 / 0.2),
+      transparent 74%
+    ),
+    radial-gradient(
+      95% 58% at 50% 44%,
+      rgb(150 193 246 / 0.1),
+      transparent 70%
+    ),
     repeating-linear-gradient(
       90deg,
       rgb(190 218 252 / 0.07) 0 1px,
@@ -1956,5 +1998,57 @@
 
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* ── Custom scrollbar ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--brand-secondary) / 0.35);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--brand-secondary) / 0.55);
+}
+
+/* ── Dark mode variables (structure ready, toggle not implemented) ── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: 10 18 32;
+  --foreground: 228 240 252;
+  --card: 15 23 42;
+  --card-foreground: 228 240 252;
+  --border: 30 45 65;
+  --muted: 100 120 145;
+  --muted-foreground: 148 168 192;
+  --primary: 6 182 212;
+  --primary-foreground: 10 18 32;
+  --secondary: 5 152 182;
+  --secondary-foreground: 228 240 252;
+  --accent: 124 58 237;
+  --accent-foreground: 248 250 252;
+  --input: 30 45 65;
+  --ring: 6 182 212;
+  --cinema-overlay-strong: rgb(var(--primary) / 0.7);
+  --cinema-overlay-soft: rgb(var(--background) / 0.82);
+  --cinema-vignette: rgb(var(--primary) / 0.3);
+  --cinema-hero-overlay-top: 0.74;
+  --cinema-hero-overlay-mid: 0.52;
+  --cinema-hero-overlay-bottom: 0.86;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

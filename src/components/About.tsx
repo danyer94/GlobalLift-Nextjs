@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
-import { Flag, Telescope } from 'lucide-react';
+import { Flag, Binoculars } from '@phosphor-icons/react';
 import type { AboutCopy, CommitmentCopy, ValuesCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
+import { AnimatedList, MotionItem } from './ui/AnimatedList';
 import { MotionSection } from './MotionSection';
 
 type AboutProps = {
@@ -9,6 +10,16 @@ type AboutProps = {
   values: ValuesCopy;
   commitment: CommitmentCopy;
 };
+
+const VALUE_KEYS = [
+  'integrity',
+  'commitment',
+  'operational-excellence',
+  'trust',
+  'adaptability',
+  'multi-sector',
+  'responsible-growth',
+] as const;
 
 export function About({ copy, values, commitment }: AboutProps) {
   const cinematicStyle = {
@@ -66,7 +77,7 @@ export function About({ copy, values, commitment }: AboutProps) {
             <div className="statement-panel statement-panel--vision liquid-glass-panel h-full">
               <div className="statement-panel-head">
                 <span className="statement-panel-icon">
-                  <Telescope className="h-4 w-4" aria-hidden="true" />
+                  <Binoculars className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <p className="statement-panel-label">{values.visionLabel}</p>
               </div>
@@ -84,15 +95,17 @@ export function About({ copy, values, commitment }: AboutProps) {
           </div>
           <div className="mt-10">
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">{values.valuesLabel}</p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <AnimatedList className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {values.values.map((value, index) => (
-                <article key={value.title} className="value-thread">
-                  <span className="value-thread-index">{String(index + 1).padStart(2, '0')}</span>
-                  <p className="value-thread-title">{value.title}</p>
-                  <p className="value-thread-description">{value.description}</p>
-                </article>
+                <MotionItem key={VALUE_KEYS[index] ?? value.title}>
+                  <article className="value-thread">
+                    <span className="value-thread-index">{String(index + 1).padStart(2, '0')}</span>
+                    <p className="value-thread-title">{value.title}</p>
+                    <p className="value-thread-description">{value.description}</p>
+                  </article>
+                </MotionItem>
               ))}
-            </div>
+            </AnimatedList>
           </div>
         </div>
 

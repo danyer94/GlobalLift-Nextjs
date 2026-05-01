@@ -13,6 +13,8 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 - Framework: Next.js `14.x` + React `18.x` + TypeScript.
 - Estilos: Tailwind CSS `3.x` + `styles/globals.css`.
+- Iconos: `@phosphor-icons/react` en componentes activos; `lucide-react` permanece solo por componentes heredados/no activos hasta migracion completa.
+- Animaciones: `framer-motion` `11.x`.
 - Email transaccional de contacto: `resend` (API route en App Router).
 - Scripts disponibles:
   - `npm run dev`
@@ -27,9 +29,11 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - `src/app/fonts/*`: fuentes locales usadas por `next/font/local` cuando una fuente de Google no esta disponible en `next/font/google`.
 - `src/app/api/contact/route.ts`: endpoint POST para envio de formulario de contacto por email.
 - `src/components/*`: componentes de UI y secciones.
+- `src/components/ui/AnimatedList.tsx`: wrappers de animaciones stagger con Framer Motion (`AnimatedList`/`MotionItem` para contenedores genericos y `AnimatedOl`/`MotionLi` para listas semanticas).
 - `src/contexts/*`: contextos de React (ej. `FontClassContext` para exponer la clase de fuente mono del layout al badge de Image Reveal).
 - `src/content/siteContent.ts`: contenido principal del sitio.
 - `styles/globals.css`: tokens visuales, reglas base y utilidades globales.
+- `src/utils/motion.ts`: variantes de animacion (stagger, fadeIn, scale) para Framer Motion.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
 - `pages/_app.tsx` y `pages/_document.tsx`: compatibilidad heredada de Pages Router.
 
@@ -42,10 +46,10 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 ## 4) Contrato de tipografia (NO romper)
 
-- Primary/body font: `Onest`
+- Primary/body font: `Plus Jakarta Sans`
 - Display/headings font: `Host Grotesk` (self-hosted via `next/font/local`) solo para headings destacados con `font-display` y para el Hero.
 - Mono font: `JetBrains Mono`
-- Alcance vigente: `Host Grotesk` se aplica al Hero (`font-hero`) y headings seleccionados por clase (`font-display`), sin reemplazar la tipografia base de todos los `h1-h4` ni la tipografia de cuerpo (`Onest`).
+- Alcance vigente: `Host Grotesk` se aplica al Hero (`font-hero`) y headings seleccionados por clase (`font-display`), sin reemplazar la tipografia base de todos los `h1-h4` ni la tipografia de cuerpo (`Plus Jakarta Sans`).
 - Labels, badges, kickers y texto auxiliar deben conservar su tipografia original de componente (no usar `Host Grotesk` por defecto). Ejemplo actual: badge `Global Lift` en sticky reveal usa `JetBrains Mono`.
 
 ### Source of truth de fuentes
@@ -93,6 +97,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - Mantener estos boxes sin degradados de fondo: usar superficie translucida, borde suave y blur (backdrop-filter) para consistencia visual.
 - Evitar crear estilos inline duplicados cuando exista una utilidad global o clase reutilizable para liquid glass.
 - Aplicar el mismo lenguaje liquid glass al selector de idioma (`LanguageToggle`) para mantener consistencia en componentes de control visibles en el header.
+- En listas animadas con contenido localizado, no usar el texto traducido como `key`; usar claves estables independientes del idioma (`legal-compliance`, `sourcing-supply`, etc.) para evitar que Framer Motion remonte items ya revelados y los deje invisibles al cambiar ES/EN.
 
 ## 6) Protocolo de auto-actualizacion de AGENTS.md (OBLIGATORIO)
 
@@ -176,3 +181,6 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-02-26: Correccion responsive de solapamiento Hero/Header en laptops: se elimina el offset fijo negativo en `Hero.tsx` y se reemplaza por `hero-copy-shell--offset` con media queries por altura/anchura en `globals.css`, evitando superposicion en viewports bajos (ej. 1280x720) y manteniendo composicion en monitores grandes (verificado en 1024x768, 1280x640, 1280x720, 1366x768, 1440x900, 1536x864, 1600x900, 1920x1080).
 - 2026-02-26: Refinamiento del espaciado Hero/Header para pantallas grandes: se redujo el gap vertical de forma continua por altura de viewport con `clamp(...)` en `hero-copy-shell--offset` y un ajuste adicional para pantallas muy grandes (`min-width:1700` + `min-height:980`), manteniendo cero solapamientos en laptops y acercando la composicion al layout de referencia Skydda.
 - 2026-04-29: Refinamiento visual del selector de idioma: se reemplazaron los SVGs detallados/pesados de banderas por iconos vectoriales circulares simplificados y se ajustaron las medidas del toggle a valores pixel-aligned para evitar bordes borrosos, manteniendo el estilo glass actual.
+- 2026-04-30: Implementacion completa del plan UI premium: (1) sombras premium con tinte de color en `--shadow-soft/lift/premium/card/glass`, (2) scrollbar personalizado, (3) variables dark mode listas (toggle no implementado), (4) upgrade tipografico de Onest a Plus Jakarta Sans, (5) grain opacity aumentado a 0.1 en modo immersive + mesh gradient en Contact, (6) sistema de animaciones escalonadas con `AnimatedList` + `MotionItem` + `src/utils/motion.ts`, (7) migracion de componentes activos a @phosphor-icons/react, manteniendo `lucide-react` para componentes heredados/no activos, (8) ProductGallery con hover metadata overlay por slide, (9) Footer rebuild con glassmorphism, grid de 4 columnas, mini-mapa SVG de Republica Dominicana y links sociales. Verificados con `npm run lint` y `npm run typecheck` sin errores.
+- 2026-04-30: Correcciones pre-commit del plan UI premium: se ignora `*.tsbuildinfo`, se retira `tsconfig.tsbuildinfo` del commit, se agregan wrappers semanticos `AnimatedOl`/`MotionLi` para listas animadas, y Footer/ProductGallery pasan su copy nuevo por `siteContent` para preservar i18n ES/EN.
+- 2026-04-30: Correccion de bug i18n + animaciones: las listas animadas de Valores, Servicios, Proceso y Por que elegirnos dejaron de usar copy traducido como `key`; ahora usan claves estables independientes del idioma para evitar que Framer Motion remonte items ya revelados con `opacity: 0` al cambiar ES/EN.

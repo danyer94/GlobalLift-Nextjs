@@ -63,7 +63,12 @@ function App() {
           <Contact copy={content.contact} />
         </main>
       </ScrollProvider>
-      <Footer items={content.navItems} note={content.about.oneLine} />
+      <Footer
+        items={content.navItems}
+        note={content.about.oneLine}
+        copy={content.footer}
+        contactInfo={content.contact.companyInfo}
+      />
     </div>
   );
 }

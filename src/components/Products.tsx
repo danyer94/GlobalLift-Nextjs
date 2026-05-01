@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { ArrowUpRight, Package, Ship } from 'lucide-react';
+import { ArrowUp, Cube, Anchor } from '@phosphor-icons/react';
 import type { ProductsCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
 import { MotionSection } from './MotionSection';
@@ -37,7 +37,7 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Ship className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <Anchor className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.exportTitle}</p>
               </div>
             </div>
@@ -51,7 +51,7 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Package className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <Cube className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.supplyTitle}</p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export function Products({ copy }: ProductsProps) {
         <div className="mt-16 md:mt-20 flex justify-center">
           <a href="#contact" className="btn btn-contact">
             {copy.cta}
-            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            <ArrowUp className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
         <ProductGallery heading={copy.heading} galleryCopy={copy.gallery} />

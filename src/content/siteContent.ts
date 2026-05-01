@@ -5,6 +5,24 @@ export type NavItem = {
   href: string;
 };
 
+export type FooterSocialLink = {
+  type: "linkedin" | "instagram";
+  href: string;
+  ariaLabel: string;
+};
+
+export type FooterCopy = {
+  backToTopLabel: string;
+  navigationLabel: string;
+  productsLabel: string;
+  contactLabel: string;
+  mapLabel: string;
+  rights: string;
+  productLinks: NavItem[];
+  socialLinks: FooterSocialLink[];
+  legalLinks: NavItem[];
+};
+
 type SeoCopy = {
   title: string;
   description: string;
@@ -40,6 +58,14 @@ export type ServicesCopy = {
 
 export type ProductsGalleryCopy = {
   slideTitles: Record<string, string>;
+  slideMetadata: Record<
+    string,
+    {
+      category: string;
+      origin: string;
+      badge?: string;
+    }
+  >;
   controls: {
     previousSlide: string;
     nextSlide: string;
@@ -146,6 +172,7 @@ type SiteContent = {
   values: ValuesCopy;
   commitment: CommitmentCopy;
   contact: ContactCopy;
+  footer: FooterCopy;
 };
 
 export const siteContent: Record<Language, SiteContent> = {
@@ -241,6 +268,44 @@ export const siteContent: Record<Language, SiteContent> = {
           "products-mango-export": "Mango para exportación",
           "products-peppers-tomatoes": "Pimientos y tomates de calidad",
           "products-mixed-catalog": "Catálogo abierto bajo solicitud",
+        },
+        slideMetadata: {
+          "products-charcoal-premium": {
+            category: "Carbón vegetal",
+            origin: "República Dominicana",
+            badge: "Premium",
+          },
+          "products-fruits-variety": {
+            category: "Frutas tropicales",
+            origin: "Rep. Dominicana",
+          },
+          "products-mango-export": {
+            category: "Mango",
+            origin: "Rep. Dominicana",
+            badge: "Exportación",
+          },
+          "products-peppers-tomatoes": {
+            category: "Hortalizas",
+            origin: "Rep. Dominicana",
+          },
+          "products-mixed-catalog": {
+            category: "Catálogo abierto",
+            origin: "Bajo solicitud",
+          },
+          "products-charcoal-bulk": {
+            category: "Carbón vegetal",
+            origin: "Rep. Dominicana",
+            badge: "Volumen",
+          },
+          "products-vegetables-variety": {
+            category: "Vegetales frescos",
+            origin: "Rep. Dominicana",
+          },
+          "products-avocado-export": {
+            category: "Aguacate",
+            origin: "Rep. Dominicana",
+            badge: "Exportación",
+          },
         },
         controls: {
           previousSlide: "Imagen anterior",
@@ -352,15 +417,44 @@ export const siteContent: Record<Language, SiteContent> = {
           "Mensaje",
         ],
         submitLabel: "Enviar solicitud",
-        submittingLabel: "Enviando...",
+        submittingLabel: "Enviando…",
         status: {
-          submitting: "Estamos enviando tu solicitud...",
+          submitting: "Estamos enviando tu solicitud…",
           success: "Solicitud enviada. Te responderemos pronto.",
           error: "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.",
         },
         micro:
           "Comparte el producto y volumen que necesitas: te respondemos con una propuesta concreta de suministro.",
       },
+    },
+    footer: {
+      backToTopLabel: "Volver al inicio",
+      navigationLabel: "Navegación",
+      productsLabel: "Productos",
+      contactLabel: "Contacto",
+      mapLabel: "Ubicación en República Dominicana",
+      rights: "Todos los derechos reservados.",
+      productLinks: [
+        { label: "Carbón vegetal", href: "#products" },
+        { label: "Frutas tropicales", href: "#products" },
+        { label: "Vegetales frescos", href: "#products" },
+        { label: "Aguacate", href: "#products" },
+        { label: "Mango", href: "#products" },
+        { label: "Abastecimiento a medida", href: "#contact" },
+      ],
+      socialLinks: [
+        {
+          type: "linkedin",
+          href: "https://linkedin.com/company/globalliftrd",
+          ariaLabel: "LinkedIn de Global Lift",
+        },
+        {
+          type: "instagram",
+          href: "https://instagram.com/globalliftrd",
+          ariaLabel: "Instagram de Global Lift",
+        },
+      ],
+      legalLinks: [],
     },
   },
   en: {
@@ -456,6 +550,44 @@ export const siteContent: Record<Language, SiteContent> = {
           "products-mango-export": "Mango for export",
           "products-peppers-tomatoes": "Quality peppers and tomatoes",
           "products-mixed-catalog": "Open catalog on request",
+        },
+        slideMetadata: {
+          "products-charcoal-premium": {
+            category: "Charcoal",
+            origin: "Dominican Republic",
+            badge: "Premium",
+          },
+          "products-fruits-variety": {
+            category: "Tropical fruits",
+            origin: "Dominican Republic",
+          },
+          "products-mango-export": {
+            category: "Mango",
+            origin: "Dominican Republic",
+            badge: "Export",
+          },
+          "products-peppers-tomatoes": {
+            category: "Fresh produce",
+            origin: "Dominican Republic",
+          },
+          "products-mixed-catalog": {
+            category: "Open catalog",
+            origin: "On request",
+          },
+          "products-charcoal-bulk": {
+            category: "Charcoal",
+            origin: "Dominican Republic",
+            badge: "Volume",
+          },
+          "products-vegetables-variety": {
+            category: "Fresh vegetables",
+            origin: "Dominican Republic",
+          },
+          "products-avocado-export": {
+            category: "Avocado",
+            origin: "Dominican Republic",
+            badge: "Export",
+          },
         },
         controls: {
           previousSlide: "Previous slide",
@@ -567,15 +699,44 @@ export const siteContent: Record<Language, SiteContent> = {
           "Message",
         ],
         submitLabel: "Send request",
-        submittingLabel: "Sending...",
+        submittingLabel: "Sending…",
         status: {
-          submitting: "We are sending your request...",
+          submitting: "We are sending your request…",
           success: "Request sent. We will get back to you soon.",
           error: "We could not send your request. Please try again in a few minutes.",
         },
         micro:
           "Share the product and volume you need and we’ll reply with a concrete supply proposal.",
       },
+    },
+    footer: {
+      backToTopLabel: "Back to top",
+      navigationLabel: "Navigation",
+      productsLabel: "Products",
+      contactLabel: "Contact",
+      mapLabel: "Location in the Dominican Republic",
+      rights: "All rights reserved.",
+      productLinks: [
+        { label: "Charcoal", href: "#products" },
+        { label: "Tropical fruits", href: "#products" },
+        { label: "Fresh vegetables", href: "#products" },
+        { label: "Avocado", href: "#products" },
+        { label: "Mango", href: "#products" },
+        { label: "Custom sourcing", href: "#contact" },
+      ],
+      socialLinks: [
+        {
+          type: "linkedin",
+          href: "https://linkedin.com/company/globalliftrd",
+          ariaLabel: "Global Lift on LinkedIn",
+        },
+        {
+          type: "instagram",
+          href: "https://instagram.com/globalliftrd",
+          ariaLabel: "Global Lift on Instagram",
+        },
+      ],
+      legalLinks: [],
     },
   },
 };

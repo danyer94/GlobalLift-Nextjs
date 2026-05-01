@@ -1,11 +1,19 @@
 import type { CSSProperties } from 'react';
 import type { ProcessCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
+import { AnimatedOl, MotionLi } from './ui/AnimatedList';
 import { MotionSection } from './MotionSection';
 
 type ProcessProps = {
   copy: ProcessCopy;
 };
+
+const PROCESS_STEP_KEYS = [
+  'discovery',
+  'sourcing-connection',
+  'logistics-coordination',
+  'delivery-follow-up',
+] as const;
 
 const splitItem = (item: string) => {
   const separators = [' - ', ' — '];
@@ -53,22 +61,22 @@ export function Process({ copy }: ProcessProps) {
             </div>
           </aside>
 
-          <ol className="space-y-5 lg:space-y-7">
+          <AnimatedOl className="space-y-5 lg:space-y-7">
             {copy.steps.map((step, index) => {
               const { title, description } = splitItem(step);
               const stepNumber = `${index + 1}`.padStart(2, '0');
 
               return (
-                <li key={step} className="process-step-card">
+                <MotionLi key={PROCESS_STEP_KEYS[index] ?? title} className="process-step-card">
                   <span className="process-step-index">{stepNumber}</span>
                   <div>
                     <p className="text-base font-semibold text-foreground md:text-lg">{title}</p>
                     <p className="mt-2 text-sm text-muted-foreground md:text-base">{description || title}</p>
                   </div>
-                </li>
+                </MotionLi>
               );
             })}
-          </ol>
+          </AnimatedOl>
         </div>
       </div>
     </MotionSection>
