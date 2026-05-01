@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import { LinkedinLogo, InstagramLogo, EnvelopeSimple, PhoneCall, MapPin } from '@phosphor-icons/react';
 import type { ContactCopy, FooterCopy, FooterSocialLink, NavItem } from '../content/siteContent';
+import { withBasePath } from '../utils/basePath';
 import { Logo } from './Logo';
 
 type FooterProps = {
@@ -9,12 +11,50 @@ type FooterProps = {
   contactInfo: ContactCopy['companyInfo'];
 };
 
+type GlobalMapVisualProps = Pick<FooterCopy, 'globalMapLabel' | 'globalMapEyebrow' | 'globalMapCaption'>;
+
 const socialIconByType = {
   linkedin: LinkedinLogo,
   instagram: InstagramLogo,
 } satisfies Record<FooterSocialLink['type'], typeof LinkedinLogo>;
 
 const getPhoneHref = (phone: string) => `tel:${phone.replace(/[^+\d]/g, '')}`;
+
+const FOOTER_GLOBAL_MAP_IMAGE = withBasePath('/images/generated/contact-global-map-lights.webp');
+
+function GlobalMapVisual({ globalMapLabel, globalMapEyebrow, globalMapCaption }: GlobalMapVisualProps) {
+  return (
+    <div
+      className="group relative h-36 w-56 max-w-full overflow-hidden rounded-2xl border border-white/20 bg-primary shadow-glass transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-secondary/45 hover:shadow-premium"
+      aria-label={globalMapLabel}
+      role="img"
+    >
+      <Image
+        src={FOOTER_GLOBAL_MAP_IMAGE}
+        alt=""
+        fill
+        sizes="(min-width: 1024px) 224px, 56vw"
+        className="object-cover opacity-90 saturate-[1.08] transition-transform duration-700 group-hover:scale-105"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_45%,rgb(var(--secondary)_/_0.18),transparent_36%),linear-gradient(180deg,transparent_12%,rgb(var(--primary)_/_0.2)_48%,rgb(var(--primary)_/_0.78)_100%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 text-primary-foreground">
+        <span className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.24em] opacity-90">
+          {globalMapEyebrow}
+        </span>
+        <span className="rounded-full border border-white/25 bg-primary/55 px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-secondary shadow-[0_0_22px_rgb(var(--secondary)_/_0.28)] backdrop-blur-md">
+          {globalMapCaption}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function Footer({ items, note, copy, contactInfo }: FooterProps) {
   return (
@@ -34,36 +74,11 @@ export function Footer({ items, note, copy, contactInfo }: FooterProps) {
             </a>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">{note}</p>
 
-            {/* Mini map — Dominican Republic */}
-            <div className="relative h-28 w-40 overflow-hidden rounded-xl border border-border/60 bg-card/50 shadow-card">
-              <svg
-                viewBox="0 0 200 280"
-                className="h-full w-full"
-                aria-label={copy.mapLabel}
-                role="img"
-              >
-                {/* Simplified DR outline */}
-                <path
-                  d="M70 20 L130 15 L155 50 L165 90 L155 140 L145 180 L125 220 L105 260 L85 270 L65 260 L55 220 L45 170 L50 120 L60 70 Z"
-                  fill="rgb(var(--secondary) / 0.12)"
-                  stroke="rgb(var(--secondary) / 0.35)"
-                  strokeWidth="1.5"
-                />
-                {/* Santo Domingo dot */}
-                <circle cx="95" cy="140" r="5" fill="rgb(var(--secondary))" opacity="0.9" />
-                <circle cx="95" cy="140" r="10" fill="rgb(var(--secondary) / 0.2)" />
-                {/* Label */}
-                <text
-                  x="105"
-                  y="136"
-                  fontSize="9"
-                  fill="rgb(var(--muted-foreground))"
-                  fontFamily="var(--font-jetbrains-mono), monospace"
-                >
-                  SDQ
-                </text>
-              </svg>
-            </div>
+            <GlobalMapVisual
+              globalMapLabel={copy.globalMapLabel}
+              globalMapEyebrow={copy.globalMapEyebrow}
+              globalMapCaption={copy.globalMapCaption}
+            />
 
             {/* Social links */}
             <div className="flex items-center gap-3">
@@ -176,7 +191,8 @@ export function Footer({ items, note, copy, contactInfo }: FooterProps) {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-8 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Global Lift. {copy.rights}
+            © <span suppressHydrationWarning>{new Date().getFullYear()}</span> Global Lift.{' '}
+            {copy.rights}
           </p>
           {copy.legalLinks.length > 0 ? (
             <div className="flex items-center gap-6 text-xs text-muted-foreground">

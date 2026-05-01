@@ -16,7 +16,9 @@ export type FooterCopy = {
   navigationLabel: string;
   productsLabel: string;
   contactLabel: string;
-  mapLabel: string;
+  globalMapLabel: string;
+  globalMapEyebrow: string;
+  globalMapCaption: string;
   rights: string;
   productLinks: NavItem[];
   socialLinks: FooterSocialLink[];
@@ -432,7 +434,10 @@ export const siteContent: Record<Language, SiteContent> = {
       navigationLabel: "Navegación",
       productsLabel: "Productos",
       contactLabel: "Contacto",
-      mapLabel: "Ubicación en República Dominicana",
+      globalMapLabel:
+        "Mapa global con rutas comerciales interconectadas hacia República Dominicana",
+      globalMapEyebrow: "Mapa global",
+      globalMapCaption: "Conexiones",
       rights: "Todos los derechos reservados.",
       productLinks: [
         { label: "Carbón vegetal", href: "#products" },
@@ -714,7 +719,10 @@ export const siteContent: Record<Language, SiteContent> = {
       navigationLabel: "Navigation",
       productsLabel: "Products",
       contactLabel: "Contact",
-      mapLabel: "Location in the Dominican Republic",
+      globalMapLabel:
+        "Global map with interconnected trade routes into the Dominican Republic",
+      globalMapEyebrow: "Global map",
+      globalMapCaption: "Connections",
       rights: "All rights reserved.",
       productLinks: [
         { label: "Charcoal", href: "#products" },
