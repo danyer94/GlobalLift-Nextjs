@@ -26,3 +26,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Pi / agent artifacts
+.atl/
+.pi/
+.pi-lens/

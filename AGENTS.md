@@ -35,6 +35,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - `styles/globals.css`: tokens visuales, reglas base y utilidades globales.
 - `src/utils/motion.ts`: variantes de animacion (stagger, fadeIn, scale) para Framer Motion.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
+- `.atl/skill-registry.md`, `.pi/`, `.pi-lens/`: artefactos locales generados por Pi/SDD/lens para skills, settings o caches; deben quedar ignorados por git.
 - `pages/_app.tsx` y `pages/_document.tsx`: compatibilidad heredada de Pages Router.
 
 ### 3.1 Variables de entorno para contacto por email
@@ -133,6 +134,7 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 
 ```md
 ### ERR-YYYYMMDD-XX - Titulo corto
+
 - Fecha:
 - Area/archivo:
 - Sintoma:
@@ -146,6 +148,7 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 ### 7.2 Incidencias registradas
 
 ### ERR-20260212-01 - Desalineacion de fuente display
+
 - Fecha: 2026-02-12
 - Area/archivo: `src/app/layout.tsx`, `styles/globals.css`, `tailwind.config.js`
 - Sintoma: cambios previos intentaron introducir `Archivo`/`Archivo_Semi_Expanded`, rompiendo la paridad tipografica esperada.
@@ -156,6 +159,7 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - Estado: Resuelto
 
 ### ERR-20260225-02 - Alcance tipografico aplicado fuera de headlines
+
 - Fecha: 2026-02-25
 - Area/archivo: `styles/globals.css`, `src/components/ImageRevealSection.tsx`
 - Sintoma: se percibio cambio de fuente en etiquetas auxiliares (ej. badge `Global Lift`) cuando el pedido era aplicar la fuente del Hero solo a headlines.
@@ -186,3 +190,6 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-04-30: Correcciones pre-commit del plan UI premium: se ignora `*.tsbuildinfo`, se retira `tsconfig.tsbuildinfo` del commit, se agregan wrappers semanticos `AnimatedOl`/`MotionLi` para listas animadas, y Footer/ProductGallery pasan su copy nuevo por `siteContent` para preservar i18n ES/EN.
 - 2026-04-30: Correccion de bug i18n + animaciones: las listas animadas de Valores, Servicios, Proceso y Por que elegirnos dejaron de usar copy traducido como `key`; ahora usan claves estables independientes del idioma para evitar que Framer Motion remonte items ya revelados con `opacity: 0` al cambiar ES/EN.
 - 2026-05-01: Reemplazo del mini-mapa del footer por una visual premium de mapa global basada en `public/images/generated/contact-global-map-lights.webp`, con overlay oscuro/glass, labels localizados (`globalMapLabel`, `globalMapEyebrow`, `globalMapCaption`) en `siteContent` y verificacion visual en navegador.
+- 2026-05-10: Inicializacion SDD en modo Engram: se genero `.atl/skill-registry.md` como registry local de skills, se agrego `.atl/` a `.gitignore` y se documento la infraestructura local en el mapa del repo.
+- 2026-05-16: Refinamiento premium del Hero inspirado en Skydda: se cambia la imagen de fondo a `hero-cinematic-port.webp`, se ajustan overlays cinematograficos, legibilidad del bloque de copy y CTAs sin alterar copy ni fuentes, preservando responsive en viewports bajos como 1280x720.
+- 2026-05-16: Se amplio `.gitignore` para excluir artefactos locales de Pi (`.pi/`, `.pi-lens/`) junto con `.atl/`, y se documento que estos directorios no deben entrar en git.

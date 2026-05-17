@@ -1597,10 +1597,11 @@
 .hero-aurora {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   background:
-    radial-gradient(80% 70% at 50% 6%, rgb(80 141 216 / 0.28), transparent 72%),
-    radial-gradient(64% 58% at 88% 24%, rgb(29 72 140 / 0.32), transparent 78%),
-    linear-gradient(180deg, rgb(7 19 45) 0%, rgb(4 13 33) 48%, rgb(2 8 20) 100%);
+    radial-gradient(76% 62% at 50% 8%, rgb(98 157 229 / 0.24), transparent 72%),
+    radial-gradient(66% 60% at 86% 24%, rgb(24 63 122 / 0.36), transparent 78%),
+    linear-gradient(180deg, rgb(4 13 31) 0%, rgb(3 10 24) 48%, rgb(1 6 16) 100%);
 }
 
 .hero-bg-slides {
@@ -1616,8 +1617,8 @@
   height: 100%;
   object-fit: cover;
   object-position: var(--hero-pos-mobile, center 42%);
-  transform: scale(1.045);
-  filter: saturate(0.8) contrast(1.12) brightness(0.6);
+  transform: scale(1.035);
+  filter: saturate(0.92) contrast(1.08) brightness(0.68);
   transition: opacity var(--motion-slow) var(--ease-standard);
 }
 
@@ -1627,20 +1628,22 @@
   inset: 0;
   background:
     radial-gradient(
-      70% 54% at 50% 36%,
-      rgb(110 169 235 / 0.26) 0%,
-      transparent 80%
+      58% 42% at 50% 35%,
+      rgb(136 190 255 / 0.2) 0%,
+      transparent 74%
     ),
-    radial-gradient(
-      80% 56% at 18% 64%,
-      rgb(96 138 201 / 0.16) 0%,
-      transparent 72%
+    linear-gradient(
+      90deg,
+      rgb(1 6 16 / 0.78) 0%,
+      rgb(2 9 22 / 0.18) 28%,
+      rgb(2 9 22 / 0.18) 70%,
+      rgb(1 6 16 / 0.72) 100%
     ),
     linear-gradient(
       180deg,
-      rgb(3 9 24 / 0.22) 0%,
-      rgb(2 7 18 / 0.58) 52%,
-      rgb(1 5 12 / 0.82) 100%
+      rgb(1 5 14 / 0.46) 0%,
+      rgb(2 7 18 / 0.24) 34%,
+      rgb(1 5 12 / 0.88) 100%
     );
   z-index: 1;
 }
@@ -1649,8 +1652,15 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.1;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgb(209 229 255 / 0.08) 48%,
+      transparent 49.2%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.08;
   mix-blend-mode: soft-light;
   z-index: 2;
   pointer-events: none;
@@ -1659,21 +1669,21 @@
 .hero-aurora::before {
   content: "";
   position: absolute;
-  inset: -22% -18% 8% -18%;
+  inset: -24% -18% 4% -18%;
   background:
     radial-gradient(
-      56% 58% at 20% 18%,
-      rgb(146 188 244 / 0.26),
+      54% 54% at 18% 18%,
+      rgb(147 189 244 / 0.2),
       transparent 74%
     ),
-    radial-gradient(58% 62% at 84% 26%, rgb(35 87 157 / 0.34), transparent 76%),
-    radial-gradient(88% 72% at 50% 88%, rgb(8 24 52 / 0.9), transparent 76%),
+    radial-gradient(58% 62% at 86% 28%, rgb(27 75 145 / 0.32), transparent 78%),
+    radial-gradient(92% 70% at 50% 92%, rgb(5 17 39 / 0.94), transparent 76%),
     radial-gradient(
-      68% 44% at 50% 52%,
-      rgb(132 174 232 / 0.14),
+      66% 42% at 50% 52%,
+      rgb(162 199 244 / 0.12),
       transparent 70%
     );
-  filter: blur(20px);
+  filter: blur(22px);
   opacity: 0.98;
   z-index: 0;
 }
@@ -1685,25 +1695,25 @@
   background:
     linear-gradient(
       180deg,
-      rgb(1 5 14 / 0.24) 0%,
-      rgb(2 7 18 / 0.08) 30%,
-      rgb(2 7 18 / 0.42) 100%
+      rgb(1 5 14 / 0.18) 0%,
+      rgb(2 7 18 / 0.04) 28%,
+      rgb(2 7 18 / 0.5) 100%
     ),
-    radial-gradient(125% 92% at 50% 104%, rgb(1 4 12 / 0.92), transparent 68%),
+    radial-gradient(128% 88% at 50% 108%, rgb(1 4 12 / 0.95), transparent 66%),
     radial-gradient(
       84% 44% at 50% 12%,
-      rgb(108 157 223 / 0.2),
+      rgb(108 157 223 / 0.18),
       transparent 74%
     ),
     radial-gradient(
-      95% 58% at 50% 44%,
-      rgb(150 193 246 / 0.1),
+      88% 48% at 50% 45%,
+      rgb(178 211 252 / 0.11),
       transparent 70%
     ),
     repeating-linear-gradient(
       90deg,
-      rgb(190 218 252 / 0.07) 0 1px,
-      transparent 1px 220px
+      rgb(190 218 252 / 0.055) 0 1px,
+      transparent 1px 228px
     );
   opacity: 1;
   z-index: 0;
@@ -1734,14 +1744,14 @@
 
 .hero-copy-shell h1 {
   text-shadow:
-    0 4px 26px rgb(2 8 20 / 0.52),
-    0 0 30px rgb(108 157 223 / 0.18);
+    0 5px 30px rgb(1 6 16 / 0.64),
+    0 0 34px rgb(122 177 239 / 0.16);
 }
 
 .hero-subtitle {
-  color: rgb(227 239 255 / 0.88);
+  color: rgb(231 241 255 / 0.9);
   letter-spacing: 0.005em;
-  text-shadow: 0 2px 14px rgb(2 8 20 / 0.38);
+  text-shadow: 0 2px 16px rgb(1 6 16 / 0.46);
 }
 
 .hero-actions {
@@ -1757,8 +1767,8 @@
   min-width: 152px;
   align-items: center;
   justify-content: center;
-  border-radius: 0.12rem;
-  padding: 0.74rem 1.52rem;
+  border-radius: 0.18rem;
+  padding: 0.74rem 1.56rem;
   font-size: 0.94rem;
   font-weight: 620;
   letter-spacing: 0.01em;
@@ -1773,16 +1783,20 @@
 
 .hero-btn--primary {
   border: 1px solid rgb(255 255 255 / 0.94);
-  background: rgb(255 255 255 / 0.98);
-  color: rgb(5 16 33);
-  box-shadow: 0 16px 34px rgb(3 11 24 / 0.26);
+  background: linear-gradient(180deg, rgb(255 255 255), rgb(229 239 250));
+  color: rgb(4 14 30);
+  box-shadow:
+    0 18px 38px rgb(2 8 20 / 0.34),
+    inset 0 1px 0 rgb(255 255 255 / 0.82);
 }
 
 .hero-btn--secondary {
-  border: 1px solid rgb(227 238 255 / 0.38);
-  background: rgb(13 34 66 / 0.1);
-  color: rgb(233 242 255 / 0.95);
-  backdrop-filter: blur(3px);
+  border: 1px solid rgb(227 238 255 / 0.42);
+  background: linear-gradient(180deg, rgb(17 43 78 / 0.24), rgb(7 20 43 / 0.12));
+  color: rgb(236 245 255 / 0.96);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
 }
 
 .hero-btn:hover {
@@ -1790,8 +1804,10 @@
 }
 
 .hero-btn--primary:hover {
-  background: rgb(248 252 255);
-  box-shadow: 0 20px 40px rgb(3 11 24 / 0.34);
+  background: linear-gradient(180deg, rgb(255 255 255), rgb(240 247 255));
+  box-shadow:
+    0 22px 44px rgb(2 8 20 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.9);
 }
 
 .hero-btn--secondary:hover {
@@ -1819,6 +1835,12 @@
   .hero-btn {
     width: 100%;
     max-width: 332px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  .hero-copy-shell--offset {
+    margin-top: -2.25rem;
   }
 }
 
