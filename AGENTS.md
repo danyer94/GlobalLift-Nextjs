@@ -98,6 +98,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - Mantener estos boxes sin degradados de fondo: usar superficie translucida, borde suave y blur (backdrop-filter) para consistencia visual.
 - Evitar crear estilos inline duplicados cuando exista una utilidad global o clase reutilizable para liquid glass.
 - Aplicar el mismo lenguaje liquid glass al selector de idioma (`LanguageToggle`) para mantener consistencia en componentes de control visibles en el header.
+- El menu hamburguesa movil (`Navigation`) debe mantener el lenguaje premium/liquid glass: drawer lateral con overlay blur, foco accesible, cierre por Escape/click externo, bloqueo de scroll y retorno de foco al trigger.
 - En listas animadas con contenido localizado, no usar el texto traducido como `key`; usar claves estables independientes del idioma (`legal-compliance`, `sourcing-supply`, etc.) para evitar que Framer Motion remonte items ya revelados y los deje invisibles al cambiar ES/EN.
 - En el footer, no usar un mini-mapa literal/ambiguo debajo del logo. La columna de marca debe comunicar posicionamiento internacional con una visual premium de mapa global usando `public/images/generated/contact-global-map-lights.webp`, overlay oscuro/glass, copy i18n desde `siteContent` y contenedor accesible por `aria-label`.
 
@@ -193,3 +194,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-05-10: Inicializacion SDD en modo Engram: se genero `.atl/skill-registry.md` como registry local de skills, se agrego `.atl/` a `.gitignore` y se documento la infraestructura local en el mapa del repo.
 - 2026-05-16: Refinamiento premium del Hero inspirado en Skydda: se cambia la imagen de fondo a `hero-cinematic-port.webp`, se ajustan overlays cinematograficos, legibilidad del bloque de copy y CTAs sin alterar copy ni fuentes, preservando responsive en viewports bajos como 1280x720.
 - 2026-05-16: Se amplio `.gitignore` para excluir artefactos locales de Pi (`.pi/`, `.pi-lens/`) junto con `.atl/`, y se documento que estos directorios no deben entrar en git.
+- 2026-05-16: Mejora del menu hamburguesa movil en `Navigation`: drawer premium/liquid glass con overlay blur, links escalonados, CTA destacado, cierre accesible por Escape/click externo y retorno de foco; estilos centralizados en `styles/globals.css`.

@@ -1,240 +1,343 @@
-import { List, X } from '@phosphor-icons/react';
-import { useEffect, useMemo, useState } from 'react';
-import type { Language, NavItem } from '../content/siteContent';
-import { LanguageToggle } from './LanguageToggle';
-import { Logo } from './Logo';
+import { ArrowRight, List, X } from "@phosphor-icons/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
+import type { Language, NavItem } from "../content/siteContent";
+import { LanguageToggle } from "./LanguageToggle";
+import { Logo } from "./Logo";
 
 type NavigationProps = {
-  items: NavItem[];
-  language: Language;
-  onLanguageChange: (value: Language) => void;
+	items: NavItem[];
+	language: Language;
+	onLanguageChange: (value: Language) => void;
 };
 
 export function Navigation({
-  items,
-  language,
-  onLanguageChange,
+	items,
+	language,
+	onLanguageChange,
 }: NavigationProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isHeroZone, setIsHeroZone] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isHeroZone, setIsHeroZone] = useState(false);
+	const menuTriggerRef = useRef<HTMLButtonElement>(null);
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
+	const mobileMenuPanelRef = useRef<HTMLElement>(null);
+	const wasMenuOpenRef = useRef(false);
 
-  const headerItems = items.filter((item) => item.href !== '#nosotros-valores');
-  const mobileMenuCopy = useMemo(
-    () =>
-      language === 'es'
-        ? {
-            open: 'Abrir menu',
-            close: 'Cerrar menu',
-            title: 'Menu',
-            navLabel: 'Navegacion movil',
-          }
-        : {
-            open: 'Open menu',
-            close: 'Close menu',
-            title: 'Menu',
-            navLabel: 'Mobile navigation',
-          },
-    [language],
-  );
+	const headerItems = items.filter((item) => item.href !== "#nosotros-valores");
+	const mobileMenuItems = headerItems.filter(
+		(item) => item.href !== "#contact",
+	);
+	const contactItem = headerItems.find((item) => item.href === "#contact");
+	const mobileMenuCopy = useMemo(
+		() =>
+			language === "es"
+				? {
+						open: "Abrir menu",
+						close: "Cerrar menu",
+						title: "Menú",
+						navLabel: "Navegacion movil",
+					}
+				: {
+						open: "Open menu",
+						close: "Close menu",
+						title: "Menu",
+						navLabel: "Mobile navigation",
+					},
+		[language],
+	);
 
-  useEffect(() => {
-    if (!isMenuOpen) return;
+	const closeMobileMenu = useCallback(() => {
+		setIsMenuOpen(false);
+	}, []);
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMenuOpen(false);
-      }
-    };
+	const openMobileMenu = useCallback(() => {
+		setIsMenuOpen(true);
+	}, []);
 
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isMenuOpen]);
+	useEffect(() => {
+		if (isMenuOpen) {
+			const focusFrame = window.requestAnimationFrame(() => {
+				closeButtonRef.current?.focus();
+			});
 
-  useEffect(() => {
-    if (!isMenuOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isMenuOpen]);
+			wasMenuOpenRef.current = true;
+			return () => window.cancelAnimationFrame(focusFrame);
+		}
 
-  useEffect(() => {
-    if (!isMenuOpen) return;
+		if (wasMenuOpenRef.current) {
+			menuTriggerRef.current?.focus();
+			wasMenuOpenRef.current = false;
+		}
+	}, [isMenuOpen]);
 
-    const closeOnDesktopBreakpoint = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(false);
-      }
-    };
+	useEffect(() => {
+		if (!isMenuOpen) return;
 
-    closeOnDesktopBreakpoint();
-    window.addEventListener('resize', closeOnDesktopBreakpoint);
-    window.addEventListener('orientationchange', closeOnDesktopBreakpoint);
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				closeMobileMenu();
+				return;
+			}
 
-    return () => {
-      window.removeEventListener('resize', closeOnDesktopBreakpoint);
-      window.removeEventListener('orientationchange', closeOnDesktopBreakpoint);
-    };
-  }, [isMenuOpen]);
+			if (event.key !== "Tab") return;
 
-  useEffect(() => {
-    const heroSection = document.querySelector<HTMLElement>('.hero-aurora');
+			const panel = mobileMenuPanelRef.current;
+			if (!panel) return;
 
-    if (!heroSection) {
-      setIsHeroZone(false);
-      return;
-    }
+			const focusableElements = Array.from(
+				panel.querySelectorAll<HTMLElement>(
+					'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+				),
+			).filter((element) => !element.hasAttribute("disabled"));
 
-    const createObserver = () => {
-      const navOffset = window.innerWidth >= 768 ? 106 : 74;
-      return new IntersectionObserver(
-        ([entry]) => {
-          setIsHeroZone(entry.isIntersecting);
-        },
-        {
-          threshold: 0,
-          rootMargin: `-${navOffset}px 0px 0px 0px`,
-        },
-      );
-    };
+			const firstFocusable = focusableElements[0];
+			const lastFocusable = focusableElements[focusableElements.length - 1];
 
-    let observer = createObserver();
-    observer.observe(heroSection);
+			if (!firstFocusable || !lastFocusable) return;
 
-    const rebindObserver = () => {
-      observer.disconnect();
-      observer = createObserver();
-      observer.observe(heroSection);
-    };
+			if (event.shiftKey && document.activeElement === firstFocusable) {
+				event.preventDefault();
+				lastFocusable.focus();
+				return;
+			}
 
-    window.addEventListener('resize', rebindObserver);
-    window.addEventListener('orientationchange', rebindObserver);
+			if (!event.shiftKey && document.activeElement === lastFocusable) {
+				event.preventDefault();
+				firstFocusable.focus();
+			}
+		};
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', rebindObserver);
-      window.removeEventListener('orientationchange', rebindObserver);
-    };
-  }, []);
+		window.addEventListener("keydown", onKeyDown);
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, [closeMobileMenu, isMenuOpen]);
 
-  const navToneClass = isHeroZone ? 'nav-hero-blend' : 'nav-liquid-glass';
-  const navLinksShellClass = isHeroZone
-    ? 'nav-links-shell nav-links-shell--hero'
-    : 'nav-links-shell nav-links-shell--glass';
-  const desktopLinkClass = isHeroZone
-    ? 'nav-link nav-link--hero'
-    : 'nav-link nav-link--glass';
-  const controlsClass = isHeroZone
-    ? 'nav-controls nav-controls--hero'
-    : 'nav-controls nav-controls--glass';
-  const logoClass = isHeroZone ? 'nav-logo nav-logo--hero' : 'nav-logo';
-  const mobileMenuButtonClass = isHeroZone
-    ? 'nav-mobile-trigger nav-mobile-trigger--hero md:hidden'
-    : 'nav-mobile-trigger nav-mobile-trigger--glass md:hidden';
+	useEffect(() => {
+		if (!isMenuOpen) return;
+		const previousOverflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		return () => {
+			document.body.style.overflow = previousOverflow;
+		};
+	}, [isMenuOpen]);
 
-  return (
-    <>
-      <nav
-        className={`fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${navToneClass}`}
-        aria-label="Primary"
-      >
-        <div className="container">
-          <div className="relative flex h-16 items-center justify-between py-4 md:h-24">
-            <a
-              href="#top"
-              className="absolute left-0 top-1/2 z-20 -translate-y-1/2"
-            >
-              <Logo className={logoClass} variant={isHeroZone ? 'hero' : 'default'} />
-            </a>
+	useEffect(() => {
+		if (!isMenuOpen) return;
 
-            <div
-              className={`absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 whitespace-nowrap md:flex ${navLinksShellClass}`}
-            >
-              {headerItems.map((item) => (
-                <a key={item.label} href={item.href} className={desktopLinkClass}>
-                  {item.label}
-                </a>
-              ))}
-            </div>
+		const closeOnDesktopBreakpoint = () => {
+			if (window.innerWidth >= 768) {
+				closeMobileMenu();
+			}
+		};
 
-            <div
-              className={`ml-auto flex shrink-0 items-center gap-2 sm:gap-3 ${controlsClass}`}
-            >
-              <LanguageToggle
-                value={language}
-                onChange={onLanguageChange}
-                variant={isHeroZone ? 'hero' : 'glass'}
-              />
-              <button
-                type="button"
-                onClick={() => setIsMenuOpen(true)}
-                className={mobileMenuButtonClass}
-                aria-label={mobileMenuCopy.open}
-                aria-expanded={isMenuOpen}
-                aria-controls="mobile-nav-drawer"
-              >
-                <List className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+		closeOnDesktopBreakpoint();
+		window.addEventListener("resize", closeOnDesktopBreakpoint);
+		window.addEventListener("orientationchange", closeOnDesktopBreakpoint);
 
-      <div
-        className={`fixed inset-0 z-[70] md:hidden ${
-          isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
-        aria-hidden={!isMenuOpen}
-      >
-        <button
-          type="button"
-          className={`absolute inset-0 bg-primary/30 backdrop-blur-sm transition-opacity ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-label={mobileMenuCopy.close}
-          onClick={() => setIsMenuOpen(false)}
-        />
+		return () => {
+			window.removeEventListener("resize", closeOnDesktopBreakpoint);
+			window.removeEventListener("orientationchange", closeOnDesktopBreakpoint);
+		};
+	}, [closeMobileMenu, isMenuOpen]);
 
-        <aside
-          id="mobile-nav-drawer"
-          className={`absolute inset-y-0 right-0 z-[71] flex h-full w-[min(88vw,420px)] flex-col border-l border-border/80 bg-background/96 p-5 text-foreground shadow-[-22px_0_64px_rgba(15,23,42,0.16)] backdrop-blur-xl transition-transform duration-300 ease-out ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-[108%]'
-          }`}
-          role="dialog"
-          aria-modal="true"
-          aria-label={mobileMenuCopy.navLabel}
-        >
-          <div className="mb-6 flex items-center justify-between border-b border-border/70 pb-4">
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-              {mobileMenuCopy.title}
-            </p>
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen(false)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-card text-primary transition-colors hover:border-secondary/40 hover:text-secondary"
-              aria-label={mobileMenuCopy.close}
-            >
-              <X className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
+	useEffect(() => {
+		const heroSection = document.querySelector<HTMLElement>(".hero-aurora");
 
-          <div className="overflow-hidden rounded-xl border border-border/80 bg-card/70">
-            {headerItems.map((item, index) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`block px-4 py-4 text-base font-semibold text-primary transition-colors hover:bg-secondary/8 hover:text-secondary ${
-                  index < headerItems.length - 1 ? 'border-b border-border/75' : ''
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </aside>
-      </div>
-    </>
-  );
+		if (!heroSection) {
+			setIsHeroZone(false);
+			return;
+		}
+
+		const createObserver = () => {
+			const navOffset = window.innerWidth >= 768 ? 106 : 74;
+			return new IntersectionObserver(
+				([entry]) => {
+					setIsHeroZone(entry.isIntersecting);
+				},
+				{
+					threshold: 0,
+					rootMargin: `-${navOffset}px 0px 0px 0px`,
+				},
+			);
+		};
+
+		let observer = createObserver();
+		observer.observe(heroSection);
+
+		const rebindObserver = () => {
+			observer.disconnect();
+			observer = createObserver();
+			observer.observe(heroSection);
+		};
+
+		window.addEventListener("resize", rebindObserver);
+		window.addEventListener("orientationchange", rebindObserver);
+
+		return () => {
+			observer.disconnect();
+			window.removeEventListener("resize", rebindObserver);
+			window.removeEventListener("orientationchange", rebindObserver);
+		};
+	}, []);
+
+	const navToneClass = isHeroZone ? "nav-hero-blend" : "nav-liquid-glass";
+	const navLinksShellClass = isHeroZone
+		? "nav-links-shell nav-links-shell--hero"
+		: "nav-links-shell nav-links-shell--glass";
+	const desktopLinkClass = isHeroZone
+		? "nav-link nav-link--hero"
+		: "nav-link nav-link--glass";
+	const controlsClass = isHeroZone
+		? "nav-controls nav-controls--hero"
+		: "nav-controls nav-controls--glass";
+	const logoClass = isHeroZone ? "nav-logo nav-logo--hero" : "nav-logo";
+	const mobileMenuButtonClass = isHeroZone
+		? "nav-mobile-trigger nav-mobile-trigger--hero md:hidden"
+		: "nav-mobile-trigger nav-mobile-trigger--glass md:hidden";
+
+	return (
+		<>
+			<nav
+				className={`fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${navToneClass}`}
+				aria-label="Primary"
+			>
+				<div className="container">
+					<div className="relative flex h-16 items-center justify-between py-4 md:h-24">
+						<a
+							href="#top"
+							className="absolute left-0 top-1/2 z-20 -translate-y-1/2"
+						>
+							<Logo
+								className={logoClass}
+								variant={isHeroZone ? "hero" : "default"}
+							/>
+						</a>
+
+						<div
+							className={`absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 whitespace-nowrap md:flex ${navLinksShellClass}`}
+						>
+							{headerItems.map((item) => (
+								<a
+									key={item.label}
+									href={item.href}
+									className={desktopLinkClass}
+								>
+									{item.label}
+								</a>
+							))}
+						</div>
+
+						<div
+							className={`ml-auto flex shrink-0 items-center gap-2 sm:gap-3 ${controlsClass}`}
+						>
+							<LanguageToggle
+								value={language}
+								onChange={onLanguageChange}
+								variant={isHeroZone ? "hero" : "glass"}
+							/>
+							<button
+								ref={menuTriggerRef}
+								type="button"
+								onClick={openMobileMenu}
+								className={mobileMenuButtonClass}
+								aria-label={mobileMenuCopy.open}
+								aria-expanded={isMenuOpen}
+								aria-controls="mobile-nav-drawer"
+							>
+								<List className="h-5 w-5" aria-hidden="true" />
+							</button>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+			<div
+				className={`mobile-menu-root fixed inset-0 z-[70] md:hidden ${
+					isMenuOpen
+						? "mobile-menu-root--open pointer-events-auto"
+						: "pointer-events-none"
+				}`}
+				aria-hidden={!isMenuOpen}
+			>
+				<button
+					type="button"
+					className="mobile-menu-backdrop absolute inset-0"
+					aria-label={mobileMenuCopy.close}
+					onClick={closeMobileMenu}
+					tabIndex={-1}
+				/>
+
+				<aside
+					ref={mobileMenuPanelRef}
+					id="mobile-nav-drawer"
+					className="mobile-menu-panel absolute inset-y-0 right-0 z-[71] flex h-full w-[min(91vw,430px)] flex-col overflow-x-hidden overflow-y-auto p-5 text-foreground"
+					role="dialog"
+					aria-modal="true"
+					aria-label={mobileMenuCopy.navLabel}
+				>
+					<div
+						className="mobile-menu-orb mobile-menu-orb--one"
+						aria-hidden="true"
+					/>
+					<div
+						className="mobile-menu-orb mobile-menu-orb--two"
+						aria-hidden="true"
+					/>
+
+					<div className="relative z-10 flex items-start justify-between gap-4 border-b border-white/30 pb-5">
+						<div className="space-y-3">
+							<Logo className="nav-logo" variant="default" />
+							<h2 className="mobile-menu-title">{mobileMenuCopy.title}</h2>
+						</div>
+						<button
+							ref={closeButtonRef}
+							type="button"
+							onClick={closeMobileMenu}
+							className="mobile-menu-close"
+							aria-label={mobileMenuCopy.close}
+							tabIndex={isMenuOpen ? 0 : -1}
+						>
+							<X className="h-5 w-5" aria-hidden="true" />
+						</button>
+					</div>
+
+					<div className="relative z-10 mt-6 flex flex-1 flex-col justify-between gap-6">
+						<div
+							className="mobile-menu-links"
+							aria-label={mobileMenuCopy.navLabel}
+						>
+							{mobileMenuItems.map((item, index) => (
+								<a
+									key={item.label}
+									href={item.href}
+									onClick={closeMobileMenu}
+									className="mobile-menu-link"
+									style={{ "--item-index": index } as CSSProperties}
+									tabIndex={isMenuOpen ? 0 : -1}
+								>
+									<span className="mobile-menu-link-index">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+									<span>{item.label}</span>
+									<ArrowRight
+										className="mobile-menu-link-icon h-4 w-4"
+										aria-hidden="true"
+									/>
+								</a>
+							))}
+						</div>
+
+						<a
+							href="#contact"
+							onClick={closeMobileMenu}
+							className="mobile-menu-cta"
+							tabIndex={isMenuOpen ? 0 : -1}
+						>
+							{contactItem?.label ?? "Contact"}
+							<ArrowRight className="h-4 w-4" aria-hidden="true" />
+						</a>
+					</div>
+				</aside>
+			</div>
+		</>
+	);
 }
