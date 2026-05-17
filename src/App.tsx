@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { About } from './components/About';
 import { Boat } from './components/Boat';
 import { Contact } from './components/Contact';
@@ -10,33 +11,53 @@ import { ImageRevealSection } from './components/ImageRevealSection';
 import { Navigation } from './components/Navigation';
 import { Process } from './components/Process';
 import { Products } from './components/Products';
-import { SEO } from './components/SEO';
 import { Services } from './components/Services';
 import { Why } from './components/Why';
-import { siteContent } from './content/siteContent';
-import { useLanguage } from './hooks/useLanguage';
+import { siteContent, type Language } from './content/siteContent';
+import { getHtmlLang, getLanguagePath } from './lib/seo';
 import { withBasePath } from './utils/basePath';
 import { ScrollProvider } from './utils/scroll';
 
 const CINEMA_PRESET = 'immersive';
+const LANGUAGE_STORAGE_KEY = 'globallift-language';
 
-function App() {
-  const { language, setLanguage } = useLanguage({
-    storageKey: 'globallift-language',
-  });
+type AppProps = {
+  initialLanguage: Language;
+};
+
+function App({ initialLanguage }: AppProps) {
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const language = initialLanguage;
   const content = siteContent[language];
+
+  const setLanguage = useCallback(
+    (next: Language) => {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(LANGUAGE_STORAGE_KEY, next);
+      }
+
+      const nextPath = getLanguagePath(next);
+      const hash = typeof window !== 'undefined' ? window.location.hash : '';
+      const currentPath = pathname ?? '/';
+
+      if (currentPath !== nextPath) {
+        replace(`${nextPath}${hash}`, { scroll: false });
+      }
+    },
+    [pathname, replace],
+  );
 
   useEffect(() => {
     document.documentElement.setAttribute('data-cinema', CINEMA_PRESET);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = getHtmlLang(language);
+  }, [language]);
+
   return (
     <div id="top" className="bg-background text-foreground antialiased">
-      <SEO
-        language={language}
-        title={content.seo.title}
-        description={content.seo.description}
-      />
       <Navigation
         items={content.navItems}
         language={language}

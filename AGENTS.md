@@ -26,16 +26,22 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 ## 3) Mapa rapido del repo
 
 - `src/app/*`: App Router (layout, page, errores globales).
-- `src/app/fonts/*`: fuentes locales usadas por `next/font/local` cuando una fuente de Google no esta disponible en `next/font/google`.
+- `src/app/en/page.tsx`: variante inglesa indexable de la landing (`/en`).
+- `src/app/sitemap.ts`: sitemap dinamico de App Router servido como `/sitemap.xml`.
+- `src/app/fonts/*`: fuentes locales self-hosted usadas por `next/font/local` para las tipografias core del proyecto.
 - `src/app/api/contact/route.ts`: endpoint POST para envio de formulario de contacto por email.
+- `middleware.ts`: redireccion SEO de `?lang=en` a `/en` y header interno para renderizar `html lang` correcto.
 - `src/components/*`: componentes de UI y secciones.
+- `src/components/JsonLd.tsx`: inyeccion server-side de datos estructurados JSON-LD.
 - `src/components/ui/AnimatedList.tsx`: wrappers de animaciones stagger con Framer Motion (`AnimatedList`/`MotionItem` para contenedores genericos y `AnimatedOl`/`MotionLi` para listas semanticas).
 - `src/contexts/*`: contextos de React (ej. `FontClassContext` para exponer la clase de fuente mono del layout al badge de Image Reveal).
 - `src/content/siteContent.ts`: contenido principal del sitio.
+- `src/lib/seo.ts`: helpers de metadata, canonical, hreflang, rutas por idioma y JSON-LD.
 - `styles/globals.css`: tokens visuales, reglas base y utilidades globales.
 - `src/utils/motion.ts`: variantes de animacion (stagger, fadeIn, scale) para Framer Motion.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
-- `.atl/skill-registry.md`, `.pi/`, `.pi-lens/`: artefactos locales generados por Pi/SDD/lens para skills, settings o caches; deben quedar ignorados por git.
+- `public/images/og/og-image.jpg`: imagen Open Graph canonica, 1200x630.
+- `.atl/skill-registry.md`, `.pi/`, `.pi-lens/`, `.codex/`: artefactos locales generados por Pi/SDD/lens/Codex para skills, settings, entornos o caches; deben quedar ignorados por git.
 - `pages/_app.tsx` y `pages/_document.tsx`: compatibilidad heredada de Pages Router.
 
 ### 3.1 Variables de entorno para contacto por email
@@ -47,16 +53,21 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 ## 4) Contrato de tipografia (NO romper)
 
-- Primary/body font: `Plus Jakarta Sans`
+- Primary/body font: `Plus Jakarta Sans` (self-hosted via `next/font/local`)
 - Display/headings font: `Host Grotesk` (self-hosted via `next/font/local`) solo para headings destacados con `font-display` y para el Hero.
-- Mono font: `JetBrains Mono`
+- Mono font: `JetBrains Mono` (self-hosted via `next/font/local`)
 - Alcance vigente: `Host Grotesk` se aplica al Hero (`font-hero`) y headings seleccionados por clase (`font-display`), sin reemplazar la tipografia base de todos los `h1-h4` ni la tipografia de cuerpo (`Plus Jakarta Sans`).
 - Labels, badges, kickers y texto auxiliar deben conservar su tipografia original de componente (no usar `Host Grotesk` por defecto). Ejemplo actual: badge `Global Lift` en sticky reveal usa `JetBrains Mono`.
 
 ### Source of truth de fuentes
 
-- Cargar fuentes solo en `src/app/layout.tsx` usando `next/font/google` y/o `next/font/local`.
-- `Host Grotesk` debe mantenerse como asset local en `src/app/fonts/host-grotesk-latin.woff2` y exponerse via variable CSS.
+- Cargar fuentes solo en `src/app/layout.tsx` usando `next/font/local`.
+- No depender de `next/font/google` para las tipografias core del proyecto: en este entorno puede degradar a fuentes fallback y retrasar la compilacion inicial.
+- Mantener estos assets locales:
+  - `src/app/fonts/plus-jakarta-sans-latin.woff2`
+  - `src/app/fonts/jetbrains-mono-latin.woff2`
+  - `src/app/fonts/host-grotesk-latin.woff2`
+- Exponer las fuentes via variables CSS.
 - Consumir fuentes por variables CSS en todas las capas de estilos:
   - `styles/globals.css`
   - `tailwind.config.js`
@@ -65,6 +76,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 - No importar `Archivo Semi Expanded` ni `Archivo_Semi_Expanded` desde `next/font/google`.
 - No usar `Archivo` como display font en este repo hasta validar cambio de referencia visual en produccion.
+- No importar `Plus_Jakarta_Sans` ni `JetBrains_Mono` desde `next/font/google`; deben cargarse desde assets locales.
 - No hardcodear nombres de fuentes en `tailwind.config.js` cuando existan variables CSS.
 - No mezclar `<link>` de Google Fonts con `next/font` para estas fuentes del proyecto.
 
@@ -101,6 +113,17 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - El menu hamburguesa movil (`Navigation`) debe mantener el lenguaje premium/liquid glass: drawer lateral con overlay blur, foco accesible, cierre por Escape/click externo, bloqueo de scroll y retorno de foco al trigger.
 - En listas animadas con contenido localizado, no usar el texto traducido como `key`; usar claves estables independientes del idioma (`legal-compliance`, `sourcing-supply`, etc.) para evitar que Framer Motion remonte items ya revelados y los deje invisibles al cambiar ES/EN.
 - En el footer, no usar un mini-mapa literal/ambiguo debajo del logo. La columna de marca debe comunicar posicionamiento internacional con una visual premium de mapa global usando `public/images/generated/contact-global-map-lights.webp`, overlay oscuro/glass, copy i18n desde `siteContent` y contenedor accesible por `aria-label`.
+- Reservar `priority`/preload de `next/image` para imagenes above-the-fold que participen del LCP (Hero, logo visible). No marcar como `priority` imagenes below-the-fold como `ProductGallery`, porque compiten con fuentes/CSS/hero en la carga inicial.
+
+### 5.2 Convencion SEO e i18n indexable
+
+- La landing en espanol vive en `/` y la variante inglesa indexable vive en `/en`.
+- No usar `?lang=en` como canonical ni como URL principal indexable; `middleware.ts` debe redirigir `/?lang=en` hacia `/en` para compatibilidad con enlaces viejos.
+- `src/lib/seo.ts` es la fuente de verdad para `metadataBase`, canonical, hreflang, Open Graph/Twitter y JSON-LD.
+- `src/app/layout.tsx` debe renderizar `html lang` desde el header interno `x-globallift-lang` seteado por middleware; no dejar `/en` con `lang="es"` en server HTML.
+- Mantener `public/images/og/og-image.jpg` en 1200x630 y alineada visualmente con importacion/exportacion/logistica; no usar imagenes de rubros ajenos al negocio.
+- `public/robots.txt` debe bloquear `/api/` para todos los crawlers salvo decision explicita contraria.
+- `src/app/sitemap.ts` debe listar solo URLs canonicas indexables (`/`, `/en`) y no variantes con query params.
 
 ## 6) Protocolo de auto-actualizacion de AGENTS.md (OBLIGATORIO)
 
@@ -193,5 +216,7 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-05-01: Reemplazo del mini-mapa del footer por una visual premium de mapa global basada en `public/images/generated/contact-global-map-lights.webp`, con overlay oscuro/glass, labels localizados (`globalMapLabel`, `globalMapEyebrow`, `globalMapCaption`) en `siteContent` y verificacion visual en navegador.
 - 2026-05-10: Inicializacion SDD en modo Engram: se genero `.atl/skill-registry.md` como registry local de skills, se agrego `.atl/` a `.gitignore` y se documento la infraestructura local en el mapa del repo.
 - 2026-05-16: Refinamiento premium del Hero inspirado en Skydda: se cambia la imagen de fondo a `hero-cinematic-port.webp`, se ajustan overlays cinematograficos, legibilidad del bloque de copy y CTAs sin alterar copy ni fuentes, preservando responsive en viewports bajos como 1280x720.
-- 2026-05-16: Se amplio `.gitignore` para excluir artefactos locales de Pi (`.pi/`, `.pi-lens/`) junto con `.atl/`, y se documento que estos directorios no deben entrar en git.
+- 2026-05-16: Se amplio `.gitignore` para excluir artefactos locales de Pi (`.pi/`, `.pi-lens/`) y Codex (`.codex/`) junto con `.atl/`, y se documento que estos directorios no deben entrar en git.
 - 2026-05-16: Mejora del menu hamburguesa movil en `Navigation`: drawer premium/liquid glass con overlay blur, links escalonados, CTA destacado, cierre accesible por Escape/click externo y retorno de foco; estilos centralizados en `styles/globals.css`.
+- 2026-05-17: Correccion del refactor SEO: se restaura `Plus Jakarta Sans` como fuente base, se reemplaza la variante inglesa query-param por ruta canonica `/en`, se agregan canonical/hreflang/JSON-LD centralizados en `src/lib/seo.ts`, sitemap dinamico en `src/app/sitemap.ts`, middleware para `html lang` server-side y redireccion `/?lang=en -> /en`, robots bloqueando `/api/` globalmente y Open Graph 1200x630 alineado al negocio.
+- 2026-05-17: Correccion de carga de fuentes y performance inicial: `Plus Jakarta Sans` y `JetBrains Mono` pasan a assets locales en `src/app/fonts/*` cargados con `next/font/local` para evitar fallback de `next/font/google`; `ProductGallery` deja de usar `priority` para no precargar imagenes below-the-fold.

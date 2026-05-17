@@ -3,13 +3,13 @@ import App from '@/App';
 import { JsonLd } from '@/components/JsonLd';
 import { buildPageMetadata } from '@/lib/seo';
 
-const language = 'es';
+const language = 'en';
 
 export function generateMetadata(): Metadata {
   return buildPageMetadata(language);
 }
 
-export default function HomePage() {
+export default function EnglishHomePage() {
   return (
     <>
       <JsonLd language={language} />

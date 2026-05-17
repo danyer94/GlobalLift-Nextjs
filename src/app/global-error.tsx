@@ -14,6 +14,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
   return (
     <html lang="es">
+      <head>
+        <meta name="robots" content="noindex, follow" />
+        <title>Error crítico | Global Lift</title>
+      </head>
       <body className="bg-background text-foreground">
         <div className="min-h-screen flex items-center justify-center px-6">
           <div className="max-w-xl text-center space-y-4">

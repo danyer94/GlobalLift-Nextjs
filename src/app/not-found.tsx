@@ -1,3 +1,14 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Página no encontrada',
+  description: 'La ruta que buscas no existe o fue movida.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
+
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center px-6">

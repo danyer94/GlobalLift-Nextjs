@@ -12,6 +12,17 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
     console.error(error);
   }, [error]);
 
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, follow';
+    document.head.appendChild(meta);
+
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center px-6">
       <div className="max-w-xl text-center space-y-4">

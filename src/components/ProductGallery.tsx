@@ -240,7 +240,6 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                     className="h-full w-full rounded-[1.75rem] object-contain shadow-[0_30px_90px_rgb(var(--primary)_/_0.22)]"
                     fill
                     sizes="(min-width: 1024px) 960px, (min-width: 640px) 86vw, 100vw"
-                    priority={index === currentIndex && currentIndex === 0}
                     onError={() => handleImageError(slide.key)}
                   />
                   {/* Hover metadata overlay */}
