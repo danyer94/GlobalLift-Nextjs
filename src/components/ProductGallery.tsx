@@ -146,11 +146,11 @@ const getCarouselCardStyle = (offset: number): CarouselCardStyle => {
   const rotate = isActive ? 0 : direction * -1 * Math.min(78, 46 + depth * 7);
   const y = depth * 8;
   const z = depth * -128;
-  const opacity = depth === 0 ? 1 : Math.max(0.24, 0.86 - depth * 0.13);
+  const opacity = 1;
   const blur = depth <= 1 ? 0 : (depth - 1) * 0.55;
   const brightness = Math.max(0.52, 1 - depth * 0.09);
   const saturation = Math.max(0.72, 1 - depth * 0.04);
-  const reflectionOpacity = Math.max(0.2, 0.72 - depth * 0.08);
+  const reflectionOpacity = Math.max(0.06, 0.32 - depth * 0.06);
   const reflectionBlur = 0.8 + depth * 0.32;
 
   return {
