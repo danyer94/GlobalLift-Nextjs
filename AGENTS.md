@@ -41,6 +41,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - `src/utils/motion.ts`: variantes de animacion (stagger, fadeIn, scale) para Framer Motion.
 - `tailwind.config.js`: extensiones de tema (colores, fuentes, sombras, radios).
 - `public/images/og/og-image.jpg`: imagen Open Graph canonica, 1200x630.
+- `public/images/generated/products/*`: assets PNG/WebP del carrusel 3D de productos (`ProductGallery`).
 - `.atl/skill-registry.md`, `.pi/`, `.pi-lens/`, `.codex/`: artefactos locales generados por Pi/SDD/lens/Codex para skills, settings, entornos o caches; deben quedar ignorados por git.
 - `pages/_app.tsx` y `pages/_document.tsx`: compatibilidad heredada de Pages Router.
 
@@ -225,6 +226,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-05-20: Ajuste de opacidad y reflejo en `ProductGallery`. Se configuro opacidad 1 en las tarjetas inactivas/laterales para eliminar la transparencia (evitando que se transparente el fondo) y se redujo la altura del reflejo en el suelo a 33% (1/3 de la imagen), aplicando un degradado de mascara (-webkit-mask-image/mask-image) con linear-gradient para difuminarlo suavemente y atenuando su opacidad maxima a 0.32 en JS.
 - 2026-05-20: Rediseño completo del modal visualizador de imágenes (Image Viewer) de `ProductGallery` en `ProductGallery.tsx`. Se eliminó el fondo cian brillante (`bg-primary/55`) y se reemplazó por un fondo oscuro cinematográfico con desenfoque de fondo (`bg-black/90` + `backdrop-blur-xl`). Se agregaron controles de vidrio soplado circular (`glassmorphic`) con iconos en blanco puro posicionados fuera del marco de la imagen y flotando sutilmente a los lados del viewport en pantallas medianas/grandes. Se implementó un resplandor de fondo ("backlight glow") cian/azul detrás de la imagen para integrarla con la atmósfera visual del carrusel, y se movió el título e índice a un panel inferior flotante de vidrio soplado.
 - 2026-05-20: Adaptación de la imagen del visor a pantalla completa real (`100vw`/`100vh` con `object-contain`), removiendo todo margen de contenedor y eliminando por completo el `border-radius` (corner radius) para que se visualice con esquinas rectas/cuadradas únicamente dentro del modal de visualización completa.
-
-
-
+- 2026-05-20: Se agregaron 10 imagenes generadas nuevas al carrusel de productos (pina, cacao, cafe, bananos, cocos, limones, aceite de coco, oregano, yuca y miel) en PNG/WebP bajo `public/images/generated/products/`, se amplio `PRODUCT_IMAGES` de 8 a 18 slides y se sincronizaron titulos/metadatos ES/EN en `siteContent`.

@@ -88,6 +88,56 @@ const PRODUCT_IMAGES: ProductSlide[] = [
     src: "images/generated/products/products-avocado-export.webp",
     fallbackSrc: "images/generated/products/products-avocado-export.png",
   },
+  {
+    key: "products-pineapple-export",
+    src: "images/generated/products/products-pineapple-export.webp",
+    fallbackSrc: "images/generated/products/products-pineapple-export.png",
+  },
+  {
+    key: "products-cocoa-export",
+    src: "images/generated/products/products-cocoa-export.webp",
+    fallbackSrc: "images/generated/products/products-cocoa-export.png",
+  },
+  {
+    key: "products-coffee-export",
+    src: "images/generated/products/products-coffee-export.webp",
+    fallbackSrc: "images/generated/products/products-coffee-export.png",
+  },
+  {
+    key: "products-bananas-export",
+    src: "images/generated/products/products-bananas-export.webp",
+    fallbackSrc: "images/generated/products/products-bananas-export.png",
+  },
+  {
+    key: "products-coconuts-export",
+    src: "images/generated/products/products-coconuts-export.webp",
+    fallbackSrc: "images/generated/products/products-coconuts-export.png",
+  },
+  {
+    key: "products-limes-export",
+    src: "images/generated/products/products-limes-export.webp",
+    fallbackSrc: "images/generated/products/products-limes-export.png",
+  },
+  {
+    key: "products-coconut-oil-export",
+    src: "images/generated/products/products-coconut-oil-export.webp",
+    fallbackSrc: "images/generated/products/products-coconut-oil-export.png",
+  },
+  {
+    key: "products-oregano-export",
+    src: "images/generated/products/products-oregano-export.webp",
+    fallbackSrc: "images/generated/products/products-oregano-export.png",
+  },
+  {
+    key: "products-cassava-export",
+    src: "images/generated/products/products-cassava-export.webp",
+    fallbackSrc: "images/generated/products/products-cassava-export.png",
+  },
+  {
+    key: "products-honey-export",
+    src: "images/generated/products/products-honey-export.webp",
+    fallbackSrc: "images/generated/products/products-honey-export.png",
+  },
 ];
 
 const TOTAL_SLIDES = PRODUCT_IMAGES.length;
@@ -395,7 +445,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             <button
               type="button"
               onClick={closeViewer}
-              className="absolute right-6 top-6 z-[230] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/20 active:scale-95 shadow-premium"
+              className="absolute right-6 top-6 z-[230] flex size-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/20 active:scale-95 shadow-premium"
               aria-label={galleryCopy.controls.closeViewer}
             >
               <X className="size-5" aria-hidden="true" />
@@ -416,7 +466,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
               <button
                 type="button"
                 onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
+                className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
                 aria-label={galleryCopy.controls.previousImage}
               >
                 <CaretLeft className="size-5" aria-hidden="true" />
@@ -440,7 +490,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
               <button
                 type="button"
                 onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
+                className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
                 aria-label={galleryCopy.controls.nextImage}
               >
                 <CaretRight className="size-5" aria-hidden="true" />

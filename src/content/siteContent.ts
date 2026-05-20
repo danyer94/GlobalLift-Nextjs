@@ -270,6 +270,16 @@ export const siteContent: Record<Language, SiteContent> = {
           "products-mango-export": "Mango para exportación",
           "products-peppers-tomatoes": "Pimientos y tomates de calidad",
           "products-mixed-catalog": "Catálogo abierto bajo solicitud",
+          "products-pineapple-export": "Piña premium para exportación",
+          "products-cocoa-export": "Cacao orgánico dominicano",
+          "products-coffee-export": "Café especial de altura",
+          "products-bananas-export": "Bananos orgánicos de exportación",
+          "products-coconuts-export": "Cocos de exportación",
+          "products-limes-export": "Limones persas de calidad",
+          "products-coconut-oil-export": "Aceite de coco orgánico",
+          "products-oregano-export": "Orégano dominicano",
+          "products-cassava-export": "Yuca de exportación",
+          "products-honey-export": "Miel orgánica para exportación",
         },
         slideMetadata: {
           "products-charcoal-premium": {
@@ -307,6 +317,51 @@ export const siteContent: Record<Language, SiteContent> = {
             category: "Aguacate",
             origin: "Rep. Dominicana",
             badge: "Exportación",
+          },
+          "products-pineapple-export": {
+            category: "Piña MD2",
+            origin: "Rep. Dominicana",
+            badge: "Premium",
+          },
+          "products-cocoa-export": {
+            category: "Cacao orgánico",
+            origin: "Rep. Dominicana",
+            badge: "Fino aroma",
+          },
+          "products-coffee-export": {
+            category: "Café especial",
+            origin: "Zonas de altura RD",
+            badge: "Especialidad",
+          },
+          "products-bananas-export": {
+            category: "Bananos orgánicos",
+            origin: "Rep. Dominicana",
+            badge: "Orgánico",
+          },
+          "products-coconuts-export": {
+            category: "Cocos",
+            origin: "Rep. Dominicana",
+          },
+          "products-limes-export": {
+            category: "Cítricos",
+            origin: "Rep. Dominicana",
+          },
+          "products-coconut-oil-export": {
+            category: "Aceite de coco",
+            origin: "Rep. Dominicana",
+            badge: "Orgánico",
+          },
+          "products-oregano-export": {
+            category: "Especias orgánicas",
+            origin: "Rep. Dominicana",
+          },
+          "products-cassava-export": {
+            category: "Yuca fresca",
+            origin: "Rep. Dominicana",
+          },
+          "products-honey-export": {
+            category: "Miel orgánica",
+            origin: "Rep. Dominicana",
           },
         },
         controls: {
@@ -555,6 +610,16 @@ export const siteContent: Record<Language, SiteContent> = {
           "products-mango-export": "Mango for export",
           "products-peppers-tomatoes": "Quality peppers and tomatoes",
           "products-mixed-catalog": "Open catalog on request",
+          "products-pineapple-export": "Premium pineapple for export",
+          "products-cocoa-export": "Organic Dominican cocoa",
+          "products-coffee-export": "High-altitude specialty coffee",
+          "products-bananas-export": "Organic bananas for export",
+          "products-coconuts-export": "Export-grade coconuts",
+          "products-limes-export": "Quality Persian limes",
+          "products-coconut-oil-export": "Organic coconut oil",
+          "products-oregano-export": "Dominican oregano",
+          "products-cassava-export": "Cassava for export",
+          "products-honey-export": "Organic honey for export",
         },
         slideMetadata: {
           "products-charcoal-premium": {
@@ -592,6 +657,51 @@ export const siteContent: Record<Language, SiteContent> = {
             category: "Avocado",
             origin: "Dominican Republic",
             badge: "Export",
+          },
+          "products-pineapple-export": {
+            category: "Pineapple MD2",
+            origin: "Dominican Republic",
+            badge: "Premium",
+          },
+          "products-cocoa-export": {
+            category: "Organic cocoa",
+            origin: "Dominican Republic",
+            badge: "Fine aroma",
+          },
+          "products-coffee-export": {
+            category: "Specialty coffee",
+            origin: "Dominican highlands",
+            badge: "Specialty",
+          },
+          "products-bananas-export": {
+            category: "Organic bananas",
+            origin: "Dominican Republic",
+            badge: "Organic",
+          },
+          "products-coconuts-export": {
+            category: "Coconuts",
+            origin: "Dominican Republic",
+          },
+          "products-limes-export": {
+            category: "Citrus",
+            origin: "Dominican Republic",
+          },
+          "products-coconut-oil-export": {
+            category: "Coconut oil",
+            origin: "Dominican Republic",
+            badge: "Organic",
+          },
+          "products-oregano-export": {
+            category: "Organic spices",
+            origin: "Dominican Republic",
+          },
+          "products-cassava-export": {
+            category: "Fresh cassava",
+            origin: "Dominican Republic",
+          },
+          "products-honey-export": {
+            category: "Organic honey",
+            origin: "Dominican Republic",
           },
         },
         controls: {
