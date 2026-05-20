@@ -378,62 +378,81 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
       {isViewerOpen &&
         createPortal(
           <div
-            className="fixed inset-0 z-[220] flex items-center justify-center bg-primary/55 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[220] flex flex-col items-center justify-center bg-black/90 p-4 backdrop-blur-xl transition-all duration-300"
             role="dialog"
             aria-modal="true"
             aria-label={currentTitle}
           >
+            {/* Background close trigger */}
             <button
               type="button"
-              className="absolute inset-0 cursor-default"
+              className="absolute inset-0 cursor-default bg-transparent"
               aria-label={galleryCopy.controls.closeViewer}
               onClick={closeViewer}
             />
-            <div
-              className="relative z-10 w-full max-w-5xl rounded-2xl border border-border/70 bg-card/95 p-3 shadow-lift sm:p-4"
-            >
-              <button
-                type="button"
-                onClick={closeViewer}
-                className="icon-button-overlay absolute right-4 top-4 z-20 size-10"
-                aria-label={galleryCopy.controls.closeViewer}
-              >
-                <X className="size-5" aria-hidden="true" />
-              </button>
 
+            {/* Viewport close button */}
+            <button
+              type="button"
+              onClick={closeViewer}
+              className="absolute right-6 top-6 z-[230] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/20 active:scale-95 shadow-premium"
+              aria-label={galleryCopy.controls.closeViewer}
+            >
+              <X className="size-5" aria-hidden="true" />
+            </button>
+
+            {/* Image viewport container */}
+            <div className="relative z-10 flex w-screen h-screen items-center justify-center overflow-hidden">
+              
+              {/* Subtle backlight glow reflecting carousel colors */}
+              <div 
+                className="absolute inset-0 -z-10 opacity-30 blur-3xl pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, rgb(var(--secondary) / 0.2) 0%, transparent 80%)"
+                }}
+              />
+
+              {/* Navigation Left (Previous) */}
               <button
                 type="button"
                 onClick={prevSlide}
-                className="icon-button-overlay absolute left-4 top-1/2 z-20 -translate-y-1/2 size-11"
+                className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
                 aria-label={galleryCopy.controls.previousImage}
               >
                 <CaretLeft className="size-5" aria-hidden="true" />
               </button>
 
-              <Image
-                src={getImageSrc(currentSlide)}
-                alt={`${heading} - ${currentTitle}`}
-                className="max-h-[78vh] w-full rounded-xl bg-background/70 object-contain"
-                width={1600}
-                height={900}
-                sizes="(min-width: 1024px) 960px, 100vw"
-                style={{ maxHeight: "78vh", width: "100%", height: "auto" }}
-                onError={() => handleImageError(currentSlide.key)}
-              />
+              {/* Fullscreen image without corner radius */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <Image
+                  src={getImageSrc(currentSlide)}
+                  alt={`${heading} - ${currentTitle}`}
+                  className="w-full h-full object-contain"
+                  width={1920}
+                  height={1080}
+                  sizes="100vw"
+                  style={{ width: "100vw", height: "100vh", objectFit: "contain" }}
+                  onError={() => handleImageError(currentSlide.key)}
+                />
+              </div>
 
+              {/* Navigation Right (Next) */}
               <button
                 type="button"
                 onClick={nextSlide}
-                className="icon-button-overlay absolute right-4 top-1/2 z-20 -translate-y-1/2 size-11"
+                className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
                 aria-label={galleryCopy.controls.nextImage}
               >
                 <CaretRight className="size-5" aria-hidden="true" />
               </button>
+            </div>
 
-              <p className="mt-3 text-center text-sm font-semibold text-foreground">
+            {/* Bottom meta information deck */}
+            <div className="relative z-10 mt-6 flex flex-col items-center gap-1 rounded-full border border-white/10 bg-black/45 px-6 py-2.5 text-center text-white backdrop-blur-md shadow-premium">
+              <p className="text-sm font-semibold tracking-wide text-white">
                 {currentTitle}
               </p>
-              <p className="text-center text-xs text-muted-foreground">
+              <p className="text-xs text-white/50 font-mono">
                 {currentIndex + 1} / {total}
               </p>
             </div>
