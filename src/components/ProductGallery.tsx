@@ -20,7 +20,6 @@ type GalleryState = {
   currentIndex: number;
   isViewerOpen: boolean;
   isCarouselPaused: boolean;
-  hoveredIndex: number | null;
   fallbackMap: Record<string, boolean>;
 };
 
@@ -31,7 +30,6 @@ type GalleryAction =
   | { type: "openViewer" }
   | { type: "closeViewer" }
   | { type: "setPaused"; paused: boolean }
-  | { type: "setHovered"; index: number | null }
   | { type: "imageError"; slideKey: string };
 
 type CarouselCardStyle = CSSProperties & {
@@ -45,6 +43,8 @@ type CarouselCardStyle = CSSProperties & {
   "--carousel-blur": string;
   "--carousel-brightness": string;
   "--carousel-saturation": string;
+  "--carousel-reflection-opacity": string;
+  "--carousel-reflection-blur": string;
 };
 
 const PRODUCT_IMAGES: ProductSlide[] = [
@@ -91,13 +91,11 @@ const PRODUCT_IMAGES: ProductSlide[] = [
 ];
 
 const TOTAL_SLIDES = PRODUCT_IMAGES.length;
-const MAX_VISIBLE_DEPTH = 4;
 
 const initialGalleryState: GalleryState = {
   currentIndex: 0,
   isViewerOpen: false,
   isCarouselPaused: false,
-  hoveredIndex: null,
   fallbackMap: {},
 };
 
@@ -115,8 +113,6 @@ const galleryReducer = (state: GalleryState, action: GalleryAction): GalleryStat
       return { ...state, isViewerOpen: false };
     case "setPaused":
       return { ...state, isCarouselPaused: action.paused };
-    case "setHovered":
-      return { ...state, hoveredIndex: action.index };
     case "imageError":
       return state.fallbackMap[action.slideKey]
         ? state
@@ -144,16 +140,18 @@ const getCarouselCardStyle = (offset: number): CarouselCardStyle => {
   const depth = Math.abs(offset);
   const direction = Math.sign(offset);
   const isActive = offset === 0;
-  const travel = isActive ? 0 : direction * (68 + (depth - 1) * 14);
-  const mobileTravel = isActive ? 0 : direction * (42 + (depth - 1) * 9);
-  const scale = Math.max(0.38, 1 - depth * 0.16);
-  const rotate = isActive ? 0 : direction * -1 * Math.min(74, 52 + depth * 8);
-  const y = depth * 13;
-  const z = depth * -145;
-  const opacity = depth === 0 ? 1 : Math.max(0.13, 0.9 - depth * 0.18);
-  const blur = depth <= 1 ? 0 : (depth - 1) * 0.9;
-  const brightness = Math.max(0.48, 1 - depth * 0.11);
-  const saturation = Math.max(0.72, 1 - depth * 0.05);
+  const travel = isActive ? 0 : direction * (54 + (depth - 1) * 25);
+  const mobileTravel = isActive ? 0 : direction * (36 + (depth - 1) * 14);
+  const scale = Math.max(0.34, 1 - depth * 0.13);
+  const rotate = isActive ? 0 : direction * -1 * Math.min(78, 46 + depth * 7);
+  const y = depth * 8;
+  const z = depth * -128;
+  const opacity = depth === 0 ? 1 : Math.max(0.24, 0.86 - depth * 0.13);
+  const blur = depth <= 1 ? 0 : (depth - 1) * 0.55;
+  const brightness = Math.max(0.52, 1 - depth * 0.09);
+  const saturation = Math.max(0.72, 1 - depth * 0.04);
+  const reflectionOpacity = Math.max(0.2, 0.72 - depth * 0.08);
+  const reflectionBlur = 0.8 + depth * 0.32;
 
   return {
     "--carousel-x": `${travel}%`,
@@ -166,12 +164,14 @@ const getCarouselCardStyle = (offset: number): CarouselCardStyle => {
     "--carousel-blur": `${blur}px`,
     "--carousel-brightness": `${brightness}`,
     "--carousel-saturation": `${saturation}`,
-    zIndex: 100 - depth * 12,
+    "--carousel-reflection-opacity": `${reflectionOpacity}`,
+    "--carousel-reflection-blur": `${reflectionBlur}px`,
+    zIndex: 100 - depth * 8,
   };
 };
 
 export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
-  const [{ currentIndex, isViewerOpen, isCarouselPaused, hoveredIndex, fallbackMap }, dispatch] = useReducer(
+  const [{ currentIndex, isViewerOpen, isCarouselPaused, fallbackMap }, dispatch] = useReducer(
     galleryReducer,
     initialGalleryState,
   );
@@ -182,11 +182,6 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   const getSlideTitle = useCallback(
     (slideKey: string) => galleryCopy.slideTitles[slideKey] ?? slideKey,
     [galleryCopy.slideTitles],
-  );
-
-  const getSlideMetadata = useCallback(
-    (slideKey: string) => galleryCopy.slideMetadata[slideKey],
-    [galleryCopy.slideMetadata],
   );
 
   const getImageSrc = useCallback(
@@ -247,7 +242,6 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   }, [isViewerOpen]);
 
   const currentTitle = getSlideTitle(currentSlide.key);
-  const currentMetadata = getSlideMetadata(currentSlide.key);
 
   return (
     <div className="mt-20 w-full max-w-7xl mx-auto md:mt-24">
@@ -256,12 +250,10 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
         onMouseEnter={() => { dispatch({ type: "setPaused", paused: true }); }}
         onMouseLeave={() => {
           dispatch({ type: "setPaused", paused: false });
-          dispatch({ type: "setHovered", index: null });
         }}
         onTouchStart={() => { dispatch({ type: "setPaused", paused: true }); }}
         onTouchEnd={() => {
           dispatch({ type: "setPaused", paused: false });
-          dispatch({ type: "setHovered", index: null });
         }}
       >
         <div className="product-3d-orb product-3d-orb--cyan" aria-hidden="true" />
@@ -275,20 +267,14 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
         >
           <div className="product-3d-horizon" aria-hidden="true" />
           <div className="product-3d-rail" aria-hidden="true" />
+          <div className="product-3d-floor" aria-hidden="true" />
+          <div className="product-3d-floor-light" aria-hidden="true" />
 
           {PRODUCT_IMAGES.map((slide, index) => {
             const offset = getCircularOffset(index, currentIndex, total);
-            const depth = Math.abs(offset);
-
-            if (depth > MAX_VISIBLE_DEPTH) {
-              return null;
-            }
-
             const isActive = offset === 0;
             const slideTitle = getSlideTitle(slide.key);
-            const slideMetadata = getSlideMetadata(slide.key);
-            const isMetadataVisible =
-              hoveredIndex !== null ? hoveredIndex === index : isCarouselPaused && isActive;
+            const imageSrc = getImageSrc(slide);
 
             return (
               <button
@@ -309,37 +295,31 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
                     goToSlide(index);
                   }
                 }}
-                onMouseEnter={() => { dispatch({ type: "setHovered", index }); }}
-                onMouseLeave={() => { dispatch({ type: "setHovered", index: null }); }}
               >
-                <span className="product-3d-card-glow" aria-hidden="true" />
-                <Image
-                  src={getImageSrc(slide)}
-                  alt={`${heading} - ${slideTitle}`}
-                  className="product-3d-image"
-                  fill
-                  sizes="(min-width: 1280px) 880px, (min-width: 768px) 72vw, 92vw"
-                  onError={() => handleImageError(slide.key)}
-                />
-                <span className="product-3d-card-sheen" aria-hidden="true" />
-                <span className="product-3d-card-vignette" aria-hidden="true" />
+                <span className="product-3d-reflection" aria-hidden="true">
+                  <Image
+                    src={imageSrc}
+                    alt=""
+                    className="product-3d-reflection-image"
+                    fill
+                    sizes="(min-width: 1280px) 520px, (min-width: 768px) 44vw, 76vw"
+                    onError={() => handleImageError(slide.key)}
+                  />
+                  <span className="product-3d-reflection-mask" />
+                </span>
 
-                <span
-                  className={`product-3d-meta ${isMetadataVisible || isActive ? "product-3d-meta--visible" : ""}`}
-                >
-                  <span className="product-3d-meta-row">
-                    {slideMetadata?.badge && (
-                      <span className="product-3d-badge">{slideMetadata.badge}</span>
-                    )}
-                    <span className="product-3d-count">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </span>
-                  <span className="product-3d-title">{slideTitle}</span>
-                  <span className="product-3d-subtitle">
-                    {slideMetadata?.category ?? slideTitle}
-                    {slideMetadata?.origin ? ` / ${slideMetadata.origin}` : ""}
-                  </span>
+                <span className="product-3d-frame">
+                  <span className="product-3d-card-glow" aria-hidden="true" />
+                  <Image
+                    src={imageSrc}
+                    alt={`${heading} - ${slideTitle}`}
+                    className="product-3d-image"
+                    fill
+                    sizes="(min-width: 1280px) 760px, (min-width: 768px) 64vw, 92vw"
+                    onError={() => handleImageError(slide.key)}
+                  />
+                  <span className="product-3d-card-sheen" aria-hidden="true" />
+                  <span className="product-3d-card-vignette" aria-hidden="true" />
                 </span>
               </button>
             );
@@ -347,41 +327,23 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
 
           <button
             type="button"
-            onClick={prevSlide}
-            className="product-3d-nav product-3d-nav--prev"
-            aria-label={galleryCopy.controls.previousSlide}
-          >
-            <CaretLeft className="size-5 md:size-6" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            className="product-3d-nav product-3d-nav--next"
-            aria-label={galleryCopy.controls.nextSlide}
-          >
-            <CaretRight className="size-5 md:size-6" aria-hidden="true" />
-          </button>
-
-          <button
-            type="button"
             onClick={openViewer}
             className="product-3d-expand"
             aria-label={galleryCopy.controls.openViewer}
           >
-            <span className="hidden sm:inline">{galleryCopy.controls.openViewer}</span>
             <ArrowsOutSimple className="size-4" aria-hidden="true" />
           </button>
         </div>
 
         <div className="product-3d-control-deck" aria-label={galleryCopy.controls.goToSlide}>
-          <div className="product-3d-current-copy">
-            <p>{heading}</p>
-            <h3>{currentTitle}</h3>
-            <span>
-              {currentMetadata?.category ?? currentTitle}
-              {currentMetadata?.origin ? ` / ${currentMetadata.origin}` : ""}
-            </span>
-          </div>
+          <button
+            type="button"
+            onClick={prevSlide}
+            className="product-3d-control-arrow"
+            aria-label={galleryCopy.controls.previousSlide}
+          >
+            <CaretLeft className="size-4" aria-hidden="true" />
+          </button>
 
           <div className="product-3d-dots" role="tablist" aria-label={galleryCopy.controls.goToSlide}>
             {PRODUCT_IMAGES.map((slide, index) => {
@@ -402,9 +364,14 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             })}
           </div>
 
-          <p className="product-3d-index" aria-live="polite">
-            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </p>
+          <button
+            type="button"
+            onClick={nextSlide}
+            className="product-3d-control-arrow"
+            aria-label={galleryCopy.controls.nextSlide}
+          >
+            <CaretRight className="size-4" aria-hidden="true" />
+          </button>
         </div>
       </div>
 
