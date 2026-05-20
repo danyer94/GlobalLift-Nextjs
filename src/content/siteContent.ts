@@ -101,6 +101,7 @@ export type ProcessCopy = {
 export type WhyCopy = {
   label: string;
   heading: string;
+  lead: string;
   items: string[];
 };
 
@@ -387,8 +388,10 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     why: {
-      label: "POR QUÉ ELEGIRNOS",
+      label: "CONFIANZA QUE MUEVE TU NEGOCIO",
       heading: "POR QUÉ ELEGIRNOS",
+      lead:
+        "Combinamos experiencia, procesos y compromiso para ofrecer soluciones confiables que optimizan tu cadena de suministro.",
       items: [
         "Cumplimiento legal — Operamos con respeto a las leyes y estándares de cumplimiento.",
         "Transparencia — Priorizamos claridad en procesos y acuerdos comerciales.",
@@ -728,8 +731,10 @@ export const siteContent: Record<Language, SiteContent> = {
       ],
     },
     why: {
-      label: "WHY CHOOSE US",
+      label: "TRUST THAT MOVES YOUR BUSINESS",
       heading: "WHY CHOOSE US",
+      lead:
+        "We combine experience, process, and commitment to deliver reliable solutions that optimize your supply chain.",
       items: [
         "Legal compliance — We operate with respect for laws and compliance standards.",
         "Transparency — We prioritize clarity across processes and commercial agreements.",
