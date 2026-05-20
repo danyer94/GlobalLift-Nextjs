@@ -18,16 +18,25 @@ export function Navigation({
 }: NavigationProps) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isHeroZone, setIsHeroZone] = useState(false);
+	const [activeHref, setActiveHref] = useState<string | null>(null);
+	const [scrollProgress, setScrollProgress] = useState(0);
 	const menuTriggerRef = useRef<HTMLButtonElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 	const mobileMenuPanelRef = useRef<HTMLElement>(null);
 	const wasMenuOpenRef = useRef(false);
 
-	const headerItems = items.filter((item) => item.href !== "#nosotros-valores");
-	const mobileMenuItems = headerItems.filter(
-		(item) => item.href !== "#contact",
+	const headerItems = useMemo(
+		() => items.filter((item) => item.href !== "#nosotros-valores"),
+		[items],
 	);
-	const contactItem = headerItems.find((item) => item.href === "#contact");
+	const mobileMenuItems = useMemo(
+		() => headerItems.filter((item) => item.href !== "#contact"),
+		[headerItems],
+	);
+	const contactItem = useMemo(
+		() => headerItems.find((item) => item.href === "#contact"),
+		[headerItems],
+	);
 	const mobileMenuCopy = useMemo(
 		() =>
 			language === "es"
@@ -36,12 +45,14 @@ export function Navigation({
 						close: "Cerrar menu",
 						title: "Menú",
 						navLabel: "Navegacion movil",
+						cta: "Solicitar propuesta",
 					}
 				: {
 						open: "Open menu",
 						close: "Close menu",
 						title: "Menu",
 						navLabel: "Mobile navigation",
+						cta: "Request proposal",
 					},
 		[language],
 	);
@@ -179,6 +190,78 @@ export function Navigation({
 		};
 	}, []);
 
+
+	useEffect(() => {
+		const sections: HTMLElement[] = [];
+		for (const item of headerItems) {
+			const id = item.href.replace("#", "");
+			if (!id) continue;
+			const section = document.getElementById(id);
+			if (section) {
+				sections.push(section);
+			}
+		}
+
+		if (!sections.length) return;
+
+		const setNearestSection = () => {
+			const navOffset = window.innerWidth >= 768 ? 128 : 88;
+			const viewportAnchor = navOffset + window.innerHeight * 0.28;
+			let nearest: HTMLElement | null = null;
+
+			for (const section of sections) {
+				const rect = section.getBoundingClientRect();
+				if (rect.top <= viewportAnchor && rect.bottom > viewportAnchor) {
+					nearest = section;
+					break;
+				}
+			}
+
+			if (!nearest) {
+				nearest = sections.find((section) => {
+					const rect = section.getBoundingClientRect();
+					return rect.top >= navOffset;
+				}) ?? sections[sections.length - 1] ?? null;
+			}
+
+			if (nearest) {
+				setActiveHref(`#${nearest.id}`);
+			}
+		};
+
+		setNearestSection();
+		window.addEventListener("scroll", setNearestSection, { passive: true });
+		window.addEventListener("resize", setNearestSection);
+		window.addEventListener("orientationchange", setNearestSection);
+
+		return () => {
+			window.removeEventListener("scroll", setNearestSection);
+			window.removeEventListener("resize", setNearestSection);
+			window.removeEventListener("orientationchange", setNearestSection);
+		};
+	}, [headerItems]);
+
+	useEffect(() => {
+		const updateScrollProgress = () => {
+			const scrollableHeight =
+				document.documentElement.scrollHeight - window.innerHeight;
+			const progress =
+				scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+			setScrollProgress(Math.min(1, Math.max(0, progress)));
+		};
+
+		updateScrollProgress();
+		window.addEventListener("scroll", updateScrollProgress, { passive: true });
+		window.addEventListener("resize", updateScrollProgress);
+		window.addEventListener("orientationchange", updateScrollProgress);
+
+		return () => {
+			window.removeEventListener("scroll", updateScrollProgress);
+			window.removeEventListener("resize", updateScrollProgress);
+			window.removeEventListener("orientationchange", updateScrollProgress);
+		};
+	}, []);
+
 	const navToneClass = isHeroZone ? "nav-hero-blend" : "nav-liquid-glass";
 	const navLinksShellClass = isHeroZone
 		? "nav-links-shell nav-links-shell--hero"
@@ -199,6 +282,7 @@ export function Navigation({
 			<nav
 				className={`fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${navToneClass}`}
 				aria-label="Primary"
+				style={{ "--nav-progress": `${scrollProgress * 100}%` } as CSSProperties}
 			>
 				<div className="container">
 					<div className="relative flex h-16 items-center justify-between py-4 md:h-24">
@@ -219,7 +303,10 @@ export function Navigation({
 								<a
 									key={item.label}
 									href={item.href}
-									className={desktopLinkClass}
+									className={`${desktopLinkClass} ${
+										activeHref === item.href ? "nav-link--active" : ""
+									}`}
+									aria-current={activeHref === item.href ? "page" : undefined}
 								>
 									{item.label}
 								</a>
@@ -243,7 +330,7 @@ export function Navigation({
 								aria-expanded={isMenuOpen}
 								aria-controls="mobile-nav-drawer"
 							>
-								<List className="h-5 w-5" aria-hidden="true" />
+								<List className="size-5" aria-hidden="true" />
 							</button>
 						</div>
 					</div>
@@ -296,7 +383,7 @@ export function Navigation({
 							aria-label={mobileMenuCopy.close}
 							tabIndex={isMenuOpen ? 0 : -1}
 						>
-							<X className="h-5 w-5" aria-hidden="true" />
+							<X className="size-5" aria-hidden="true" />
 						</button>
 					</div>
 
@@ -319,7 +406,7 @@ export function Navigation({
 									</span>
 									<span>{item.label}</span>
 									<ArrowRight
-										className="mobile-menu-link-icon h-4 w-4"
+										className="mobile-menu-link-icon size-4"
 										aria-hidden="true"
 									/>
 								</a>
@@ -332,8 +419,8 @@ export function Navigation({
 							className="mobile-menu-cta"
 							tabIndex={isMenuOpen ? 0 : -1}
 						>
-							{contactItem?.label ?? "Contact"}
-							<ArrowRight className="h-4 w-4" aria-hidden="true" />
+							{contactItem ? mobileMenuCopy.cta : "Contact"}
+							<ArrowRight className="size-4" aria-hidden="true" />
 						</a>
 					</div>
 				</aside>

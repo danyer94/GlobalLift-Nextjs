@@ -187,10 +187,13 @@ export function Contact({ copy }: ContactProps) {
             </div>
           </div>
           <div className="contact-form-panel p-8">
+            <div className="contact-form-intro">
+              <p>{copy.form.intro}</p>
+            </div>
             <form
               onSubmit={handleSubmit}
               onChange={handleFormChange}
-              className="grid gap-4 sm:grid-cols-2"
+              className="mt-6 grid gap-4 sm:grid-cols-2"
               aria-describedby="contact-helper"
             >
               <div className="sr-only" aria-hidden="true">

@@ -142,6 +142,7 @@ export type ContactCopy = {
   };
   form: {
     fields: string[];
+    intro: string;
     submitLabel: string;
     submittingLabel: string;
     status: {
@@ -473,6 +474,7 @@ export const siteContent: Record<Language, SiteContent> = {
           "Producto (opcional)",
           "Mensaje",
         ],
+        intro: "Respondemos con una ruta clara de abastecimiento, logística o conexión comercial según tu operación.",
         submitLabel: "Enviar solicitud",
         submittingLabel: "Enviando…",
         status: {
@@ -813,6 +815,7 @@ export const siteContent: Record<Language, SiteContent> = {
           "Product (optional)",
           "Message",
         ],
+        intro: "We respond with a clear sourcing, logistics, or commercial connection path for your operation.",
         submitLabel: "Send request",
         submittingLabel: "Sending…",
         status: {

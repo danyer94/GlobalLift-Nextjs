@@ -234,6 +234,11 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
     [galleryCopy.slideTitles],
   );
 
+  const getSlideMetadata = useCallback(
+    (slideKey: string) => galleryCopy.slideMetadata[slideKey],
+    [galleryCopy.slideMetadata],
+  );
+
   const getImageSrc = useCallback(
     (slide: ProductSlide) => {
       const relativePath = fallbackMap[slide.key]
@@ -292,6 +297,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
   }, [isViewerOpen]);
 
   const currentTitle = getSlideTitle(currentSlide.key);
+  const currentMetadata = getSlideMetadata(currentSlide.key);
 
   return (
     <div className="mt-20 w-full max-w-7xl mx-auto md:mt-24">
@@ -383,6 +389,25 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
           >
             <ArrowsOutSimple className="size-4" aria-hidden="true" />
           </button>
+        </div>
+
+        <div className="product-3d-meta" aria-live="polite">
+          <span className="product-3d-meta-count">
+            {String(currentIndex + 1).padStart(2, "0")} / {total}
+          </span>
+          <span className="product-3d-meta-divider" aria-hidden="true" />
+          <span className="product-3d-meta-title">{currentTitle}</span>
+          {currentMetadata ? (
+            <>
+              <span className="product-3d-meta-divider" aria-hidden="true" />
+              <span className="product-3d-meta-detail">
+                {currentMetadata.category} · {currentMetadata.origin}
+              </span>
+            </>
+          ) : null}
+          {currentMetadata?.badge ? (
+            <span className="product-3d-meta-badge">{currentMetadata.badge}</span>
+          ) : null}
         </div>
 
         <div className="product-3d-control-deck" aria-label={galleryCopy.controls.goToSlide}>
