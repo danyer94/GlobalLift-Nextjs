@@ -421,22 +421,66 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
           </button>
 
           <div className="product-3d-dots" role="tablist" aria-label={galleryCopy.controls.goToSlide}>
-            {PRODUCT_IMAGES.map((slide, index) => {
-              const isActive = index === currentIndex;
-              return (
-                <button
-                  key={slide.key}
-                  type="button"
-                  onClick={() => goToSlide(index)}
-                  className={`product-3d-dot ${isActive ? "product-3d-dot--active" : ""}`}
-                  aria-label={`${galleryCopy.controls.goToSlide} ${index + 1}`}
-                  aria-selected={isActive}
-                  role="tab"
-                >
-                  <span aria-hidden="true" />
-                </button>
-              );
-            })}
+            {(() => {
+              const MAX_VISIBLE = 7;
+              if (total <= MAX_VISIBLE) {
+                return PRODUCT_IMAGES.map((slide, index) => {
+                  const isActive = index === currentIndex;
+                  return (
+                    <button
+                      key={slide.key}
+                      type="button"
+                      onClick={() => goToSlide(index)}
+                      className={`product-3d-dot ${isActive ? "product-3d-dot--active" : ""}`}
+                      aria-label={`${galleryCopy.controls.goToSlide} ${index + 1}`}
+                      aria-selected={isActive}
+                      role="tab"
+                    >
+                      <span aria-hidden="true" />
+                    </button>
+                  );
+                });
+              }
+
+              const half = Math.floor(MAX_VISIBLE / 2);
+              let windowStart = currentIndex - half;
+              let windowEnd = currentIndex + half;
+
+              if (windowStart < 0) {
+                windowStart = 0;
+                windowEnd = MAX_VISIBLE - 1;
+              }
+              if (windowEnd >= total) {
+                windowEnd = total - 1;
+                windowStart = total - MAX_VISIBLE;
+              }
+
+              return PRODUCT_IMAGES.slice(windowStart, windowEnd + 1).map((slide, i) => {
+                const realIndex = windowStart + i;
+                const isActive = realIndex === currentIndex;
+                const isEdge = i === 0 || i === (windowEnd - windowStart);
+                const isNearEdge = i === 1 || i === (windowEnd - windowStart - 1);
+                const scaleClass = isEdge && !isActive
+                  ? "product-3d-dot--small"
+                  : isNearEdge && !isActive
+                    ? "product-3d-dot--medium"
+                    : "";
+
+                return (
+                  <button
+                    key={slide.key}
+                    type="button"
+                    onClick={() => goToSlide(realIndex)}
+                    className={`product-3d-dot ${isActive ? "product-3d-dot--active" : ""} ${scaleClass}`}
+                    aria-label={`${galleryCopy.controls.goToSlide} ${realIndex + 1}`}
+                    aria-selected={isActive}
+                    role="tab"
+                  >
+                    <span aria-hidden="true" />
+                  </button>
+                );
+              });
+            })()}
           </div>
 
           <button
