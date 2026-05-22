@@ -2124,6 +2124,244 @@
     }
   }
 
+  @media (min-width: 768px) and (max-width: 1180px) {
+    .why-cinematic-section {
+      padding-top: clamp(3.35rem, 5.6vh, 4.75rem);
+      padding-bottom: clamp(3rem, 5vh, 4.5rem);
+    }
+
+    .why-deck-header {
+      max-width: 44rem;
+    }
+
+    .why-deck-eyebrow {
+      font-size: clamp(0.58rem, 1vw, 0.72rem);
+      letter-spacing: 0.34em;
+    }
+
+    .why-deck-title {
+      margin-top: 0.8rem;
+      font-size: clamp(2.85rem, 7vw, 4.8rem);
+    }
+
+    .why-deck-light {
+      margin-block: 1rem 0.85rem;
+    }
+
+    .why-deck-lead {
+      max-width: 38rem;
+      font-size: clamp(0.88rem, 1.25vw, 1.02rem);
+      line-height: 1.48;
+    }
+
+    .why-card-deck {
+      min-height: clamp(16rem, 39vh, 23rem);
+      justify-content: center;
+      margin-top: clamp(1.45rem, 4vh, 2.4rem);
+      margin-inline: 0;
+      overflow: visible;
+      padding: 0.75rem 0.25rem 1.8rem;
+      scroll-snap-type: none;
+    }
+
+    .why-card-deck::before {
+      bottom: 0.8rem;
+      height: 28%;
+    }
+
+    .why-card-deck::after {
+      bottom: 3.35rem;
+    }
+
+    .why-deck-item {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 8.8rem;
+      scroll-snap-align: unset;
+    }
+
+    .why-deck-item + .why-deck-item {
+      margin-left: clamp(-1.05rem, -1.1vw, -0.48rem);
+    }
+
+    .why-deck-card {
+      min-height: clamp(13rem, 34vh, 19rem);
+      border-radius: clamp(0.85rem, 1.8vw, 1.25rem);
+      padding: clamp(0.68rem, 1.2vw, 1rem) clamp(0.48rem, 0.9vw, 0.72rem);
+      box-shadow:
+        0 22px 48px rgb(0 0 0 / 0.34),
+        0 0 0 1px rgb(var(--secondary) / 0.14),
+        0 0 24px rgb(var(--secondary) / 0.24),
+        inset 0 1px 0 rgb(255 255 255 / 0.78);
+    }
+
+    .why-card-number {
+      width: clamp(1.55rem, 3vw, 2rem);
+      height: clamp(1.55rem, 3vw, 2rem);
+      font-size: clamp(0.54rem, 0.9vw, 0.68rem);
+    }
+
+    .why-card-icon {
+      min-height: clamp(2.5rem, 7vh, 4rem);
+    }
+
+    .why-card-icon svg {
+      width: clamp(1.45rem, 3.2vw, 2rem);
+      height: clamp(1.45rem, 3.2vw, 2rem);
+    }
+
+    .why-card-rule {
+      width: 1.55rem;
+      margin: clamp(0.45rem, 1.3vh, 0.85rem) 0 clamp(0.55rem, 1.6vh, 0.95rem);
+    }
+
+    .why-card-title {
+      min-height: clamp(1.7rem, 5.2vh, 2.7rem);
+      font-size: clamp(0.72rem, 1.35vw, 0.98rem);
+      line-height: 1.04;
+    }
+
+    .why-card-description {
+      margin-top: clamp(0.48rem, 1.2vh, 0.8rem);
+      font-size: clamp(0.62rem, 1.1vw, 0.78rem);
+      line-height: 1.28;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1180px) and (max-height: 700px) {
+    .why-cinematic-section {
+      padding-top: clamp(2.1rem, 4.5vh, 2.8rem);
+      padding-bottom: clamp(2.1rem, 4.5vh, 2.8rem);
+    }
+
+    .why-deck-title {
+      margin-top: 0.65rem;
+      font-size: clamp(2.25rem, 5.4vw, 3.5rem);
+    }
+
+    .why-deck-light {
+      margin-block: 0.75rem 0.65rem;
+    }
+
+    .why-deck-lead {
+      max-width: 34rem;
+      font-size: 0.78rem;
+      line-height: 1.32;
+    }
+
+    .why-card-deck {
+      min-height: clamp(10rem, 34vh, 15.5rem);
+      margin-top: clamp(0.85rem, 2.7vh, 1.2rem);
+      padding-block: 0.45rem 0.9rem;
+    }
+
+    .why-deck-card {
+      min-height: clamp(9rem, 30vh, 13.5rem);
+      padding: 0.5rem 0.38rem;
+    }
+
+    .why-card-number {
+      width: 1.45rem;
+      height: 1.45rem;
+      font-size: 0.5rem;
+    }
+
+    .why-card-icon {
+      min-height: 1.9rem;
+    }
+
+    .why-card-icon svg {
+      width: 1.35rem;
+      height: 1.35rem;
+    }
+
+    .why-card-rule {
+      margin: 0.36rem 0 0.45rem;
+    }
+
+    .why-card-title {
+      min-height: 1.25rem;
+      font-size: clamp(0.58rem, 1.08vw, 0.72rem);
+    }
+
+    .why-card-description {
+      margin-top: 0.38rem;
+      font-size: clamp(0.5rem, 0.92vw, 0.6rem);
+      line-height: 1.16;
+    }
+  }
+
+  @media (min-width: 1181px) and (max-height: 900px) {
+    .why-cinematic-section {
+      padding-top: clamp(2.7rem, 5vh, 3.75rem);
+      padding-bottom: clamp(2.8rem, 5vh, 4rem);
+    }
+
+    .why-deck-header {
+      max-width: 48rem;
+    }
+
+    .why-deck-title {
+      margin-top: 0.8rem;
+      font-size: clamp(3.2rem, 6vw, 5rem);
+    }
+
+    .why-deck-light {
+      margin-block: 1rem 0.85rem;
+    }
+
+    .why-deck-lead {
+      max-width: 40rem;
+      font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+      line-height: 1.45;
+    }
+
+    .why-card-deck {
+      min-height: clamp(15rem, 37vh, 19rem);
+      margin-top: clamp(1.25rem, 3.2vh, 1.8rem);
+      padding-bottom: 1.45rem;
+    }
+
+    .why-deck-item {
+      flex-basis: clamp(9.2rem, 12vw, 12rem);
+    }
+
+    .why-deck-card {
+      min-height: clamp(12rem, 31vh, 16rem);
+      padding: clamp(0.72rem, 1.2vw, 0.98rem) clamp(0.55rem, 0.9vw, 0.78rem);
+    }
+
+    .why-card-number {
+      width: 2.05rem;
+      height: 2.05rem;
+      font-size: 0.68rem;
+    }
+
+    .why-card-icon {
+      min-height: clamp(2.45rem, 6vh, 3.4rem);
+    }
+
+    .why-card-icon svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .why-card-rule {
+      margin: 0.48rem 0 0.65rem;
+    }
+
+    .why-card-title {
+      min-height: 1.85rem;
+      font-size: clamp(0.78rem, 1.05vw, 0.94rem);
+    }
+
+    .why-card-description {
+      margin-top: 0.52rem;
+      font-size: clamp(0.66rem, 0.82vw, 0.76rem);
+      line-height: 1.24;
+    }
+  }
+
   @media (max-width: 767px) {
     .why-cinematic-section {
       overflow: hidden;
