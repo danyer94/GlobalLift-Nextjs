@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { SITE_URL } from "../../../lib/seo";
 
 export const runtime = "nodejs";
 
@@ -10,6 +11,9 @@ type ContactPayload = {
   phone: string;
   service: string;
   product: string;
+  route: string;
+  volume: string;
+  timing: string;
   message: string;
   website: string;
 };
@@ -23,6 +27,9 @@ const FIELD_LIMITS: Record<Exclude<keyof ContactPayload, "website">, number> = {
   phone: 40,
   service: 140,
   product: 180,
+  route: 180,
+  volume: 120,
+  timing: 120,
   message: 4000,
 };
 
@@ -39,6 +46,9 @@ function parsePayload(body: unknown): ContactPayload {
       phone: "",
       service: "",
       product: "",
+      route: "",
+      volume: "",
+      timing: "",
       message: "",
       website: "",
     };
@@ -53,6 +63,9 @@ function parsePayload(body: unknown): ContactPayload {
     phone: normalizeString(payload.phone),
     service: normalizeString(payload.service),
     product: normalizeString(payload.product),
+    route: normalizeString(payload.route),
+    volume: normalizeString(payload.volume),
+    timing: normalizeString(payload.timing),
     message: normalizeString(payload.message),
     website: normalizeString(payload.website),
   };
@@ -81,6 +94,9 @@ function validatePayload(payload: ContactPayload): string[] {
     errors.push("Service too long");
   if (payload.product.length > FIELD_LIMITS.product)
     errors.push("Product too long");
+  if (payload.route.length > FIELD_LIMITS.route) errors.push("Route too long");
+  if (payload.volume.length > FIELD_LIMITS.volume) errors.push("Volume too long");
+  if (payload.timing.length > FIELD_LIMITS.timing) errors.push("Timing too long");
   if (payload.message.length > FIELD_LIMITS.message)
     errors.push("Message too long");
 
@@ -98,7 +114,7 @@ function escapeHtml(value: string): string {
 
 function formatTextBody(payload: ContactPayload): string {
   return [
-    "New contact request from globallif.vercel.app",
+    `New contact request from ${SITE_URL}`,
     "",
     `Name: ${payload.name}`,
     `Company: ${payload.company}`,
@@ -106,6 +122,9 @@ function formatTextBody(payload: ContactPayload): string {
     `Phone: ${payload.phone}`,
     `Service: ${payload.service}`,
     `Product: ${payload.product || "N/A"}`,
+    `Destination / Origin: ${payload.route || "N/A"}`,
+    `Estimated volume: ${payload.volume || "N/A"}`,
+    `Expected timing: ${payload.timing || "N/A"}`,
     "",
     "Message:",
     payload.message,
@@ -115,13 +134,16 @@ function formatTextBody(payload: ContactPayload): string {
 function formatHtmlBody(payload: ContactPayload): string {
   return `
     <div style="font-family:Arial,sans-serif;line-height:1.6;color:#0f172a;max-width:640px;">
-      <h2 style="margin:0 0 16px;">New contact request from globallif.vercel.app</h2>
+      <h2 style="margin:0 0 16px;">New contact request from ${escapeHtml(SITE_URL)}</h2>
       <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
       <p><strong>Company:</strong> ${escapeHtml(payload.company)}</p>
       <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
       <p><strong>Phone:</strong> ${escapeHtml(payload.phone)}</p>
       <p><strong>Service:</strong> ${escapeHtml(payload.service)}</p>
       <p><strong>Product:</strong> ${escapeHtml(payload.product || "N/A")}</p>
+      <p><strong>Destination / Origin:</strong> ${escapeHtml(payload.route || "N/A")}</p>
+      <p><strong>Estimated volume:</strong> ${escapeHtml(payload.volume || "N/A")}</p>
+      <p><strong>Expected timing:</strong> ${escapeHtml(payload.timing || "N/A")}</p>
       <hr style="border:0;border-top:1px solid #e2e8f0;margin:20px 0;" />
       <p style="margin:0 0 8px;"><strong>Message:</strong></p>
       <p style="white-space:pre-wrap;margin:0;">${escapeHtml(payload.message)}</p>

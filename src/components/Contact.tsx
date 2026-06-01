@@ -14,6 +14,7 @@ type FieldConfig = {
   id: string;
   type: 'text' | 'email' | 'tel' | 'textarea';
   required: boolean;
+  autoComplete?: string;
   inputMode?: HTMLAttributes<HTMLInputElement>['inputMode'];
   colSpan?: string;
 };
@@ -35,17 +36,23 @@ type ContactPayload = {
   phone: string;
   service: string;
   product: string;
+  route: string;
+  volume: string;
+  timing: string;
   message: string;
   website: string;
 };
 
 const fieldConfig: FieldConfig[] = [
-  { id: 'name', type: 'text', required: true },
-  { id: 'company', type: 'text', required: true },
-  { id: 'email', type: 'email', required: true, inputMode: 'email' },
-  { id: 'phone', type: 'tel', required: true, inputMode: 'tel' },
-  { id: 'service', type: 'text', required: true },
-  { id: 'product', type: 'text', required: false },
+  { id: 'name', type: 'text', required: true, autoComplete: 'name' },
+  { id: 'company', type: 'text', required: true, autoComplete: 'organization' },
+  { id: 'email', type: 'email', required: true, autoComplete: 'email', inputMode: 'email' },
+  { id: 'phone', type: 'tel', required: true, autoComplete: 'tel', inputMode: 'tel' },
+  { id: 'service', type: 'text', required: true, autoComplete: 'off' },
+  { id: 'product', type: 'text', required: false, autoComplete: 'off' },
+  { id: 'route', type: 'text', required: false, autoComplete: 'off' },
+  { id: 'volume', type: 'text', required: false, autoComplete: 'off' },
+  { id: 'timing', type: 'text', required: false, autoComplete: 'off' },
   { id: 'message', type: 'textarea', required: true, colSpan: 'sm:col-span-2' },
 ];
 
@@ -105,6 +112,9 @@ export function Contact({ copy }: ContactProps) {
       phone: String(formData.get('phone') ?? ''),
       service: String(formData.get('service') ?? ''),
       product: String(formData.get('product') ?? ''),
+      route: String(formData.get('route') ?? ''),
+      volume: String(formData.get('volume') ?? ''),
+      timing: String(formData.get('timing') ?? ''),
       message: String(formData.get('message') ?? ''),
       website: String(formData.get('website') ?? ''),
     };
@@ -186,8 +196,9 @@ export function Contact({ copy }: ContactProps) {
               </ul>
             </div>
           </div>
-          <div className="contact-form-panel p-8">
+          <div className="contact-form-panel p-6 sm:p-8">
             <div className="contact-form-intro">
+              <span className="contact-form-intro-label">{copy.form.intakeLabel}</span>
               <p>{copy.form.intro}</p>
             </div>
             <form
@@ -202,6 +213,7 @@ export function Contact({ copy }: ContactProps) {
               </div>
               {fieldConfig.map((field, index) => {
                 const label = copy.form.fields[index] ?? '';
+                const placeholder = copy.form.placeholders[index] ?? undefined;
 
                 return (
                   <div key={field.id} className={field.colSpan ?? ''}>
@@ -209,13 +221,22 @@ export function Contact({ copy }: ContactProps) {
                       {label}
                     </label>
                     {field.type === 'textarea' ? (
-                      <textarea id={field.id} name={field.id} rows={4} required={field.required} className="field-input" />
+                      <textarea
+                        id={field.id}
+                        name={field.id}
+                        rows={5}
+                        required={field.required}
+                        placeholder={placeholder}
+                        className="field-input"
+                      />
                     ) : (
                       <input
                         id={field.id}
                         name={field.id}
                         type={field.type}
                         inputMode={field.inputMode}
+                        autoComplete={field.autoComplete}
+                        placeholder={placeholder}
                         required={field.required}
                         className="field-input"
                       />

@@ -102,7 +102,12 @@ export type WhyCopy = {
   label: string;
   heading: string;
   lead: string;
-  items: string[];
+  pillars: {
+    key: string;
+    title: string;
+    description: string;
+    proof: string;
+  }[];
 };
 
 export type CompanyValue = {
@@ -143,6 +148,8 @@ export type ContactCopy = {
   };
   form: {
     fields: string[];
+    placeholders: string[];
+    intakeLabel: string;
     intro: string;
     submitLabel: string;
     submittingLabel: string;
@@ -392,14 +399,28 @@ export const siteContent: Record<Language, SiteContent> = {
       heading: "POR QUÉ ELEGIRNOS",
       lead:
         "Combinamos experiencia, procesos y compromiso para ofrecer soluciones confiables que optimizan tu cadena de suministro.",
-      items: [
-        "Cumplimiento legal — Operamos con respeto a las leyes y estándares de cumplimiento.",
-        "Transparencia — Priorizamos claridad en procesos y acuerdos comerciales.",
-        "Eficiencia operativa — Trabajamos con procesos estructurados y enfoque en ejecución.",
-        "Ética empresarial — Construimos relaciones desde la integridad y la responsabilidad.",
-        "Adaptabilidad — Respondemos de forma ágil a dinámicas del mercado y necesidades del cliente.",
-        "Enfoque multisectorial — Facilitamos oportunidades comerciales en múltiples industrias.",
-        "Crecimiento responsable — Buscamos crear valor sostenible a largo plazo.",
+      pillars: [
+        {
+          key: "compliance-clarity",
+          title: "Cumplimiento y claridad documental",
+          description:
+            "Operamos con respeto legal, acuerdos transparentes y comunicación precisa para reducir incertidumbre comercial.",
+          proof: "Cumplimiento legal · Transparencia · Ética empresarial",
+        },
+        {
+          key: "operational-coordination",
+          title: "Coordinación operativa de punta a punta",
+          description:
+            "Alineamos necesidad, abastecimiento, logística y seguimiento para que cada solicitud avance con estructura.",
+          proof: "Eficiencia operativa · Seguimiento · Ejecución local",
+        },
+        {
+          key: "adaptive-sourcing",
+          title: "Abastecimiento flexible y multisectorial",
+          description:
+            "No dependemos de un catálogo cerrado. Activamos oportunidades según producto, volumen, destino y mercado.",
+          proof: "Adaptabilidad · Enfoque multisectorial · Crecimiento responsable",
+        },
       ],
     },
     values: {
@@ -475,8 +496,24 @@ export const siteContent: Record<Language, SiteContent> = {
           "Teléfono",
           "Tipo de servicio",
           "Producto (opcional)",
+          "Destino u origen",
+          "Volumen estimado",
+          "Tiempo esperado",
           "Mensaje",
         ],
+        placeholders: [
+          "Nombre y apellido",
+          "Empresa o razón social",
+          "correo@empresa.com",
+          "+1 809 000 0000",
+          "Exportación, importación, logística…",
+          "Carbón, cacao, frutas, categoría…",
+          "República Dominicana → destino…",
+          "Contenedor, kg, cajas, recurrencia…",
+          "Inmediato, mensual, fecha objetivo…",
+          "Cuéntanos restricciones, documentación, destino y prioridad…",
+        ],
+        intakeLabel: "Intake operativo",
         intro: "Respondemos con una ruta clara de abastecimiento, logística o conexión comercial según tu operación.",
         submitLabel: "Enviar solicitud",
         submittingLabel: "Enviando…",
@@ -735,14 +772,28 @@ export const siteContent: Record<Language, SiteContent> = {
       heading: "WHY CHOOSE US",
       lead:
         "We combine experience, process, and commitment to deliver reliable solutions that optimize your supply chain.",
-      items: [
-        "Legal compliance — We operate with respect for laws and compliance standards.",
-        "Transparency — We prioritize clarity across processes and commercial agreements.",
-        "Operational efficiency — We work through structured processes and execution focus.",
-        "Ethical business — We build relationships rooted in integrity and responsibility.",
-        "Adaptability — We respond quickly to market dynamics and client needs.",
-        "Multi-sector approach — We facilitate commercial opportunities across industries.",
-        "Responsible growth — We aim to create sustainable long-term value.",
+      pillars: [
+        {
+          key: "compliance-clarity",
+          title: "Compliance and documentation clarity",
+          description:
+            "We operate with legal respect, transparent agreements, and precise communication to reduce commercial uncertainty.",
+          proof: "Legal compliance · Transparency · Ethical business",
+        },
+        {
+          key: "operational-coordination",
+          title: "End-to-end operational coordination",
+          description:
+            "We align need, sourcing, logistics, and follow-up so every request advances with structure.",
+          proof: "Operational efficiency · Follow-up · Local execution",
+        },
+        {
+          key: "adaptive-sourcing",
+          title: "Flexible multi-sector sourcing",
+          description:
+            "We are not limited to a closed catalog. We activate opportunities based on product, volume, destination, and market.",
+          proof: "Adaptability · Multi-sector approach · Responsible growth",
+        },
       ],
     },
     values: {
@@ -818,8 +869,24 @@ export const siteContent: Record<Language, SiteContent> = {
           "Phone",
           "Service Type",
           "Product (optional)",
+          "Destination or origin",
+          "Estimated volume",
+          "Expected timing",
           "Message",
         ],
+        placeholders: [
+          "Full name",
+          "Company or legal name",
+          "name@company.com",
+          "+1 809 000 0000",
+          "Export, import, logistics…",
+          "Charcoal, cocoa, fruit, category…",
+          "Dominican Republic → destination…",
+          "Container, kg, boxes, recurrence…",
+          "Immediate, monthly, target date…",
+          "Share constraints, documents, destination, and priority…",
+        ],
+        intakeLabel: "Trade intake",
         intro: "We respond with a clear sourcing, logistics, or commercial connection path for your operation.",
         submitLabel: "Send request",
         submittingLabel: "Sending…",

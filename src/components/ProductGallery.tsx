@@ -497,7 +497,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
       {isViewerOpen &&
         createPortal(
           <div
-            className="fixed inset-0 z-[220] flex flex-col items-center justify-center bg-black/90 p-4 backdrop-blur-xl transition-all duration-300"
+            className="product-viewer-modal"
             role="dialog"
             aria-modal="true"
             aria-label={currentTitle}
@@ -514,7 +514,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             <button
               type="button"
               onClick={closeViewer}
-              className="absolute right-6 top-6 z-[230] flex size-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-md transition-all duration-200 hover:bg-white/15 hover:border-white/20 active:scale-95 shadow-premium"
+              className="product-viewer-action product-viewer-close"
               aria-label={galleryCopy.controls.closeViewer}
             >
               <X className="size-5" aria-hidden="true" />
@@ -524,18 +524,13 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             <div className="relative z-10 flex w-screen h-screen items-center justify-center overflow-hidden">
               
               {/* Subtle backlight glow reflecting carousel colors */}
-              <div 
-                className="absolute inset-0 -z-10 opacity-30 blur-3xl pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle, rgb(var(--secondary) / 0.2) 0%, transparent 80%)"
-                }}
-              />
+              <div className="product-viewer-backlight" aria-hidden="true" />
 
               {/* Navigation Left (Previous) */}
               <button
                 type="button"
                 onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
+                className="product-viewer-action product-viewer-prev"
                 aria-label={galleryCopy.controls.previousImage}
               >
                 <CaretLeft className="size-5" aria-hidden="true" />
@@ -559,7 +554,7 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
               <button
                 type="button"
                 onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/60 hover:border-white/20 active:scale-95 shadow-premium"
+                className="product-viewer-action product-viewer-next"
                 aria-label={galleryCopy.controls.nextImage}
               >
                 <CaretRight className="size-5" aria-hidden="true" />
@@ -567,11 +562,11 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
             </div>
 
             {/* Bottom meta information deck */}
-            <div className="relative z-10 mt-6 flex flex-col items-center gap-1 rounded-full border border-white/10 bg-black/45 px-6 py-2.5 text-center text-white backdrop-blur-md shadow-premium">
-              <p className="text-sm font-semibold tracking-wide text-white">
+            <div className="product-viewer-meta">
+              <p className="text-sm font-semibold tracking-wide">
                 {currentTitle}
               </p>
-              <p className="text-xs text-white/50 font-mono">
+              <p className="font-mono text-xs text-graphite/60">
                 {currentIndex + 1} / {total}
               </p>
             </div>
