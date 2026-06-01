@@ -329,14 +329,20 @@ export function ProductGallery({ heading, galleryCopy }: ProductGalleryProps) {
           {PRODUCT_IMAGES.map((slide, index) => {
             const offset = getCircularOffset(index, currentIndex, total);
             const isActive = offset === 0;
+            const isFar = Math.abs(offset) > 2;
             const slideTitle = getSlideTitle(slide.key);
             const imageSrc = getImageSrc(slide);
+            const cardClass = isActive
+              ? "product-3d-card product-3d-card--active"
+              : isFar
+                ? "product-3d-card product-3d-card--depth product-3d-card--depth-far"
+                : "product-3d-card product-3d-card--depth";
 
             return (
               <button
                 key={slide.key}
                 type="button"
-                className={`product-3d-card ${isActive ? "product-3d-card--active" : "product-3d-card--depth"}`}
+                className={cardClass}
                 style={getCarouselCardStyle(offset)}
                 data-carousel-card="true"
                 data-carousel-active={isActive ? "true" : "false"}
