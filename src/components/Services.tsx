@@ -128,8 +128,8 @@ export function Services({ copy }: ServicesProps) {
                   <div className="services-matrix-number" aria-hidden="true">{card.number}</div>
                   <div className="services-matrix-copy">
                     <h3>{card.title}</h3>
-                    <p>{card.description}</p>
                     <span className="services-matrix-copy-line" aria-hidden="true" />
+                    <p>{card.description}</p>
                   </div>
                   <div className="services-matrix-visual" aria-hidden="true">
                     <div className={`services-matrix-art services-matrix-art--${card.mediaKey}`}>
