@@ -197,10 +197,6 @@ export function Contact({ copy }: ContactProps) {
             </div>
           </div>
           <div className="contact-form-panel p-6 sm:p-8">
-            <div className="contact-form-intro">
-              <span className="contact-form-intro-label">{copy.form.intakeLabel}</span>
-              <p>{copy.form.intro}</p>
-            </div>
             <form
               onSubmit={handleSubmit}
               onChange={handleFormChange}

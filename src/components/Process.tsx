@@ -52,7 +52,7 @@ export function Process({ copy }: ProcessProps) {
           <h2 className="section-title mt-6 font-display">{copy.heading}</h2>
         </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[0.88fr,1.12fr] lg:gap-10">
+        <div className="process-narrative mt-14 grid gap-8 lg:grid-cols-[0.88fr,1.12fr] lg:gap-10">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <div className="process-stage">
               <div className="process-stage-media" style={stageStyle}>
@@ -61,13 +61,13 @@ export function Process({ copy }: ProcessProps) {
             </div>
           </aside>
 
-          <AnimatedOl className="space-y-5 lg:space-y-7">
+          <AnimatedOl className="process-step-stack space-y-5 lg:space-y-7">
             {copy.steps.map((step, index) => {
               const { title, description } = splitItem(step);
               const stepNumber = `${index + 1}`.padStart(2, '0');
 
               return (
-                <MotionLi key={PROCESS_STEP_KEYS[index] ?? title} className="process-step-card">
+                <MotionLi key={PROCESS_STEP_KEYS[index] ?? title} className="process-step-card" style={{ '--step-offset': `${index * 0.85}rem` } as CSSProperties}>
                   <span className="process-step-index">{stepNumber}</span>
                   <div>
                     <p className="text-base font-semibold text-foreground md:text-lg">{title}</p>

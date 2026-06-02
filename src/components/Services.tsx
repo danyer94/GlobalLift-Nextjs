@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Anchor, Cube, ClipboardText, Globe, Handshake, Airplane, ShieldCheck, Truck } from '@phosphor-icons/react';
+import Image from 'next/image';
 import type { ServicesCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
 import { AnimatedOl, MotionLi } from './ui/AnimatedList';
@@ -9,43 +9,90 @@ type ServicesProps = {
   copy: ServicesCopy;
 };
 
-const SERVICE_KEYS = [
-  'import',
-  'export',
-  'logistics-coordination',
-  'commercialization',
-  'supplier-client-connection',
-  'trade-facilitation',
-  'sourcing-supply',
-] as const;
-
-const getIconForService = (title: string) => {
-  const normalized = title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-
-  if (normalized.includes('maritimo') || normalized.includes('ocean')) return Anchor;
-  if (normalized.includes('aereo') || normalized.includes('air')) return Airplane;
-  if (normalized.includes('terrestre') || normalized.includes('land')) return Truck;
-  if (normalized.includes('aduanas') || normalized.includes('customs')) return ClipboardText;
-  if (normalized.includes('almacenamiento') || normalized.includes('storage')) return Cube;
-  if (normalized.includes('seguro') || normalized.includes('insurance')) return ShieldCheck;
-  if (normalized.includes('asesoria') || normalized.includes('consulting')) return Handshake;
-  return Globe;
+type ServiceCard = {
+  key: string;
+  number: string;
+  title: string;
+  description: string;
+  tone: 'porcelain' | 'signal' | 'navy';
+  media: string;
+  mediaKey: 'supply' | 'logistics' | 'compliance';
 };
 
 const splitItem = (item: string) => {
-  const [title, ...rest] = item.split(/\s(?:\u2014|-)\s/u);
+  const [title, ...rest] = item.split(/\s(?:\u2014|-|\u00e2\u20ac\u201d)\s/u);
   return {
     title: title ?? item,
     description: rest.join(' - '),
   };
 };
 
-const getServiceTone = (index: number) => {
-  const tones = ['sea', 'air', 'land', 'trade'] as const;
-  return tones[index % tones.length];
+const buildServiceCards = (copy: ServicesCopy): ServiceCard[] => {
+  const isEnglish = copy.heading.toLowerCase().includes('services');
+  const parsed = copy.items.map(splitItem);
+  const byIndex = (index: number) => parsed[index]?.description || parsed[index]?.title || '';
+
+  if (isEnglish) {
+    return [
+      {
+        key: 'supply-sourcing',
+        number: '01',
+        title: 'Supply and sourcing',
+        description: 'We connect your business with reliable suppliers and manage sourcing, evaluation, and commercial coordination for multiple product categories.',
+        tone: 'porcelain',
+        media: withBasePath('/images/generated/services/services-supply-render.webp'),
+        mediaKey: 'supply',
+      },
+      {
+        key: 'logistics-coordination',
+        number: '02',
+        title: 'Logistics and coordination',
+        description: byIndex(2) || 'We organize each stage of the operation with planning, control, and visibility from origin to destination.',
+        tone: 'signal',
+        media: withBasePath('/images/generated/services/services-logistics-render.webp'),
+        mediaKey: 'logistics',
+      },
+      {
+        key: 'trade-compliance',
+        number: '03',
+        title: 'Foreign trade and compliance',
+        description: 'We support imports, exports, trade facilitation, and documentation with structured processes and ethical business standards.',
+        tone: 'navy',
+        media: withBasePath('/images/generated/services/services-compliance-render.webp'),
+        mediaKey: 'compliance',
+      },
+    ];
+  }
+
+  return [
+    {
+      key: 'supply-sourcing',
+      number: '01',
+      title: 'Suministro y abastecimiento',
+      description: 'Conectamos tu negocio con proveedores confiables y gestionamos búsqueda, evaluación y coordinación comercial para múltiples categorías.',
+      tone: 'porcelain',
+      media: withBasePath('/images/generated/services/services-supply-render.webp'),
+      mediaKey: 'supply',
+    },
+    {
+      key: 'logistics-coordination',
+      number: '02',
+      title: 'Logística y coordinación',
+      description: byIndex(2) || 'Organizamos cada etapa de la operación con planificación, control y visibilidad desde origen hasta destino.',
+      tone: 'signal',
+      media: withBasePath('/images/generated/services/services-logistics-render.webp'),
+      mediaKey: 'logistics',
+    },
+    {
+      key: 'trade-compliance',
+      number: '03',
+      title: 'Comercio exterior y cumplimiento',
+      description: 'Acompañamos importaciones, exportaciones, documentación y facilitación comercial con procesos estructurados y ética empresarial.',
+      tone: 'navy',
+      media: withBasePath('/images/generated/services/services-compliance-render.webp'),
+      mediaKey: 'compliance',
+    },
+  ];
 };
 
 export function Services({ copy }: ServicesProps) {
@@ -54,40 +101,48 @@ export function Services({ copy }: ServicesProps) {
     '--cinema-position': 'center 38%',
   } as CSSProperties;
 
+  const cards = buildServiceCards(copy);
+
   return (
     <MotionSection
       id="services"
-      className="section section-alt cinema-surface"
+      className="section section-dark cinema-surface services-matrix-section"
       decorVariant="grid"
       parallaxStrength={20}
       style={cinematicStyle}
     >
       <div className="container">
-        <div>
-          <h2 className="section-title mt-6 font-display">{copy.heading}</h2>
-          <p className="section-lead mt-6 max-w-3xl">{copy.lead}</p>
+        <div className="services-matrix-header">
+          <div>
+            <p className="services-matrix-kicker">{copy.label}</p>
+            <h2 className="section-title font-display">{copy.heading}</h2>
+          </div>
+          <p className="section-lead">{copy.lead}</p>
         </div>
 
-        <AnimatedOl className="service-route mt-12" aria-label={copy.heading}>
-          {copy.items.map((item, index) => {
-            const { title, description } = splitItem(item);
-            const Icon = getIconForService(title);
-
+        <AnimatedOl className="services-matrix-grid" aria-label={copy.heading}>
+          {cards.map((card) => {
             return (
-              <MotionLi
-                key={SERVICE_KEYS[index] ?? title}
-                className={`service-route-item service-route-item--${getServiceTone(index)}`}
-              >
-                <div className="service-route-marker">
-                  <span className="service-route-index">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="icon-dot">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                </div>
-                <div className="service-route-copy">
-                  <p className="text-base font-semibold text-foreground md:text-lg">{title}</p>
-                  {description && <p className="mt-2 text-sm text-muted-foreground md:text-base">{description}</p>}
-                </div>
+              <MotionLi key={card.key} className={`services-matrix-card services-matrix-card--${card.tone}`}>
+                <article className="services-matrix-inner">
+                  <div className="services-matrix-number" aria-hidden="true">{card.number}</div>
+                  <div className="services-matrix-copy">
+                    <h3>{card.title}</h3>
+                    <p>{card.description}</p>
+                    <span className="services-matrix-copy-line" aria-hidden="true" />
+                  </div>
+                  <div className="services-matrix-visual" aria-hidden="true">
+                    <div className={`services-matrix-art services-matrix-art--${card.mediaKey}`}>
+                      <Image
+                        src={card.media}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1181px) 33vw, 100vw"
+                        priority={false}
+                      />
+                    </div>
+                  </div>
+                </article>
               </MotionLi>
             );
           })}
