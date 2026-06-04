@@ -61,6 +61,7 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 - Display/headings font: `Host Grotesk` (self-hosted via `next/font/local`) solo para headings destacados con `font-display` y para el Hero.
 - Mono font: `JetBrains Mono` (self-hosted via `next/font/local`)
 - Alcance vigente: `Host Grotesk` se aplica al Hero (`font-hero`) y headings seleccionados por clase (`font-display`), sin reemplazar la tipografia base de todos los `h1-h4` ni la tipografia de cuerpo (`Plus Jakarta Sans`).
+- Jerarquia vigente: el H1 del Hero debe mantenerse como el mayor momento tipografico del sitio. Los titulos de seccion pueden usar escala cinematografica, pero no deben superar visualmente al Hero salvo decision explicita.
 - Labels, badges, kickers y texto auxiliar deben conservar su tipografia original de componente (no usar `Host Grotesk` por defecto). Ejemplo actual: badge `Global Lift` en sticky reveal usa `JetBrains Mono`.
 
 ### Source of truth de fuentes
@@ -251,3 +252,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-06-01: Ajuste fino de `Services`: el hover ya no escala las imagenes de cada tarjeta; escala la tarjeta completa sin importar el punto de hover, y la linea divisoria se movio debajo del titulo antes del texto secundario.
 - 2026-06-01: Ajuste de proporcion y capas en `Services`: las tarjetas se redujeron aproximadamente 10% (`services-matrix-grid` al 90% y min-height escalado) y el texto queda siempre por encima de las imagenes con z-index superior.
 - 2026-06-03: `Nosotros` se reestructuro para mejorar escaneo y reducir texto: headline con propuesta de valor, un unico parrafo principal, CTAs a Proceso/Contacto, panel de Compromiso sin parrafo duplicado, 3 proof cards operativas y valores compactados en 3 principios agrupados. Se actualizaron `About.tsx`, `siteContent.ts` y estilos `about-*` en `styles/globals.css`.
+- 2026-06-04: Se corrigio la jerarquia tipografica global sin agrandar el Hero: el H1 conserva su escala original y se reducen `about-title`, `about-values-title`, `section-title`, `services-matrix-header .section-title` y `why-deck-title` para no competir con el H1. AGENTS_CHECK: actualizado por cambios en `styles/globals.css`.

@@ -787,7 +787,13 @@
   }
 
   .section-title {
-    @apply text-xl font-semibold leading-tight text-foreground md:text-2xl;
+    max-width: 12ch;
+    color: rgb(var(--foreground));
+    font-size: clamp(2.45rem, 5.8vw, 4.65rem);
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.052em;
+    text-wrap: balance;
   }
 
   .section-lead {
@@ -821,10 +827,11 @@
     max-width: 13ch;
     margin-top: 0.8rem;
     color: rgb(var(--foreground));
-    font-size: clamp(3rem, 7vw, 6.7rem);
+    font-size: clamp(2.85rem, 6.1vw, 5.25rem);
     font-weight: 400;
-    line-height: 0.92;
-    letter-spacing: -0.06em;
+    line-height: 0.96;
+    letter-spacing: -0.052em;
+    text-wrap: balance;
   }
 
   .about-intro {
@@ -974,10 +981,11 @@
   .about-values-title {
     margin-top: 0.7rem;
     color: rgb(var(--foreground));
-    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
     font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: -0.055em;
+    line-height: 0.98;
+    letter-spacing: -0.048em;
+    text-wrap: balance;
   }
 
   .about-values-header>p {
@@ -1901,7 +1909,7 @@
   @media (max-width: 767px) {
     .about-title {
       max-width: 11ch;
-      font-size: clamp(2.8rem, 15vw, 4rem);
+      font-size: clamp(2.55rem, 13vw, 3.55rem);
     }
 
     .about-intro {
@@ -2133,10 +2141,11 @@
   .why-deck-title {
     margin-top: 1.05rem;
     color: rgb(248 250 252);
-    font-size: clamp(3rem, 7.2vw, 6rem);
+    font-size: clamp(2.7rem, 6vw, 5.1rem);
     font-weight: 400;
-    line-height: 0.88;
-    letter-spacing: -0.075em;
+    line-height: 0.94;
+    letter-spacing: -0.062em;
+    text-wrap: balance;
     text-shadow:
       0 24px 60px rgb(0 0 0 / 0.54),
       0 0 38px rgb(198 230 255 / 0.18);
@@ -2630,7 +2639,7 @@
     }
 
     .why-deck-title {
-      font-size: clamp(2.7rem, 15vw, 4.2rem);
+      font-size: clamp(2.45rem, 13vw, 3.65rem);
     }
 
     .why-deck-eyebrow {
@@ -4273,9 +4282,9 @@
 .services-matrix-header .section-title {
   max-width: 46rem;
   color: rgb(248 250 252);
-  font-size: clamp(3.4rem, 7.5vw, 7rem);
-  line-height: 0.9;
-  letter-spacing: -0.06em;
+  font-size: clamp(2.7rem, 6vw, 5.1rem);
+  line-height: 0.94;
+  letter-spacing: -0.062em;
 }
 
 .services-matrix-header .section-lead {
@@ -4522,7 +4531,7 @@
   }
 
   .services-matrix-header .section-title {
-    font-size: clamp(3rem, 17vw, 4.6rem);
+    font-size: clamp(2.45rem, 13vw, 3.65rem);
   }
 
   .services-matrix-card {
