@@ -33,3 +33,4 @@ dist-ssr
 .pi-lens/
 .codex/
 .impeccable/
+.od*

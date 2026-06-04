@@ -1,10 +1,21 @@
-import type { ComponentType } from 'react';
-import type { IconProps } from '@phosphor-icons/react';
-import { ArrowRight, Globe, EnvelopeSimple, MapPin, PhoneCall } from '@phosphor-icons/react';
-import { useState, type CSSProperties, type FormEvent, type HTMLAttributes } from 'react';
-import type { ContactCopy } from '../content/siteContent';
-import { withBasePath } from '../utils/basePath';
-import { MotionSection } from './MotionSection';
+import type { ComponentType } from "react";
+import type { IconProps } from "@phosphor-icons/react";
+import {
+  ArrowRight,
+  Globe,
+  EnvelopeSimple,
+  MapPin,
+  PhoneCall,
+} from "@phosphor-icons/react";
+import {
+  useState,
+  type CSSProperties,
+  type FormEvent,
+  type HTMLAttributes,
+} from "react";
+import type { ContactCopy } from "../content/siteContent";
+import { withBasePath } from "../utils/basePath";
+import { MotionSection } from "./MotionSection";
 
 type ContactProps = {
   copy: ContactCopy;
@@ -12,22 +23,22 @@ type ContactProps = {
 
 type FieldConfig = {
   id: string;
-  type: 'text' | 'email' | 'tel' | 'textarea';
+  type: "text" | "email" | "tel" | "textarea";
   required: boolean;
   autoComplete?: string;
-  inputMode?: HTMLAttributes<HTMLInputElement>['inputMode'];
+  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   colSpan?: string;
 };
 
 type CompanyInfoItem = {
-  id: 'country' | 'address' | 'email' | 'phone';
+  id: "country" | "address" | "email" | "phone";
   label: string;
   value: string;
   href?: string;
   icon: ComponentType<IconProps>;
 };
 
-type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
+type SubmitState = "idle" | "submitting" | "success" | "error";
 
 type ContactPayload = {
   name: string;
@@ -44,48 +55,60 @@ type ContactPayload = {
 };
 
 const fieldConfig: FieldConfig[] = [
-  { id: 'name', type: 'text', required: true, autoComplete: 'name' },
-  { id: 'company', type: 'text', required: true, autoComplete: 'organization' },
-  { id: 'email', type: 'email', required: true, autoComplete: 'email', inputMode: 'email' },
-  { id: 'phone', type: 'tel', required: true, autoComplete: 'tel', inputMode: 'tel' },
-  { id: 'service', type: 'text', required: true, autoComplete: 'off' },
-  { id: 'product', type: 'text', required: false, autoComplete: 'off' },
-  { id: 'route', type: 'text', required: false, autoComplete: 'off' },
-  { id: 'volume', type: 'text', required: false, autoComplete: 'off' },
-  { id: 'timing', type: 'text', required: false, autoComplete: 'off' },
-  { id: 'message', type: 'textarea', required: true, colSpan: 'sm:col-span-2' },
+  { id: "name", type: "text", required: true, autoComplete: "name" },
+  { id: "company", type: "text", required: true, autoComplete: "organization" },
+  {
+    id: "email",
+    type: "email",
+    required: true,
+    autoComplete: "email",
+    inputMode: "email",
+  },
+  {
+    id: "phone",
+    type: "tel",
+    required: true,
+    autoComplete: "tel",
+    inputMode: "tel",
+  },
+  { id: "service", type: "text", required: true, autoComplete: "off" },
+  { id: "product", type: "text", required: false, autoComplete: "off" },
+  { id: "route", type: "text", required: false, autoComplete: "off" },
+  { id: "volume", type: "text", required: false, autoComplete: "off" },
+  { id: "timing", type: "text", required: false, autoComplete: "off" },
+  { id: "message", type: "textarea", required: true, colSpan: "sm:col-span-2" },
 ];
 
 export function Contact({ copy }: ContactProps) {
-  const [submitState, setSubmitState] = useState<SubmitState>('idle');
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   const cinematicStyle = {
-    '--cinema-image': `url(${withBasePath('/images/generated/contact-global-map-lights.webp')})`,
-    '--cinema-position': 'center 44%',
+    "--cinema-image": `url(${withBasePath("/images/generated/contact-global-map-lights.webp")})`,
+    "--cinema-position": "center 44%",
   } as CSSProperties;
 
   const companyInfoItems: CompanyInfoItem[] = [
     {
-      id: 'country',
+      id: "country",
       label: copy.companyInfo.countryLabel,
       value: copy.companyInfo.country,
       icon: Globe,
     },
     {
-      id: 'address',
+      id: "address",
       label: copy.companyInfo.addressLabel,
       value: copy.companyInfo.address,
       icon: MapPin,
     },
     {
-      id: 'email',
+      id: "email",
       label: copy.companyInfo.emailLabel,
       value: copy.companyInfo.email,
       href: `mailto:${copy.companyInfo.email}`,
       icon: EnvelopeSimple,
     },
     {
-      id: 'phone',
+      id: "phone",
       label: copy.companyInfo.phoneLabel,
       value: copy.companyInfo.phone,
       href: `tel:${copy.companyInfo.phone}`,
@@ -102,58 +125,60 @@ export function Contact({ copy }: ContactProps) {
       return;
     }
 
-    setSubmitState('submitting');
+    setSubmitState("submitting");
 
     const formData = new FormData(form);
     const payload: ContactPayload = {
-      name: String(formData.get('name') ?? ''),
-      company: String(formData.get('company') ?? ''),
-      email: String(formData.get('email') ?? ''),
-      phone: String(formData.get('phone') ?? ''),
-      service: String(formData.get('service') ?? ''),
-      product: String(formData.get('product') ?? ''),
-      route: String(formData.get('route') ?? ''),
-      volume: String(formData.get('volume') ?? ''),
-      timing: String(formData.get('timing') ?? ''),
-      message: String(formData.get('message') ?? ''),
-      website: String(formData.get('website') ?? ''),
+      name: String(formData.get("name") ?? ""),
+      company: String(formData.get("company") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      service: String(formData.get("service") ?? ""),
+      product: String(formData.get("product") ?? ""),
+      route: String(formData.get("route") ?? ""),
+      volume: String(formData.get("volume") ?? ""),
+      timing: String(formData.get("timing") ?? ""),
+      message: String(formData.get("message") ?? ""),
+      website: String(formData.get("website") ?? ""),
     };
 
     try {
-      const response = await fetch(withBasePath('/api/contact'), {
-        method: 'POST',
+      const response = await fetch(withBasePath("/api/contact"), {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-        throw new Error('Contact request failed');
+        throw new Error("Contact request failed");
       }
 
-      setSubmitState('success');
+      setSubmitState("success");
       form.reset();
     } catch {
-      setSubmitState('error');
+      setSubmitState("error");
     }
   };
 
   const statusMessage =
-    submitState === 'submitting'
+    submitState === "submitting"
       ? copy.form.status.submitting
-      : submitState === 'success'
+      : submitState === "success"
         ? copy.form.status.success
-        : submitState === 'error'
+        : submitState === "error"
           ? copy.form.status.error
           : null;
 
   const statusClassName =
-    submitState === 'error' ? 'mt-3 text-sm text-red-600' : 'mt-3 text-sm text-emerald-700';
+    submitState === "error"
+      ? "mt-3 text-sm text-red-600"
+      : "mt-3 text-sm text-emerald-700";
 
   const handleFormChange = () => {
-    if (submitState === 'success' || submitState === 'error') {
-      setSubmitState('idle');
+    if (submitState === "success" || submitState === "error") {
+      setSubmitState("idle");
     }
   };
 
@@ -168,7 +193,7 @@ export function Contact({ copy }: ContactProps) {
       <div className="container">
         <div className="grid gap-12 lg:grid-cols-[1fr,1.1fr]">
           <div className="space-y-6">
-            <h2 className="section-title font-display">{copy.heading}</h2>
+            <h2 className="about-values-title font-display">{copy.heading}</h2>
             <p className="section-lead">{copy.description}</p>
             <div className="contact-company-panel">
               <div className="contact-company-head">
@@ -184,7 +209,10 @@ export function Contact({ copy }: ContactProps) {
                     <div>
                       <p className="contact-company-label">{item.label}</p>
                       {item.href ? (
-                        <a href={item.href} className="contact-company-value contact-company-link">
+                        <a
+                          href={item.href}
+                          className="contact-company-value contact-company-link"
+                        >
                           {item.value}
                         </a>
                       ) : (
@@ -205,18 +233,24 @@ export function Contact({ copy }: ContactProps) {
             >
               <div className="sr-only" aria-hidden="true">
                 <label htmlFor="website">Website</label>
-                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
               </div>
               {fieldConfig.map((field, index) => {
-                const label = copy.form.fields[index] ?? '';
+                const label = copy.form.fields[index] ?? "";
                 const placeholder = copy.form.placeholders[index] ?? undefined;
 
                 return (
-                  <div key={field.id} className={field.colSpan ?? ''}>
+                  <div key={field.id} className={field.colSpan ?? ""}>
                     <label htmlFor={field.id} className="contact-form-label">
                       {label}
                     </label>
-                    {field.type === 'textarea' ? (
+                    {field.type === "textarea" ? (
                       <textarea
                         id={field.id}
                         name={field.id}
@@ -241,16 +275,29 @@ export function Contact({ copy }: ContactProps) {
                 );
               })}
               <div className="sm:col-span-2">
-                <button type="submit" className="btn btn-contact w-full" disabled={submitState === 'submitting'}>
-                  {submitState === 'submitting' ? copy.form.submittingLabel : copy.form.submitLabel}
+                <button
+                  type="submit"
+                  className="btn btn-contact w-full"
+                  disabled={submitState === "submitting"}
+                >
+                  {submitState === "submitting"
+                    ? copy.form.submittingLabel
+                    : copy.form.submitLabel}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </button>
                 {statusMessage ? (
-                  <p role="status" aria-live="polite" className={statusClassName}>
+                  <p
+                    role="status"
+                    aria-live="polite"
+                    className={statusClassName}
+                  >
                     {statusMessage}
                   </p>
                 ) : null}
-                <p id="contact-helper" className="mt-3 text-xs text-muted-foreground">
+                <p
+                  id="contact-helper"
+                  className="mt-3 text-xs text-muted-foreground"
+                >
                   {copy.form.micro}
                 </p>
               </div>

@@ -110,7 +110,8 @@ Este archivo es una fuente de verdad viva: si cambia el proyecto y este document
 
 - Aplicar estilo liquid glass a los boxes de Nosotros, Compromiso, Process y Por que elegirnos.
 - En Valores, aplicar liquid glass solo a los boxes de Vision y Mision.
-- Mantener la lista de valores individuales (value-thread) en su estilo de hilo original, sin liquid glass.
+- `Nosotros` debe mantenerse como una seccion ejecutiva escaneable: eyebrow `QUIENES SOMOS`, headline con propuesta de valor, un parrafo principal, CTAs hacia Proceso/Contacto, un panel de Compromiso y 3 proof cards operativas. No duplicar parrafos entre columna principal y panel lateral.
+- Mantener los principios/valores agrupados en 3 `value-thread` operativos, sin liquid glass; evitar volver a una grilla larga de 7 valores iguales salvo decision explicita.
 - Mantener estos boxes sin degradados de fondo: usar superficie translucida, borde suave y blur (backdrop-filter) para consistencia visual.
 - Evitar crear estilos inline duplicados cuando exista una utilidad global o clase reutilizable para liquid glass.
 - Aplicar el mismo lenguaje liquid glass al selector de idioma (`LanguageToggle`) para mantener consistencia en componentes de control visibles en el header.
@@ -249,3 +250,4 @@ No borrar incidencias previas; solo marcar estado o agregar resolucion adicional
 - 2026-06-01: Se reemplazaron las visuales abstractas de spans/SVG en `Services` por renders raster transparentes PNG/WebP (`public/images/generated/services/*-render.*`) superpuestos dentro de cada tarjeta, restaurando además el número de tarjeta y la línea divisoria debajo del copy para mayor fidelidad con la referencia.
 - 2026-06-01: Ajuste fino de `Services`: el hover ya no escala las imagenes de cada tarjeta; escala la tarjeta completa sin importar el punto de hover, y la linea divisoria se movio debajo del titulo antes del texto secundario.
 - 2026-06-01: Ajuste de proporcion y capas en `Services`: las tarjetas se redujeron aproximadamente 10% (`services-matrix-grid` al 90% y min-height escalado) y el texto queda siempre por encima de las imagenes con z-index superior.
+- 2026-06-03: `Nosotros` se reestructuro para mejorar escaneo y reducir texto: headline con propuesta de valor, un unico parrafo principal, CTAs a Proceso/Contacto, panel de Compromiso sin parrafo duplicado, 3 proof cards operativas y valores compactados en 3 principios agrupados. Se actualizaron `About.tsx`, `siteContent.ts` y estilos `about-*` en `styles/globals.css`.

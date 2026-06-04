@@ -1,9 +1,9 @@
-import type { CSSProperties } from 'react';
-import { ArrowUp, Cube, Anchor } from '@phosphor-icons/react';
-import type { ProductsCopy } from '../content/siteContent';
-import { withBasePath } from '../utils/basePath';
-import { MotionSection } from './MotionSection';
-import { ProductGallery } from './ProductGallery';
+import type { CSSProperties } from "react";
+import { ArrowUp, Cube, Anchor } from "@phosphor-icons/react";
+import type { ProductsCopy } from "../content/siteContent";
+import { withBasePath } from "../utils/basePath";
+import { MotionSection } from "./MotionSection";
+import { ProductGallery } from "./ProductGallery";
 
 type ProductsProps = {
   copy: ProductsCopy;
@@ -11,8 +11,8 @@ type ProductsProps = {
 
 export function Products({ copy }: ProductsProps) {
   const cinematicStyle = {
-    '--cinema-image': `url(${withBasePath('/images/generated/products-produce-table.webp')})`,
-    '--cinema-position': 'center 42%',
+    "--cinema-image": `url(${withBasePath("/images/generated/products-produce-table.webp")})`,
+    "--cinema-position": "center 42%",
   } as CSSProperties;
 
   return (
@@ -26,7 +26,9 @@ export function Products({ copy }: ProductsProps) {
       <div className="container">
         <div className="grid gap-10 lg:grid-cols-[1fr,1.1fr] lg:items-start">
           <div>
-            <h2 className="section-title font-display mt-6">{copy.heading}</h2>
+            <h2 className="about-values-title font-display mt-6">
+              {copy.heading}
+            </h2>
           </div>
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
@@ -37,12 +39,21 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Anchor className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-                <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.exportTitle}</p>
+                <Anchor
+                  className="h-4 w-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
+                  {copy.exportTitle}
+                </p>
               </div>
             </div>
-            <p className="text-base text-muted-foreground md:text-lg">{copy.exportText}</p>
-            <p className="text-base font-semibold text-foreground md:text-lg">{copy.coalHighlight}</p>
+            <p className="text-base text-muted-foreground md:text-lg">
+              {copy.exportText}
+            </p>
+            <p className="text-base font-semibold text-foreground md:text-lg">
+              {copy.coalHighlight}
+            </p>
           </div>
           <div className="space-y-4">
             <div className="space-y-2">
@@ -51,12 +62,21 @@ export function Products({ copy }: ProductsProps) {
                 aria-hidden="true"
               />
               <div className="flex items-center gap-3">
-                <Cube className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-                <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">{copy.supplyTitle}</p>
+                <Cube
+                  className="h-4 w-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
+                  {copy.supplyTitle}
+                </p>
               </div>
             </div>
-            <p className="text-base text-muted-foreground md:text-lg">{copy.supplyText}</p>
-            <p className="text-base font-semibold text-foreground md:text-lg">{copy.openCatalogHighlight}</p>
+            <p className="text-base text-muted-foreground md:text-lg">
+              {copy.supplyText}
+            </p>
+            <p className="text-base font-semibold text-foreground md:text-lg">
+              {copy.openCatalogHighlight}
+            </p>
           </div>
         </div>
         <div className="mt-16 md:mt-20 flex justify-center">

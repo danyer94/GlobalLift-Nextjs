@@ -1,0 +1,22 @@
+{
+  "$schema": "https://open-design.ai/schemas/plugin.v1.json",
+  "specVersion": "1.0.0",
+  "name": "design-system-global-lift-mpyhdlt6",
+  "title": "Design System: Global Lift",
+  "version": "0.1.0",
+  "description": "--- name: Global Lift description: Premium B2B trade and logistics website for Dominican import, export, and sourcing operations. colors: atlantic-navy: \"#0f172a\" signal-cyan: \"#06b6d4\" operational-teal: \"#0598b6\" violet",
+  "od": {
+    "kind": "skill",
+    "taskKind": "new-generation",
+    "context": {
+      "skills": [
+        {
+          "path": "./SKILL.md"
+        }
+      ]
+    },
+    "capabilities": [
+      "prompt:inject"
+    ]
+  }
+}

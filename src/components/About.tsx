@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Flag, Binoculars } from '@phosphor-icons/react';
+import { ArrowRight, Binoculars, Flag } from '@phosphor-icons/react';
 import type { AboutCopy, CommitmentCopy, ValuesCopy } from '../content/siteContent';
 import { withBasePath } from '../utils/basePath';
 import { AnimatedList, MotionItem } from './ui/AnimatedList';
@@ -12,13 +12,9 @@ type AboutProps = {
 };
 
 const VALUE_KEYS = [
-  'integrity',
-  'commitment',
-  'operational-excellence',
-  'trust',
-  'adaptability',
-  'multi-sector',
-  'responsible-growth',
+  'compliance-transparency',
+  'execution-coordination',
+  'adaptive-growth',
 ] as const;
 
 export function About({ copy, values, commitment }: AboutProps) {
@@ -36,44 +32,62 @@ export function About({ copy, values, commitment }: AboutProps) {
       style={cinematicStyle}
     >
       <div className="container">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr,0.9fr] lg:items-start">
-          <div className="space-y-6">
-            <h2 className="section-title font-display">{copy.heading}</h2>
-            <div className="space-y-4 section-lead max-w-2xl">
+        <div className="about-executive-grid">
+          <div className="about-copy-column">
+            <p className="about-eyebrow">{copy.label}</p>
+            <h2 className="about-title font-display">{copy.heading}</h2>
+            <div className="about-intro">
               {copy.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-          </div>
-          <div className="space-y-6">
-            <div className="liquid-glass-panel p-7 flex flex-col gap-4">
-              <span className="pill">{copy.heading}</span>
-              <p className="text-lg text-foreground">{copy.oneLine}</p>
-              <div className="section-divider h-px" aria-hidden="true" />
-              <p className="text-sm text-muted-foreground">{copy.paragraphs[1]}</p>
-            </div>
-            <div id="nosotros-compromiso" className="liquid-glass-panel relative overflow-hidden p-8">
-              <span
-                className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-secondary/15 blur-3xl"
-                aria-hidden="true"
-              />
-              <span
-                className="pointer-events-none absolute -bottom-16 left-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"
-                aria-hidden="true"
-              />
-              <div className="relative space-y-6">
-                <h3 className="section-title font-display">{commitment.heading}</h3>
-                <p className="text-sm md:text-base text-muted-foreground">{commitment.text}</p>
-              </div>
+            <div className="about-actions" aria-label={copy.label}>
+              <a className="btn btn-primary" href="#process">
+                {copy.primaryCta}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a className="about-text-link" href="#contact">
+                {copy.secondaryCta}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
             </div>
           </div>
+
+          <aside id="nosotros-compromiso" className="about-commitment-card liquid-glass-panel">
+            <span className="about-card-kicker">{commitment.label}</span>
+            <p className="about-one-line">{copy.oneLine}</p>
+            <div className="about-card-divider" aria-hidden="true" />
+            <div className="about-commitment-copy">
+              <h3>{commitment.heading}</h3>
+              <p>{commitment.text}</p>
+            </div>
+          </aside>
         </div>
 
-        <div id="nosotros-valores" className="mt-16">
-          <div>
-            <h3 className="section-title font-display mt-6">{values.heading}</h3>
+        <AnimatedList className="about-proof-grid">
+          {copy.proofPoints.map((point, index) => (
+            <MotionItem key={point.key}>
+              <article className="about-proof-card">
+                <span className="about-proof-index">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{point.title}</h3>
+                  <p>{point.description}</p>
+                </div>
+              </article>
+            </MotionItem>
+          ))}
+        </AnimatedList>
+
+        <div id="nosotros-valores" className="about-values-zone">
+          <div className="about-values-header">
+            <div>
+              <p className="about-eyebrow">{values.label}</p>
+              <h3 className="about-values-title font-display">{values.heading}</h3>
+            </div>
+            <p>{values.valuesLabel}</p>
           </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+
+          <div className="about-statement-grid">
             <div className="statement-panel statement-panel--vision liquid-glass-panel h-full">
               <div className="statement-panel-head">
                 <span className="statement-panel-icon">
@@ -93,22 +107,24 @@ export function About({ copy, values, commitment }: AboutProps) {
               <p className="statement-panel-text">{values.missionText}</p>
             </div>
           </div>
-          <div className="mt-10">
-            <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">{values.valuesLabel}</p>
-            <AnimatedList className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {values.values.map((value, index) => (
-                <MotionItem key={VALUE_KEYS[index] ?? value.title}>
-                  <article className="value-thread">
-                    <span className="value-thread-index">{String(index + 1).padStart(2, '0')}</span>
-                    <p className="value-thread-title">{value.title}</p>
-                    <p className="value-thread-description">{value.description}</p>
-                  </article>
-                </MotionItem>
-              ))}
-            </AnimatedList>
-          </div>
-        </div>
 
+          <AnimatedList className="about-principles-grid">
+            {values.principles.map((principle, index) => (
+              <MotionItem key={VALUE_KEYS[index] ?? principle.key}>
+                <article className="value-thread value-thread--grouped">
+                  <span className="value-thread-index">{String(index + 1).padStart(2, '0')}</span>
+                  <p className="value-thread-title">{principle.title}</p>
+                  <p className="value-thread-description">{principle.description}</p>
+                  <div className="value-thread-tags" aria-label={principle.title}>
+                    {principle.items.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </article>
+              </MotionItem>
+            ))}
+          </AnimatedList>
+        </div>
       </div>
     </MotionSection>
   );

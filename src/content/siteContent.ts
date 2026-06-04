@@ -49,6 +49,13 @@ export type AboutCopy = {
   heading: string;
   paragraphs: string[];
   oneLine: string;
+  proofPoints: {
+    key: string;
+    title: string;
+    description: string;
+  }[];
+  primaryCta: string;
+  secondaryCta: string;
 };
 
 export type ServicesCopy = {
@@ -123,6 +130,12 @@ export type ValuesCopy = {
   missionLabel: string;
   missionText: string;
   valuesLabel: string;
+  principles: {
+    key: string;
+    title: string;
+    description: string;
+    items: string[];
+  }[];
   values: CompanyValue[];
 };
 
@@ -233,13 +246,33 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     about: {
       label: "QUIÉNES SOMOS",
-      heading: "NOSOTROS",
+      heading: "Comercio global con ejecución local",
       paragraphs: [
-        "Global Lift es una empresa dominicana dedicada a la importación, exportación, logística y comercialización de bienes y servicios, con un enfoque multisectorial y una visión estratégica orientada al comercio nacional e internacional. Actuamos como puente entre vendedores en el extranjero y oportunidades de abastecimiento en República Dominicana, facilitando conexiones comerciales entre mercados, proveedores y clientes.",
-        "Operamos bajo altos estándares de cumplimiento legal, eficiencia operativa y transparencia. Nuestro enfoque se centra en optimizar operaciones y habilitar relaciones comerciales sólidas, con una gestión orientada al crecimiento sostenible y a la creación de valor a largo plazo.",
-        "Trabajamos para ser un aliado estratégico confiable, conectando mercados y creando oportunidades comerciales con visión global y ejecución local.",
+        "Global Lift es una empresa dominicana de importación, exportación, logística y comercialización. Conectamos vendedores, proveedores y clientes entre mercados internacionales y República Dominicana, con una operación enfocada en cumplimiento, coordinación y valor comercial sostenible.",
       ],
       oneLine: "Conectando mercados, elevando oportunidades.",
+      proofPoints: [
+        {
+          key: "compliance",
+          title: "Cumplimiento documental",
+          description:
+            "Operaciones con respeto legal, acuerdos claros y comunicación transparente.",
+        },
+        {
+          key: "coordination",
+          title: "Coordinación operativa",
+          description:
+            "Alineamos abastecimiento, logística y seguimiento para mover cada solicitud con estructura.",
+        },
+        {
+          key: "sourcing",
+          title: "Abastecimiento flexible",
+          description:
+            "Activamos oportunidades según producto, volumen, destino y mercado, sin depender de un catálogo cerrado.",
+        },
+      ],
+      primaryCta: "Ver proceso",
+      secondaryCta: "Hablar de una operación",
     },
     services: {
       label: "QUÉ HACEMOS",
@@ -433,6 +466,29 @@ export const siteContent: Record<Language, SiteContent> = {
       missionText:
         "Brindar soluciones integrales de importación, exportación, logística y servicios comerciales, facilitando el flujo eficiente de bienes y servicios en múltiples industrias mediante procesos estructurados, ética empresarial y una gestión orientada al crecimiento sostenible.",
       valuesLabel: "VALORES",
+      principles: [
+        {
+          key: "compliance-transparency",
+          title: "Cumplimiento y transparencia",
+          description:
+            "Cada operación se sostiene sobre integridad, respeto legal y relaciones comerciales confiables.",
+          items: ["Integridad", "Confianza"],
+        },
+        {
+          key: "execution-coordination",
+          title: "Ejecución y coordinación",
+          description:
+            "Convertimos acuerdos en movimiento real mediante compromiso, eficiencia y mejora continua.",
+          items: ["Compromiso", "Excelencia Operativa"],
+        },
+        {
+          key: "adaptive-growth",
+          title: "Adaptabilidad y crecimiento responsable",
+          description:
+            "Respondemos a mercados cambiantes con enfoque multisectorial y visión sostenible a largo plazo.",
+          items: ["Adaptabilidad", "Enfoque Multisectorial", "Crecimiento Responsable"],
+        },
+      ],
       values: [
         {
           title: "Integridad",
@@ -606,13 +662,33 @@ export const siteContent: Record<Language, SiteContent> = {
     },
     about: {
       label: "WHO WE ARE",
-      heading: "ABOUT US",
+      heading: "Global trade with local execution",
       paragraphs: [
-        "Global Lift is a Dominican company focused on importing, exporting, logistics, and the commercialization of goods and services—with a multi-sector approach and a strategic view of both national and international trade. We serve as a bridge between overseas sellers and sourcing opportunities in the Dominican Republic, facilitating commercial connections among markets, suppliers, and clients.",
-        "We operate with strong standards for legal compliance, operational efficiency, and transparency. Our focus is to optimize operations and build lasting commercial relationships through structured processes, ethical business practices, and sustainability-oriented growth.",
-        "We work to be a reliable strategic partner, connecting markets and creating commercial opportunities through global vision and local execution.",
+        "Global Lift is a Dominican import, export, logistics, and trade facilitation company. We connect sellers, suppliers, and clients across international markets and the Dominican Republic through an operation focused on compliance, coordination, and sustainable commercial value.",
       ],
       oneLine: "Connecting markets, lifting opportunities.",
+      proofPoints: [
+        {
+          key: "compliance",
+          title: "Documentation compliance",
+          description:
+            "Operations built on legal respect, clear agreements, and transparent communication.",
+        },
+        {
+          key: "coordination",
+          title: "Operational coordination",
+          description:
+            "We align sourcing, logistics, and follow-up so each request moves with structure.",
+        },
+        {
+          key: "sourcing",
+          title: "Flexible sourcing",
+          description:
+            "We activate opportunities by product, volume, destination, and market without relying on a closed catalog.",
+        },
+      ],
+      primaryCta: "See process",
+      secondaryCta: "Discuss an operation",
     },
     services: {
       label: "WHAT WE DO",
@@ -806,6 +882,29 @@ export const siteContent: Record<Language, SiteContent> = {
       missionText:
         "To deliver integrated import, export, logistics, and commercial services—enabling the efficient flow of goods and services across industries through structured processes, ethical business practices, and sustainability-oriented management.",
       valuesLabel: "VALUES",
+      principles: [
+        {
+          key: "compliance-transparency",
+          title: "Compliance and transparency",
+          description:
+            "Every operation is grounded in integrity, legal respect, and reliable commercial relationships.",
+          items: ["Integrity", "Trust"],
+        },
+        {
+          key: "execution-coordination",
+          title: "Execution and coordination",
+          description:
+            "We turn agreements into real movement through commitment, efficiency, and continuous improvement.",
+          items: ["Commitment", "Operational Excellence"],
+        },
+        {
+          key: "adaptive-growth",
+          title: "Adaptability and responsible growth",
+          description:
+            "We respond to changing markets with a multi-sector approach and long-term sustainable vision.",
+          items: ["Adaptability", "Multi-sector Approach", "Responsible Growth"],
+        },
+      ],
       values: [
         {
           title: "Integrity",

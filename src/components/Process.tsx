@@ -1,26 +1,26 @@
-import type { CSSProperties } from 'react';
-import type { ProcessCopy } from '../content/siteContent';
-import { withBasePath } from '../utils/basePath';
-import { AnimatedOl, MotionLi } from './ui/AnimatedList';
-import { MotionSection } from './MotionSection';
+import type { CSSProperties } from "react";
+import type { ProcessCopy } from "../content/siteContent";
+import { withBasePath } from "../utils/basePath";
+import { AnimatedOl, MotionLi } from "./ui/AnimatedList";
+import { MotionSection } from "./MotionSection";
 
 type ProcessProps = {
   copy: ProcessCopy;
 };
 
 const PROCESS_STEP_KEYS = [
-  'discovery',
-  'sourcing-connection',
-  'logistics-coordination',
-  'delivery-follow-up',
+  "discovery",
+  "sourcing-connection",
+  "logistics-coordination",
+  "delivery-follow-up",
 ] as const;
 
 const splitItem = (item: string) => {
-  const separators = [' - ', ' — '];
+  const separators = [" - ", " — "];
   const separator = separators.find((token) => item.includes(token));
 
   if (!separator) {
-    return { title: item, description: '' };
+    return { title: item, description: "" };
   }
 
   const index = item.indexOf(separator);
@@ -32,12 +32,12 @@ const splitItem = (item: string) => {
 
 export function Process({ copy }: ProcessProps) {
   const cinematicStyle = {
-    '--cinema-image': `url(${withBasePath('/images/generated/process-operations-desk.webp')})`,
-    '--cinema-position': 'center 46%',
+    "--cinema-image": `url(${withBasePath("/images/generated/process-operations-desk.webp")})`,
+    "--cinema-position": "center 46%",
   } as CSSProperties;
 
   const stageStyle = {
-    '--process-stage-image': `url(${withBasePath('/images/generated/hero-cinematic-port.webp')})`,
+    "--process-stage-image": `url(${withBasePath("/images/generated/hero-cinematic-port.webp")})`,
   } as CSSProperties;
   return (
     <MotionSection
@@ -49,7 +49,9 @@ export function Process({ copy }: ProcessProps) {
     >
       <div className="container">
         <div className="max-w-3xl">
-          <h2 className="section-title mt-6 font-display">{copy.heading}</h2>
+          <h2 className="about-values-title mt-6 font-display">
+            {copy.heading}
+          </h2>
         </div>
 
         <div className="process-narrative mt-14 grid gap-8 lg:grid-cols-[0.88fr,1.12fr] lg:gap-10">
@@ -64,14 +66,24 @@ export function Process({ copy }: ProcessProps) {
           <AnimatedOl className="process-step-stack space-y-5 lg:space-y-7">
             {copy.steps.map((step, index) => {
               const { title, description } = splitItem(step);
-              const stepNumber = `${index + 1}`.padStart(2, '0');
+              const stepNumber = `${index + 1}`.padStart(2, "0");
 
               return (
-                <MotionLi key={PROCESS_STEP_KEYS[index] ?? title} className="process-step-card" style={{ '--step-offset': `${index * 0.85}rem` } as CSSProperties}>
+                <MotionLi
+                  key={PROCESS_STEP_KEYS[index] ?? title}
+                  className="process-step-card"
+                  style={
+                    { "--step-offset": `${index * 0.85}rem` } as CSSProperties
+                  }
+                >
                   <span className="process-step-index">{stepNumber}</span>
                   <div>
-                    <p className="text-base font-semibold text-foreground md:text-lg">{title}</p>
-                    <p className="mt-2 text-sm text-muted-foreground md:text-base">{description || title}</p>
+                    <p className="text-base font-semibold text-foreground md:text-lg">
+                      {title}
+                    </p>
+                    <p className="mt-2 text-sm text-muted-foreground md:text-base">
+                      {description || title}
+                    </p>
                   </div>
                 </MotionLi>
               );
